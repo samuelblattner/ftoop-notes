@@ -1,0 +1,365 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>GUI &mdash; FTOOP Java Examples 1.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="FTOOP Java Examples 1.0 documentation" href="../index.html"/>
+        <link rel="next" title="Smells" href="../smells/smells.html"/>
+        <link rel="prev" title="Reflection" href="../advanced-techniques/reflection/reflection.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> FTOOP Java Examples
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../patterns/index.html">Patterns</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../threading/index.html">Threading</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced-techniques/index.html">Advanced Techniques</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">GUI</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#swing">Swing</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#elements">Elements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#layouts">Layouts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#example">Example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#example-2">Example 2</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../smells/smells.html">Smells</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">FTOOP Java Examples</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+    <li>GUI</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/gui/gui.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="gui">
+<h1>GUI<a class="headerlink" href="#gui" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="swing">
+<h2>Swing<a class="headerlink" href="#swing" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="elements">
+<h3>Elements<a class="headerlink" href="#elements" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="layouts">
+<h3>Layouts<a class="headerlink" href="#layouts" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="example">
+<h3>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">gui</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">javax.swing.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.awt.*</span><span class="o">;</span>
+
+<span class="cm">/**</span>
+<span class="cm"> * Created by samuelblattner on 21/09/16.</span>
+<span class="cm"> */</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">GuiExample</span> <span class="o">{</span>
+
+    <span class="c1">// Basic Frame (root GUI element)</span>
+    <span class="kd">private</span> <span class="n">JFrame</span> <span class="n">baseFrame</span><span class="o">;</span>
+
+    <span class="c1">// A Panel</span>
+    <span class="kd">private</span> <span class="n">JPanel</span> <span class="n">basePanel</span><span class="o">;</span>
+
+    <span class="c1">// Buttons</span>
+    <span class="kd">private</span> <span class="n">JButton</span> <span class="n">okButton</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">JButton</span> <span class="n">cancelButton</span><span class="o">;</span>
+
+
+    <span class="kd">public</span> <span class="nf">GuiExample</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">createBaseDialog</span><span class="o">();</span>
+        <span class="n">createBaseDialog</span><span class="o">();</span>
+
+        <span class="n">baseFrame</span><span class="o">.</span><span class="na">setVisible</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">createBaseDialog</span><span class="o">()</span> <span class="o">{</span>
+
+        <span class="c1">// Create Frame</span>
+        <span class="n">baseFrame</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JFrame</span><span class="o">(</span><span class="s">&quot;My Frame&quot;</span><span class="o">);</span>
+        <span class="n">baseFrame</span><span class="o">.</span><span class="na">setSize</span><span class="o">(</span><span class="mi">500</span><span class="o">,</span> <span class="mi">500</span><span class="o">);</span>
+        <span class="n">baseFrame</span><span class="o">.</span><span class="na">setDefaultCloseOperation</span><span class="o">(</span><span class="n">WindowConstants</span><span class="o">.</span><span class="na">DISPOSE_ON_CLOSE</span><span class="o">);</span>
+
+        <span class="c1">// Create Panel</span>
+        <span class="n">basePanel</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JPanel</span><span class="o">(</span><span class="k">new</span> <span class="n">BorderLayout</span><span class="o">());</span>
+
+        <span class="c1">// Add to Frame</span>
+        <span class="n">baseFrame</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">basePanel</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">createButtons</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">okButton</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JButton</span><span class="o">(</span><span class="s">&quot;Hello&quot;</span><span class="o">);</span>
+        <span class="n">cancelButton</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JButton</span><span class="o">(</span><span class="s">&quot;Hello&quot;</span><span class="o">);</span>
+
+        <span class="n">basePanel</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">okButton</span><span class="o">,</span> <span class="n">BorderLayout</span><span class="o">.</span><span class="na">NORTH</span><span class="o">);</span>
+        <span class="n">basePanel</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">cancelButton</span><span class="o">,</span> <span class="n">BorderLayout</span><span class="o">.</span><span class="na">SOUTH</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span> <span class="n">args</span><span class="o">[])</span> <span class="o">{</span>
+        <span class="n">GuiExample</span> <span class="n">example</span> <span class="o">=</span> <span class="k">new</span> <span class="n">GuiExample</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="example-2">
+<h3>Example 2<a class="headerlink" href="#example-2" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">gui</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">javax.swing.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.awt.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.awt.event.ActionEvent</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.awt.event.ActionListener</span><span class="o">;</span>
+
+<span class="cm">/**</span>
+<span class="cm"> * Created by samuelblattner on 21/09/16.</span>
+<span class="cm"> */</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">GuiExample2</span> <span class="o">{</span>
+    
+    <span class="kd">private</span> <span class="n">JFrame</span> <span class="n">baseFrame</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">JPanel</span> <span class="n">basePanel</span><span class="o">,</span> <span class="n">centerPanel</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">JButton</span> <span class="n">buttonToLeft</span><span class="o">,</span> <span class="n">buttonToRight</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">JScrollPane</span> <span class="n">leftScrollPane</span><span class="o">,</span> <span class="n">rightScrollPane</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">JList</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">leftList</span><span class="o">,</span> <span class="n">rightList</span><span class="o">;</span>
+
+    
+    <span class="kd">public</span> <span class="nf">GuiExample2</span><span class="o">()</span> <span class="o">{</span>
+    
+        <span class="n">baseFrame</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JFrame</span><span class="o">(</span><span class="s">&quot;Mein tolles Fenster :-)&quot;</span><span class="o">);</span>
+        <span class="n">baseFrame</span><span class="o">.</span><span class="na">setDefaultCloseOperation</span><span class="o">(</span><span class="n">WindowConstants</span><span class="o">.</span><span class="na">EXIT_ON_CLOSE</span><span class="o">);</span>
+        <span class="c1">// pack()???</span>
+
+        <span class="n">basePanel</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JPanel</span><span class="o">(</span><span class="k">new</span> <span class="n">BorderLayout</span><span class="o">(</span><span class="mi">5</span><span class="o">,</span><span class="mi">5</span><span class="o">));</span>
+        <span class="n">baseFrame</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">basePanel</span><span class="o">);</span>
+
+        <span class="n">leftScrollPane</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JScrollPane</span><span class="o">();</span>
+        <span class="n">leftScrollPane</span><span class="o">.</span><span class="na">setPreferredSize</span><span class="o">(</span><span class="k">new</span> <span class="n">Dimension</span><span class="o">(</span><span class="mi">200</span><span class="o">,</span> <span class="mi">200</span><span class="o">));</span>
+        <span class="n">leftList</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JList</span><span class="o">&lt;&gt;();</span>
+        <span class="n">leftScrollPane</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">leftList</span><span class="o">);</span>
+        <span class="n">basePanel</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">leftScrollPane</span><span class="o">,</span> <span class="n">BorderLayout</span><span class="o">.</span><span class="na">WEST</span><span class="o">);</span>
+
+        <span class="n">rightScrollPane</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JScrollPane</span><span class="o">();</span>
+        <span class="c1">//rightScrollPane.setPreferredSize(new Dimension(200, 200));</span>
+        <span class="n">rightList</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JList</span><span class="o">&lt;&gt;();</span>
+        <span class="n">rightScrollPane</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">rightList</span><span class="o">);</span>
+        <span class="n">basePanel</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">rightScrollPane</span><span class="o">,</span> <span class="n">BorderLayout</span><span class="o">.</span><span class="na">EAST</span><span class="o">);</span>
+
+        <span class="n">centerPanel</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JPanel</span><span class="o">(</span><span class="k">new</span> <span class="n">GridLayout</span><span class="o">(</span><span class="mi">10</span><span class="o">,</span> <span class="mi">1</span><span class="o">));</span>
+
+        <span class="n">buttonToLeft</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JButton</span><span class="o">(</span><span class="s">&quot;&lt;&lt;&lt;&quot;</span><span class="o">);</span>
+        <span class="n">buttonToLeft</span><span class="o">.</span><span class="na">addActionListener</span><span class="o">(</span><span class="k">new</span> <span class="n">ActionListener</span><span class="o">()</span> <span class="o">{</span>
+            <span class="nd">@Override</span>
+            <span class="kd">public</span> <span class="kt">void</span> <span class="nf">actionPerformed</span><span class="o">(</span><span class="n">ActionEvent</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Hast mich geklickt :D&quot;</span><span class="o">);</span>
+                <span class="c1">//leftList.add(&quot;Click Left&quot;, null);</span>
+            <span class="o">}</span>
+        <span class="o">});</span>
+
+        <span class="n">buttonToRight</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JButton</span><span class="o">(</span><span class="s">&quot;&gt;&gt;&gt;&quot;</span><span class="o">);</span>
+        <span class="n">buttonToRight</span><span class="o">.</span><span class="na">addActionListener</span><span class="o">(</span><span class="k">new</span> <span class="n">ActionListener</span><span class="o">()</span> <span class="o">{</span>
+            <span class="nd">@Override</span>
+            <span class="kd">public</span> <span class="kt">void</span> <span class="nf">actionPerformed</span><span class="o">(</span><span class="n">ActionEvent</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Hast mich geklickt :D&quot;</span><span class="o">);</span>
+                <span class="c1">//rightList.add(&quot;Click Right&quot;, null);</span>
+            <span class="o">}</span>
+        <span class="o">});</span>
+
+        <span class="n">centerPanel</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">buttonToLeft</span><span class="o">);</span> <span class="c1">//, buttonToRight);</span>
+        <span class="n">centerPanel</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">buttonToRight</span><span class="o">);</span>
+        <span class="n">basePanel</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">centerPanel</span><span class="o">,</span> <span class="n">BorderLayout</span><span class="o">.</span><span class="na">CENTER</span><span class="o">);</span>
+
+
+        <span class="n">baseFrame</span><span class="o">.</span><span class="na">setSize</span><span class="o">(</span><span class="k">new</span> <span class="n">Dimension</span><span class="o">(</span><span class="mi">600</span><span class="o">,</span> <span class="mi">250</span><span class="o">));</span>
+        <span class="n">baseFrame</span><span class="o">.</span><span class="na">setVisible</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+
+    <span class="o">}</span>
+    
+       
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span> <span class="n">args</span><span class="o">[])</span> <span class="o">{</span>
+        <span class="n">GuiExample2</span> <span class="n">example</span> <span class="o">=</span> <span class="k">new</span> <span class="n">GuiExample2</span><span class="o">();</span>
+
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../smells/smells.html" class="btn btn-neutral float-right" title="Smells" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../advanced-techniques/reflection/reflection.html" class="btn btn-neutral" title="Reflection" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, Samuel Blattner.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

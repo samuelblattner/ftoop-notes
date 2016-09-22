@@ -1,0 +1,274 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Magic Numbers &mdash; FTOOP Java Examples 1.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="FTOOP Java Examples 1.0 documentation" href="../../index.html"/>
+        <link rel="up" title="Smells" href="../smells.html"/>
+        <link rel="prev" title="Smells" href="../smells.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> FTOOP Java Examples
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../patterns/index.html">Patterns</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../threading/index.html">Threading</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../advanced-techniques/index.html">Advanced Techniques</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../gui/gui.html">GUI</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../smells.html">Smells</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Magic Numbers</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#bad-smell-weil">Bad Smell weil ...</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#refactoring">Refactoring</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../index.html">FTOOP Java Examples</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../smells.html">Smells</a> &raquo;</li>
+      
+    <li>Magic Numbers</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../../_sources/smells/program-design/magic-numbers.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="magic-numbers">
+<h1>Magic Numbers<a class="headerlink" href="#magic-numbers" title="Permalink to this headline">¶</a></h1>
+<p>Magic Numbers sind Zahlenwerte, die im Code «hardgecodet» hinterlegt werden (siehe Beispiel).</p>
+<div class="section" id="bad-smell-weil">
+<h2>Bad Smell weil ...<a class="headerlink" href="#bad-smell-weil" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Magic Numbers sind semantisch nicht aussagekräftig, sprich: Man weiss nicht auf Anhieb, wofür die Zahl steht.</li>
+<li>Ein Ersetzen einer Magic Number, die an mehreren Stellen vorkommt ist sehr aufwändig und fehleranfällig!</li>
+</ul>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">package</span> <span class="n">smells</span><span class="o">.</span><span class="n">program_design</span><span class="p">;</span>
+
+<span class="o">/**</span>
+ <span class="o">*</span> <span class="n">Magic</span> <span class="n">Numbers</span> <span class="n">Bad</span> <span class="n">Smell</span> <span class="n">Example</span>
+ <span class="o">*/</span>
+<span class="n">public</span> <span class="k">class</span> <span class="nc">MagicNumbers_Bad</span> <span class="p">{</span>
+
+    <span class="n">public</span> <span class="n">MagicNumbers_Bad</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">startShow</span><span class="p">(</span><span class="mi">100</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="n">private</span> <span class="n">void</span> <span class="n">startShow</span><span class="p">(</span><span class="nb">int</span> <span class="n">slidesInterval</span><span class="p">)</span> <span class="p">{</span>
+        <span class="o">//</span> <span class="n">Do</span> <span class="n">slide</span> <span class="n">show</span>
+        <span class="n">playVideo</span><span class="p">(</span><span class="mf">10.0</span><span class="n">f</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="n">private</span> <span class="n">void</span> <span class="n">playVideo</span><span class="p">(</span><span class="nb">float</span> <span class="n">volume</span><span class="p">)</span> <span class="p">{</span>
+        <span class="o">//</span> <span class="n">Play</span> <span class="n">video</span> <span class="k">with</span> <span class="n">volume</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="refactoring">
+<h2>Refactoring<a class="headerlink" href="#refactoring" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Konstanten verwenden.</li>
+</ul>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">package</span> <span class="n">smells</span><span class="o">.</span><span class="n">program_design</span><span class="p">;</span>
+
+<span class="o">/**</span>
+ <span class="o">*</span> <span class="n">Magic</span> <span class="n">Numbers</span> <span class="n">Bad</span> <span class="n">Smell</span> <span class="n">Example</span>
+ <span class="o">*/</span>
+<span class="n">public</span> <span class="k">class</span> <span class="nc">MagicNumbers_Good</span> <span class="p">{</span>
+
+    <span class="n">private</span> <span class="n">static</span> <span class="n">final</span> <span class="nb">int</span> <span class="n">SLIDE_INTERVAL</span> <span class="o">=</span> <span class="mi">100</span><span class="p">;</span>
+    <span class="n">private</span> <span class="n">static</span> <span class="n">final</span> <span class="nb">float</span> <span class="n">VIDEO_VOLUME</span> <span class="o">=</span> <span class="mf">10.0</span><span class="n">f</span><span class="p">;</span>
+
+    <span class="n">public</span> <span class="n">MagicNumbers_Good</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">startShow</span><span class="p">(</span><span class="n">SLIDE_INTERVAL</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="n">private</span> <span class="n">void</span> <span class="n">startShow</span><span class="p">(</span><span class="nb">int</span> <span class="n">slidesInterval</span><span class="p">)</span> <span class="p">{</span>
+        <span class="o">//</span> <span class="n">Do</span> <span class="n">slide</span> <span class="n">show</span>
+        <span class="n">playVideo</span><span class="p">(</span><span class="n">VIDEO_VOLUME</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="n">private</span> <span class="n">void</span> <span class="n">playVideo</span><span class="p">(</span><span class="nb">float</span> <span class="n">volume</span><span class="p">)</span> <span class="p">{</span>
+        <span class="o">//</span> <span class="n">Play</span> <span class="n">video</span> <span class="k">with</span> <span class="n">volume</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="../smells.html" class="btn btn-neutral" title="Smells" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, Samuel Blattner.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
