@@ -1,0 +1,978 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>FTOOP Java Examples 1.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="None" href="index.html#document-index"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html#document-index" class="icon icon-home"> FTOOP Java Examples
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="index.html#document-patterns/index">Patterns</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html#document-threading/index">Threading</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html#document-advanced-techniques/index">Advanced Techniques</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html#document-gui/gui">GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html#document-smells/smells">Smells</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html#document-index">FTOOP Java Examples</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html#document-index">Docs</a> &raquo;</li>
+      
+    <li>FTOOP Java Examples 1.0 documentation</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="welcome-to-ftoop-java-examples-s-documentation">
+<h1>Welcome to FTOOP Java Examples&#8217;s documentation!<a class="headerlink" href="#welcome-to-ftoop-java-examples-s-documentation" title="Permalink to this headline">¶</a></h1>
+<p>Contents:</p>
+<div class="toctree-wrapper compound">
+<span id="document-patterns/index"></span><div class="section" id="patterns">
+<h2>Patterns<a class="headerlink" href="#patterns" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<span id="document-patterns/erzeugungsmuster/erbauer"></span><div class="section" id="erbauer-builder">
+<h3>Erbauer (Builder)<a class="headerlink" href="#erbauer-builder" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Ebenfalls eine «Konfigurationsmethode»</li>
+<li>Unterschied zu <code class="docutils literal"><span class="pre">`Fabrikmethode`</span></code>: Es wird eine Instanz des Builders (innere statische Klasse von Produkt) erstellt, die durch gekettete Aufrufe von Konfigurationsmethoden konfiguriert werden kann.</li>
+<li>Dem Produkt wird anschliessend die Instanz des Builders als Konfiguration übergeben.</li>
+</ul>
+<div class="line-block">
+<div class="line"><strong>Vorteile</strong></div>
+<div class="line">+ Lesbarkeit und Vereinfacung</div>
+<div class="line">+ Konstruktionssicherheit</div>
+<div class="line">+ Unterstützung optionaler Attribute</div>
+<div class="line">- Komplexer</div>
+<div class="line"><br /></div>
+</div>
+<div class="section" id="beispiel">
+<h4>Beispiel<a class="headerlink" href="#beispiel" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">package</span> <span class="n">patterns</span><span class="o">.</span><span class="n">erzeugungsmuster</span><span class="o">.</span><span class="n">erbauer</span><span class="p">;</span>
+
+<span class="o">/**</span>
+ <span class="o">*</span> <span class="n">Vehicle</span> <span class="n">Class</span> <span class="p">(</span><span class="n">Construction</span> <span class="n">Pattern</span><span class="p">)</span>
+ <span class="o">*/</span>
+<span class="n">public</span> <span class="k">class</span> <span class="nc">Vehicle</span> <span class="p">{</span>
+
+    <span class="n">private</span> <span class="n">String</span> <span class="nb">type</span><span class="p">,</span> <span class="n">color</span><span class="p">;</span>
+    <span class="n">private</span> <span class="nb">int</span> <span class="n">nWheels</span><span class="p">;</span>
+    <span class="n">private</span> <span class="n">boolean</span> <span class="n">hasMotor</span><span class="p">;</span>
+    <span class="n">private</span> <span class="nb">float</span> <span class="n">maxSpeed</span><span class="p">;</span>
+
+    <span class="o">/**</span>
+     <span class="o">*</span> <span class="n">Called</span> <span class="n">by</span> <span class="n">the</span> <span class="n">Builder</span>
+     <span class="o">*/</span>
+    <span class="n">private</span> <span class="n">Vehicle</span><span class="p">(</span><span class="n">VehicleBuilder</span> <span class="n">options</span><span class="p">)</span> <span class="p">{</span>
+        <span class="o">//</span> <span class="n">Do</span> <span class="n">something</span><span class="o">...</span>
+    <span class="p">}</span>
+
+    <span class="o">/**</span>
+     <span class="o">*</span> <span class="n">Vehicle</span> <span class="n">Builder</span>
+     <span class="o">*/</span>
+    <span class="n">public</span> <span class="n">static</span> <span class="n">final</span> <span class="k">class</span> <span class="nc">VehicleBuilder</span> <span class="p">{</span>
+
+        <span class="n">private</span> <span class="nb">int</span> <span class="n">nWheels</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+        <span class="n">private</span> <span class="nb">int</span> <span class="n">nDoors</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+
+        <span class="n">public</span> <span class="n">VehicleBuilder</span> <span class="n">twoWheeler</span><span class="p">()</span> <span class="p">{</span>
+            <span class="n">this</span><span class="o">.</span><span class="n">nWheels</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+            <span class="k">return</span> <span class="n">this</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="n">public</span> <span class="n">VehicleBuilder</span> <span class="n">fourWheeler</span><span class="p">()</span> <span class="p">{</span>
+            <span class="n">this</span><span class="o">.</span><span class="n">nWheels</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+            <span class="k">return</span> <span class="n">this</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="n">public</span> <span class="n">VehicleBuilder</span> <span class="n">numDoors</span><span class="p">(</span><span class="nb">int</span> <span class="n">nDoors</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">this</span><span class="o">.</span><span class="n">nDoors</span> <span class="o">=</span> <span class="n">nDoors</span><span class="p">;</span>
+            <span class="k">return</span> <span class="n">this</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="n">public</span> <span class="n">Vehicle</span> <span class="n">create</span><span class="p">()</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="n">new</span> <span class="n">Vehicle</span><span class="p">(</span><span class="n">this</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">package</span> <span class="n">patterns</span><span class="o">.</span><span class="n">erzeugungsmuster</span><span class="o">.</span><span class="n">erbauer</span><span class="p">;</span>
+
+
+<span class="o">/**</span>
+ <span class="o">*</span> <span class="n">Created</span> <span class="n">by</span> <span class="n">samuelblattner</span> <span class="n">on</span> <span class="mi">20</span><span class="o">/</span><span class="mi">09</span><span class="o">/</span><span class="mf">16.</span>
+ <span class="o">*/</span>
+<span class="n">public</span> <span class="k">class</span> <span class="nc">Main</span> <span class="p">{</span>
+
+    <span class="n">public</span> <span class="n">static</span> <span class="n">void</span> <span class="n">main</span><span class="p">(</span><span class="n">String</span> <span class="n">args</span><span class="p">[])</span> <span class="p">{</span>
+        <span class="n">Vehicle</span> <span class="n">myCar</span> <span class="o">=</span> <span class="n">new</span> <span class="n">Vehicle</span><span class="o">.</span><span class="n">VehicleBuilder</span><span class="p">()</span><span class="o">.</span><span class="n">fourWheeler</span><span class="p">()</span><span class="o">.</span><span class="n">numDoors</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">create</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<span id="document-patterns/erzeugungsmuster/erzeugungsmethode"></span><div class="section" id="erzeugungsmethode">
+<h3>Erzeugungsmethode<a class="headerlink" href="#erzeugungsmethode" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Analog zu Bestellung in Restaurant</li>
+<li>Statische Produktionsmethode damit komplizierter Konstruktor nicht von aussen aufgerufen werden muss.</li>
+<li>Nur private Konstruktoren!</li>
+</ul>
+<div class="line-block">
+<div class="line"><strong>Vorteile</strong></div>
+<div class="line">+ Lesbarkeit, sprechende Konstruktoren</div>
+<div class="line"><br /></div>
+</div>
+<div class="section" id="beispiel">
+<h4>Beispiel<a class="headerlink" href="#beispiel" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">patterns.erzeugungsmuster.erzeugungsmethode</span><span class="o">;</span>
+
+<span class="cm">/**</span>
+<span class="cm"> * Vehicle Class (Construction Pattern)</span>
+<span class="cm"> */</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Vehicle</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">type</span><span class="o">,</span> <span class="n">color</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kt">int</span> <span class="n">nWheels</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kt">boolean</span> <span class="n">hasMotor</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kt">float</span> <span class="n">maxSpeed</span><span class="o">;</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * This constructor is too complicated for mortals, wrap it in two literal and easy constructors</span>
+<span class="cm">     */</span>
+    <span class="kd">private</span> <span class="nf">Vehicle</span> <span class="o">(</span><span class="n">String</span> <span class="n">type</span><span class="o">,</span> <span class="n">String</span> <span class="n">color</span><span class="o">,</span> <span class="kt">int</span> <span class="n">nWheels</span><span class="o">,</span> <span class="kt">boolean</span> <span class="n">hasMotor</span><span class="o">,</span> <span class="kt">float</span> <span class="n">maxSpeed</span><span class="o">)</span> <span class="o">{</span>
+        <span class="c1">// Do something...</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * Now, this is much easier</span>
+<span class="cm">     */</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="n">Vehicle</span> <span class="nf">createCar</span><span class="o">(</span><span class="n">String</span> <span class="n">color</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="n">Vehicle</span><span class="o">(</span><span class="s">&quot;Car&quot;</span><span class="o">,</span> <span class="n">color</span><span class="o">,</span> <span class="mi">4</span><span class="o">,</span> <span class="kc">true</span><span class="o">,</span> <span class="mf">200.0f</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * And this, too</span>
+<span class="cm">     */</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="n">Vehicle</span> <span class="nf">createBike</span><span class="o">(</span><span class="n">String</span> <span class="n">color</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="n">Vehicle</span><span class="o">(</span><span class="s">&quot;Bike&quot;</span><span class="o">,</span> <span class="n">color</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="kc">false</span><span class="o">,</span> <span class="mf">60.0f</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<span id="document-patterns/erzeugungsmuster/fabrikmethode"></span><div class="section" id="fabrikmethode-factory">
+<h3>Fabrikmethode (Factory)<a class="headerlink" href="#fabrikmethode-factory" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Ebenfalls eine «Konfigurationsmethode»</li>
+<li>Unterschied zu <code class="docutils literal"><span class="pre">`Erzeugungsmethode`</span></code>: Den Job der Konstruktion übernimmt eine separate Fabrik-Klasse</li>
+<li>Produkte müssen entweder gemeinsames Interface implementieren, gemeinsame abstrakte Klasse erben oder beides!</li>
+</ul>
+<div class="line-block">
+<div class="line"><strong>Vorteile</strong></div>
+<div class="line">+ Lesbarkeit</div>
+<div class="line">+ Abstraktion / Kapselung</div>
+<div class="line">+ Konstruktionssicherheit</div>
+<div class="line">- Mehraufwand</div>
+<div class="line">- Komplexer</div>
+<div class="line"><br /></div>
+</div>
+<div class="section" id="beispiel">
+<h4>Beispiel<a class="headerlink" href="#beispiel" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">package</span> <span class="n">patterns</span><span class="o">.</span><span class="n">erzeugungsmuster</span><span class="o">.</span><span class="n">fabrikmethode</span><span class="p">;</span>
+
+<span class="o">/**</span>
+ <span class="o">*</span> <span class="n">Interface</span> <span class="n">Vehicle</span>
+ <span class="o">*/</span>
+<span class="n">public</span> <span class="n">interface</span> <span class="n">Vehicle</span> <span class="p">{</span>
+
+    <span class="n">public</span> <span class="nb">int</span> <span class="n">getNumWheels</span><span class="p">();</span>
+    <span class="n">public</span> <span class="n">void</span> <span class="n">setSpeed</span><span class="p">(</span><span class="nb">float</span> <span class="n">speed</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">package</span> <span class="n">patterns</span><span class="o">.</span><span class="n">erzeugungsmuster</span><span class="o">.</span><span class="n">fabrikmethode</span><span class="p">;</span>
+
+<span class="o">/**</span>
+ <span class="o">*</span> <span class="n">Vehicle</span> <span class="n">Factory</span>
+ <span class="o">*/</span>
+<span class="n">public</span> <span class="k">class</span> <span class="nc">VehicleFactory</span> <span class="p">{</span>
+
+    <span class="n">private</span> <span class="n">enum</span> <span class="n">VEHICLE_TYPE</span> <span class="p">{</span>
+        <span class="n">CAR</span><span class="p">,</span>
+        <span class="n">BIKE</span><span class="p">,</span>
+    <span class="p">}</span>
+
+    <span class="o">/**</span>
+     <span class="o">*</span> <span class="n">This</span> <span class="ow">is</span> <span class="n">the</span> <span class="n">Factory</span> <span class="n">method</span>
+     <span class="o">*/</span>
+    <span class="n">public</span> <span class="n">static</span> <span class="n">Vehicle</span> <span class="n">createVehicle</span><span class="p">(</span><span class="n">final</span> <span class="n">VEHICLE_TYPE</span> <span class="nb">type</span><span class="p">,</span> <span class="n">final</span> <span class="n">String</span> <span class="n">name</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">switch</span> <span class="p">(</span><span class="nb">type</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">case</span> <span class="n">CAR</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">new</span> <span class="n">Car</span><span class="p">(</span><span class="s2">&quot;My cool car&quot;</span><span class="p">);</span>
+            <span class="n">case</span> <span class="n">BIKE</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">new</span> <span class="n">Bike</span><span class="p">(</span><span class="s2">&quot;My cool bike&quot;</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="n">throw</span> <span class="n">new</span> <span class="n">IllegalStateException</span><span class="p">(</span>
+                <span class="n">String</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;Unexpected Vehicle type </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="p">)</span>
+        <span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<span id="document-patterns/erzeugungsmuster/singleton"></span><div class="section" id="singleton">
+<h3>Singleton<a class="headerlink" href="#singleton" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Max. 1 Instanz soll existieren</li>
+<li>Z.B. zentrale Registrierung oder Ressourcen-Handler</li>
+<li>Privater Konstruktor</li>
+</ul>
+<div class="line-block">
+<div class="line"><strong>Vorteile</strong></div>
+<div class="line">+ Zentraler Zugriffspunkt</div>
+<div class="line">+ Strukturierung</div>
+<div class="line">- Mehrer Instanzen bei mehreren ClassLoadern möglich (z.B. Webserver)</div>
+<div class="line"><br /></div>
+<div class="line"><strong>Hinweis</strong></div>
+<div class="line">Benutzen von Lazy-Instance (Erzeugung Instanz erst bei Gebrauch) ist nicht zu empfehlen, da die getInstance()-Methode dann synchronized sein müsste und einen potentiellen Flaschenhals darstellt. Deshalb: Lieber bereits zur Ladezeit eine Instanz erzeugen.</div>
+<div class="line"><br /></div>
+</div>
+<div class="section" id="beispiel">
+<h4>Beispiel<a class="headerlink" href="#beispiel" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">package</span> <span class="n">patterns</span><span class="o">.</span><span class="n">erzeugungsmuster</span><span class="o">.</span><span class="n">singleton</span><span class="p">;</span>
+
+<span class="o">/**</span>
+ <span class="o">*</span> <span class="n">Non</span><span class="o">-</span><span class="n">Lazy</span> <span class="n">Singleton</span>
+ <span class="o">*/</span>
+<span class="n">public</span> <span class="n">final</span> <span class="k">class</span> <span class="nc">Singleton</span> <span class="p">{</span>
+
+    <span class="n">private</span> <span class="n">static</span> <span class="n">final</span> <span class="n">Singleton</span> <span class="n">INSTANCE</span> <span class="o">=</span> <span class="n">new</span> <span class="n">Singleton</span><span class="p">();</span>
+
+    <span class="n">public</span> <span class="n">static</span> <span class="n">Singleton</span> <span class="n">getInstance</span><span class="p">()</span> <span class="p">{</span>
+
+        <span class="k">return</span> <span class="n">INSTANCE</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">private</span> <span class="n">Singleton</span><span class="p">()</span> <span class="p">{</span>
+
+    <span class="p">};</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<span id="document-threading/index"></span><div class="section" id="threading">
+<h2>Threading<a class="headerlink" href="#threading" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<span id="document-threading/alternator/alternator"></span><div class="section" id="alternator">
+<h3>Alternator<a class="headerlink" href="#alternator" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Threads mit alternierender Ausführung</li>
+<li>Alternierung über ein zentrales Lock-Objekt geregelt (boolean[])</li>
+</ul>
+<div class="section" id="beispiel">
+<h4>Beispiel<a class="headerlink" href="#beispiel" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">threading.alternator</span><span class="o">;</span>
+
+<span class="cm">/**</span>
+<span class="cm"> * Alternator example</span>
+<span class="cm"> */</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Alternator</span> <span class="kd">implements</span> <span class="n">Runnable</span> <span class="o">{</span>
+
+    <span class="c1">// This will be a reference to an external lock</span>
+    <span class="kd">private</span> <span class="kt">boolean</span><span class="o">[]</span> <span class="n">chosen_alternator_lock</span><span class="o">;</span>
+
+    <span class="c1">// This alternator&#39;s ID (true or false)</span>
+    <span class="kd">private</span> <span class="kt">boolean</span> <span class="n">alternatorID</span><span class="o">;</span>
+
+    <span class="c1">// This alternator&#39;s name</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
+
+
+    <span class="cm">/**</span>
+<span class="cm">     * Constructor</span>
+<span class="cm">     */</span>
+    <span class="kd">private</span> <span class="nf">Alternator</span><span class="o">(</span><span class="n">String</span> <span class="n">name</span><span class="o">,</span> <span class="kt">boolean</span> <span class="n">alternatorID</span><span class="o">,</span> <span class="kt">boolean</span><span class="o">[]</span> <span class="n">chosen_alternator_lock</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">alternatorID</span> <span class="o">=</span> <span class="n">alternatorID</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">chosen_alternator_lock</span> <span class="o">=</span> <span class="n">chosen_alternator_lock</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * Here&#39;s the actual work done</span>
+<span class="cm">     */</span>
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">printMessage</span><span class="o">()</span> <span class="o">{</span>
+
+
+        <span class="c1">// Check if this alternator can enter the critical zone</span>
+        <span class="kd">synchronized</span> <span class="o">(</span><span class="n">chosen_alternator_lock</span><span class="o">)</span> <span class="o">{</span>
+
+            <span class="c1">// Check if it&#39;s this alternator&#39;s turn, otherwise wait and give way</span>
+            <span class="c1">// for the other alternator.</span>
+            <span class="k">try</span> <span class="o">{</span>
+                <span class="k">while</span> <span class="o">(</span><span class="n">chosen_alternator_lock</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span> <span class="o">!=</span> <span class="n">alternatorID</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="k">this</span><span class="o">.</span><span class="na">chosen_alternator_lock</span><span class="o">.</span><span class="na">wait</span><span class="o">();</span>
+                <span class="o">}</span>
+            <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">InterruptedException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+
+            <span class="o">}</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">String</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="s">&quot;Hello from Alternator ID %s&quot;</span><span class="o">,</span> <span class="n">name</span><span class="o">));</span>
+            <span class="n">chosen_alternator_lock</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span> <span class="o">=</span> <span class="o">!</span><span class="n">alternatorID</span><span class="o">;</span>
+            <span class="n">chosen_alternator_lock</span><span class="o">.</span><span class="na">notifyAll</span><span class="o">();</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * Keep run method as small as possible</span>
+<span class="cm">     */</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">100</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="n">printMessage</span><span class="o">();</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span> <span class="n">args</span><span class="o">[])</span> <span class="o">{</span>
+        <span class="kt">boolean</span><span class="o">[]</span> <span class="n">chosen_alternator_lock</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">boolean</span><span class="o">[</span><span class="mi">1</span><span class="o">];</span>
+        <span class="n">chosen_alternator_lock</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+        <span class="n">Thread</span> <span class="n">alternator1</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Thread</span><span class="o">(</span><span class="k">new</span> <span class="n">Alternator</span><span class="o">(</span><span class="s">&quot;First Alternator&quot;</span><span class="o">,</span> <span class="kc">true</span><span class="o">,</span> <span class="n">chosen_alternator_lock</span><span class="o">));</span>
+        <span class="n">Thread</span> <span class="n">alternator2</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Thread</span><span class="o">(</span><span class="k">new</span> <span class="n">Alternator</span><span class="o">(</span><span class="s">&quot;Second Alternator&quot;</span><span class="o">,</span> <span class="kc">false</span><span class="o">,</span> <span class="n">chosen_alternator_lock</span><span class="o">));</span>
+        <span class="n">alternator1</span><span class="o">.</span><span class="na">start</span><span class="o">();</span>
+        <span class="n">alternator2</span><span class="o">.</span><span class="na">start</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<span id="document-advanced-techniques/index"></span><div class="section" id="advanced-techniques">
+<h2>Advanced Techniques<a class="headerlink" href="#advanced-techniques" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<span id="document-advanced-techniques/reflection/reflection"></span><div class="section" id="reflection">
+<h3>Reflection<a class="headerlink" href="#reflection" title="Permalink to this headline">¶</a></h3>
+<p>Die Reflection-API bildet ein Modell der Java-Sprache. Die Reflection-API beschreibt
+mittels Klassen wie Method, Constructor, Class, Field, etc. die Elemente von Java.
+Mit Reflection kann die Struktur unbekannter Objekte und Klassen zur Laufzeit analysiert
+werden. Ausserdem können damit Methoden und Konstruktoren aufgerufen und
+Felder gesetzt werden.</p>
+<div class="section" id="vorteile">
+<h4>Vorteile<a class="headerlink" href="#vorteile" title="Permalink to this headline">¶</a></h4>
+<ol class="arabic simple">
+<li>Von der Klasse, die Reflection benutzt, gibt es nie eine direkte (binäre) Abhängigkeit auf die mit Reflection verwendeten Klassen. Sie kann deshalb unabhängig vom Vorhandensein der benutzten Klasse geladen und ausgeführt werden.</li>
+<li>Die mit Reflection aufgerufenen Klassen müssen z.B. keinen bestimmten Typ haben, sondern nur Methoden mit einer bestimmten Signatur anbieten.</li>
+<li>Verwendung von Annotations</li>
+<li>Generische / konfigurierbare Ausführung von Programmen wird möglich.</li>
+</ol>
+</div>
+<div class="section" id="nachteile">
+<h4>Nachteile<a class="headerlink" href="#nachteile" title="Permalink to this headline">¶</a></h4>
+<ol class="arabic simple">
+<li>Die Reflection-API arbeitet mit Strings. Dadurch entsteht nur eine implizite Abhängigkeit / Kopplung zu den benutzen Klassen. Bei einer Veränderung der API der benutzten Klassen kann diese (vom Compiler unbemerkt) gebrochen werden.</li>
+</ol>
+</div>
+<div class="section" id="beispiel">
+<h4>Beispiel<a class="headerlink" href="#beispiel" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">package</span> <span class="n">advanced_techniques</span><span class="o">.</span><span class="n">reflection</span><span class="p">;</span>
+
+<span class="o">/**</span>
+ <span class="o">*</span> <span class="n">Created</span> <span class="n">by</span> <span class="n">samuelblattner</span> <span class="n">on</span> <span class="mi">21</span><span class="o">/</span><span class="mi">09</span><span class="o">/</span><span class="mf">16.</span>
+ <span class="o">*/</span>
+<span class="n">public</span> <span class="k">class</span> <span class="nc">Reflection</span> <span class="p">{</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<span id="document-gui/gui"></span><div class="section" id="gui">
+<h2>GUI<a class="headerlink" href="#gui" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="swing">
+<h3>Swing<a class="headerlink" href="#swing" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="elements">
+<h4>Elements<a class="headerlink" href="#elements" title="Permalink to this headline">¶</a></h4>
+</div>
+<div class="section" id="layouts">
+<h4>Layouts<a class="headerlink" href="#layouts" title="Permalink to this headline">¶</a></h4>
+</div>
+<div class="section" id="example">
+<h4>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">gui</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">javax.swing.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.awt.*</span><span class="o">;</span>
+
+<span class="cm">/**</span>
+<span class="cm"> * Created by samuelblattner on 21/09/16.</span>
+<span class="cm"> */</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">GuiExample</span> <span class="o">{</span>
+
+    <span class="c1">// Basic Frame (root GUI element)</span>
+    <span class="kd">private</span> <span class="n">JFrame</span> <span class="n">baseFrame</span><span class="o">;</span>
+
+    <span class="c1">// A Panel</span>
+    <span class="kd">private</span> <span class="n">JPanel</span> <span class="n">basePanel</span><span class="o">;</span>
+
+    <span class="c1">// Buttons</span>
+    <span class="kd">private</span> <span class="n">JButton</span> <span class="n">okButton</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">JButton</span> <span class="n">cancelButton</span><span class="o">;</span>
+
+
+    <span class="kd">public</span> <span class="nf">GuiExample</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">createBaseDialog</span><span class="o">();</span>
+        <span class="n">createBaseDialog</span><span class="o">();</span>
+
+        <span class="n">baseFrame</span><span class="o">.</span><span class="na">setVisible</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">createBaseDialog</span><span class="o">()</span> <span class="o">{</span>
+
+        <span class="c1">// Create Frame</span>
+        <span class="n">baseFrame</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JFrame</span><span class="o">(</span><span class="s">&quot;My Frame&quot;</span><span class="o">);</span>
+        <span class="n">baseFrame</span><span class="o">.</span><span class="na">setSize</span><span class="o">(</span><span class="mi">500</span><span class="o">,</span> <span class="mi">500</span><span class="o">);</span>
+        <span class="n">baseFrame</span><span class="o">.</span><span class="na">setDefaultCloseOperation</span><span class="o">(</span><span class="n">WindowConstants</span><span class="o">.</span><span class="na">DISPOSE_ON_CLOSE</span><span class="o">);</span>
+
+        <span class="c1">// Create Panel</span>
+        <span class="n">basePanel</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JPanel</span><span class="o">(</span><span class="k">new</span> <span class="n">BorderLayout</span><span class="o">());</span>
+
+        <span class="c1">// Add to Frame</span>
+        <span class="n">baseFrame</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">basePanel</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">createButtons</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">okButton</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JButton</span><span class="o">(</span><span class="s">&quot;Hello&quot;</span><span class="o">);</span>
+        <span class="n">cancelButton</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JButton</span><span class="o">(</span><span class="s">&quot;Hello&quot;</span><span class="o">);</span>
+
+        <span class="n">basePanel</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">okButton</span><span class="o">,</span> <span class="n">BorderLayout</span><span class="o">.</span><span class="na">NORTH</span><span class="o">);</span>
+        <span class="n">basePanel</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">cancelButton</span><span class="o">,</span> <span class="n">BorderLayout</span><span class="o">.</span><span class="na">SOUTH</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span> <span class="n">args</span><span class="o">[])</span> <span class="o">{</span>
+        <span class="n">GuiExample</span> <span class="n">example</span> <span class="o">=</span> <span class="k">new</span> <span class="n">GuiExample</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="example-2">
+<h4>Example 2<a class="headerlink" href="#example-2" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">gui</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">javax.swing.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.awt.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.awt.event.ActionEvent</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.awt.event.ActionListener</span><span class="o">;</span>
+
+<span class="cm">/**</span>
+<span class="cm"> * Created by samuelblattner on 21/09/16.</span>
+<span class="cm"> */</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">GuiExample2</span> <span class="o">{</span>
+    
+    <span class="kd">private</span> <span class="n">JFrame</span> <span class="n">baseFrame</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">JPanel</span> <span class="n">basePanel</span><span class="o">,</span> <span class="n">centerPanel</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">JButton</span> <span class="n">buttonToLeft</span><span class="o">,</span> <span class="n">buttonToRight</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">JScrollPane</span> <span class="n">leftScrollPane</span><span class="o">,</span> <span class="n">rightScrollPane</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">JList</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">leftList</span><span class="o">,</span> <span class="n">rightList</span><span class="o">;</span>
+
+    
+    <span class="kd">public</span> <span class="nf">GuiExample2</span><span class="o">()</span> <span class="o">{</span>
+    
+        <span class="n">baseFrame</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JFrame</span><span class="o">(</span><span class="s">&quot;Mein tolles Fenster :-)&quot;</span><span class="o">);</span>
+        <span class="n">baseFrame</span><span class="o">.</span><span class="na">setDefaultCloseOperation</span><span class="o">(</span><span class="n">WindowConstants</span><span class="o">.</span><span class="na">EXIT_ON_CLOSE</span><span class="o">);</span>
+        <span class="c1">// pack()???</span>
+
+        <span class="n">basePanel</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JPanel</span><span class="o">(</span><span class="k">new</span> <span class="n">BorderLayout</span><span class="o">(</span><span class="mi">5</span><span class="o">,</span><span class="mi">5</span><span class="o">));</span>
+        <span class="n">baseFrame</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">basePanel</span><span class="o">);</span>
+
+        <span class="n">leftScrollPane</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JScrollPane</span><span class="o">();</span>
+        <span class="n">leftScrollPane</span><span class="o">.</span><span class="na">setPreferredSize</span><span class="o">(</span><span class="k">new</span> <span class="n">Dimension</span><span class="o">(</span><span class="mi">200</span><span class="o">,</span> <span class="mi">200</span><span class="o">));</span>
+        <span class="n">leftList</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JList</span><span class="o">&lt;&gt;();</span>
+        <span class="n">leftScrollPane</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">leftList</span><span class="o">);</span>
+        <span class="n">basePanel</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">leftScrollPane</span><span class="o">,</span> <span class="n">BorderLayout</span><span class="o">.</span><span class="na">WEST</span><span class="o">);</span>
+
+        <span class="n">rightScrollPane</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JScrollPane</span><span class="o">();</span>
+        <span class="c1">//rightScrollPane.setPreferredSize(new Dimension(200, 200));</span>
+        <span class="n">rightList</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JList</span><span class="o">&lt;&gt;();</span>
+        <span class="n">rightScrollPane</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">rightList</span><span class="o">);</span>
+        <span class="n">basePanel</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">rightScrollPane</span><span class="o">,</span> <span class="n">BorderLayout</span><span class="o">.</span><span class="na">EAST</span><span class="o">);</span>
+
+        <span class="n">centerPanel</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JPanel</span><span class="o">(</span><span class="k">new</span> <span class="n">GridLayout</span><span class="o">(</span><span class="mi">10</span><span class="o">,</span> <span class="mi">1</span><span class="o">));</span>
+
+        <span class="n">buttonToLeft</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JButton</span><span class="o">(</span><span class="s">&quot;&lt;&lt;&lt;&quot;</span><span class="o">);</span>
+        <span class="n">buttonToLeft</span><span class="o">.</span><span class="na">addActionListener</span><span class="o">(</span><span class="k">new</span> <span class="n">ActionListener</span><span class="o">()</span> <span class="o">{</span>
+            <span class="nd">@Override</span>
+            <span class="kd">public</span> <span class="kt">void</span> <span class="nf">actionPerformed</span><span class="o">(</span><span class="n">ActionEvent</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Hast mich geklickt :D&quot;</span><span class="o">);</span>
+                <span class="c1">//leftList.add(&quot;Click Left&quot;, null);</span>
+            <span class="o">}</span>
+        <span class="o">});</span>
+
+        <span class="n">buttonToRight</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JButton</span><span class="o">(</span><span class="s">&quot;&gt;&gt;&gt;&quot;</span><span class="o">);</span>
+        <span class="n">buttonToRight</span><span class="o">.</span><span class="na">addActionListener</span><span class="o">(</span><span class="k">new</span> <span class="n">ActionListener</span><span class="o">()</span> <span class="o">{</span>
+            <span class="nd">@Override</span>
+            <span class="kd">public</span> <span class="kt">void</span> <span class="nf">actionPerformed</span><span class="o">(</span><span class="n">ActionEvent</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Hast mich geklickt :D&quot;</span><span class="o">);</span>
+                <span class="c1">//rightList.add(&quot;Click Right&quot;, null);</span>
+            <span class="o">}</span>
+        <span class="o">});</span>
+
+        <span class="n">centerPanel</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">buttonToLeft</span><span class="o">);</span> <span class="c1">//, buttonToRight);</span>
+        <span class="n">centerPanel</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">buttonToRight</span><span class="o">);</span>
+        <span class="n">basePanel</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">centerPanel</span><span class="o">,</span> <span class="n">BorderLayout</span><span class="o">.</span><span class="na">CENTER</span><span class="o">);</span>
+
+
+        <span class="n">baseFrame</span><span class="o">.</span><span class="na">setSize</span><span class="o">(</span><span class="k">new</span> <span class="n">Dimension</span><span class="o">(</span><span class="mi">600</span><span class="o">,</span> <span class="mi">250</span><span class="o">));</span>
+        <span class="n">baseFrame</span><span class="o">.</span><span class="na">setVisible</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+
+    <span class="o">}</span>
+    
+       
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span> <span class="n">args</span><span class="o">[])</span> <span class="o">{</span>
+        <span class="n">GuiExample2</span> <span class="n">example</span> <span class="o">=</span> <span class="k">new</span> <span class="n">GuiExample2</span><span class="o">();</span>
+
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<span id="document-smells/smells"></span><div class="section" id="smells">
+<h2>Smells<a class="headerlink" href="#smells" title="Permalink to this headline">¶</a></h2>
+<p>Qualitativ guter Code ist der Schlüssel zum langfristigen Erfolg einer Software
+* Minimiert # Fehler, die erst im Betrieb auftauchen
+* Hilft, Fehler rasch zu finden und zu beheben
+* Unterstützt die rasche Entwicklung von Erweiterungen zu einem späteren Zeitpunkt
+* Ermöglicht Wartung durch Personen, die an der Entwicklung nicht beteiligt waren</p>
+<div class="toctree-wrapper compound">
+<span id="document-smells/program-design/TD_declaration-scope-973"></span><div class="section" id="lange-methoden-parameterlisten-gleichen-typs">
+<h3>Lange Methoden-Parameterlisten (gleichen Typs)<a class="headerlink" href="#lange-methoden-parameterlisten-gleichen-typs" title="Permalink to this headline">¶</a></h3>
+<p>Methodensignaturen mit vielen und vor allem ähnlichen Datentypen sind schnell unübersichtlich und können zu fehlerhaften Aufrufen durch den Programmierer führen, insbesondere dann, wenn die Methode überladen wird.</p>
+<div class="section" id="bad-smell-weil">
+<h4>Bad Smell weil ...<a class="headerlink" href="#bad-smell-weil" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>Einfaches Vertauschen von Parametern wenn Methode überladen.</li>
+<li>Unübersichtlich</li>
+</ul>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">smells.program_design</span><span class="o">;</span>
+
+<span class="cm">/**</span>
+<span class="cm"> * Copy Paste left-overs</span>
+<span class="cm"> */</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">CopyPaste_Bad</span> <span class="o">{</span>
+
+    <span class="kd">public</span> <span class="n">Vehicle</span> <span class="nf">createCar</span><span class="o">()</span> <span class="o">{</span>
+
+        <span class="n">Vehicle</span> <span class="n">vehicle</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Vehicle</span><span class="o">();</span>
+        <span class="n">vehicle</span><span class="o">.</span><span class="na">type</span> <span class="o">=</span> <span class="n">CAR</span><span class="o">;</span>
+        <span class="n">vehicle</span><span class="o">.</span><span class="na">hasMotor</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+
+        <span class="k">return</span> <span class="n">vehicle</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="n">Vehicle</span> <span class="nf">createBike</span><span class="o">()</span> <span class="o">{</span>
+
+        <span class="n">Vehicle</span> <span class="n">vehicle</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Vehicle</span><span class="o">();</span>
+        <span class="n">vehicle</span><span class="o">.</span><span class="na">type</span> <span class="o">=</span> <span class="n">CAR</span><span class="o">;</span>  <span class="c1">// &lt;--- Vergessen zu ändern !!!</span>
+        <span class="n">vehicle</span><span class="o">.</span><span class="na">hasMotor</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+
+        <span class="k">return</span> <span class="n">vehicle</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<span id="document-smells/program-design/constants-interfaces"></span><div class="section" id="magic-numbers">
+<h3>Magic Numbers<a class="headerlink" href="#magic-numbers" title="Permalink to this headline">¶</a></h3>
+<p>Magic Numbers sind Zahlenwerte, die im Code «hardgecodet» hinterlegt werden (siehe Beispiel).</p>
+<div class="section" id="bad-smell-weil">
+<h4>Bad Smell weil ...<a class="headerlink" href="#bad-smell-weil" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>Magic Numbers sind semantisch nicht aussagekräftig, sprich: Man weiss nicht auf Anhieb, wofür die Zahl steht.</li>
+<li>Ein Ersetzen einer Magic Number, die an mehreren Stellen vorkommt ist sehr aufwändig und fehleranfällig!</li>
+</ul>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">package</span> <span class="n">smells</span><span class="o">.</span><span class="n">program_design</span><span class="p">;</span>
+
+<span class="o">/**</span>
+ <span class="o">*</span> <span class="n">Magic</span> <span class="n">Numbers</span> <span class="n">Bad</span> <span class="n">Smell</span> <span class="n">Example</span>
+ <span class="o">*/</span>
+<span class="n">public</span> <span class="k">class</span> <span class="nc">MagicNumbers_Bad</span> <span class="p">{</span>
+
+    <span class="n">public</span> <span class="n">MagicNumbers_Bad</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">startShow</span><span class="p">(</span><span class="mi">100</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="n">private</span> <span class="n">void</span> <span class="n">startShow</span><span class="p">(</span><span class="nb">int</span> <span class="n">slidesInterval</span><span class="p">)</span> <span class="p">{</span>
+        <span class="o">//</span> <span class="n">Do</span> <span class="n">slide</span> <span class="n">show</span>
+        <span class="n">playVideo</span><span class="p">(</span><span class="mf">10.0</span><span class="n">f</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="n">private</span> <span class="n">void</span> <span class="n">playVideo</span><span class="p">(</span><span class="nb">float</span> <span class="n">volume</span><span class="p">)</span> <span class="p">{</span>
+        <span class="o">//</span> <span class="n">Play</span> <span class="n">video</span> <span class="k">with</span> <span class="n">volume</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="refactoring">
+<h4>Refactoring<a class="headerlink" href="#refactoring" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>Konstanten verwenden.</li>
+</ul>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">package</span> <span class="n">smells</span><span class="o">.</span><span class="n">program_design</span><span class="p">;</span>
+
+<span class="o">/**</span>
+ <span class="o">*</span> <span class="n">Magic</span> <span class="n">Numbers</span> <span class="n">Bad</span> <span class="n">Smell</span> <span class="n">Example</span>
+ <span class="o">*/</span>
+<span class="n">public</span> <span class="k">class</span> <span class="nc">MagicNumbers_Good</span> <span class="p">{</span>
+
+    <span class="n">private</span> <span class="n">static</span> <span class="n">final</span> <span class="nb">int</span> <span class="n">SLIDE_INTERVAL</span> <span class="o">=</span> <span class="mi">100</span><span class="p">;</span>
+    <span class="n">private</span> <span class="n">static</span> <span class="n">final</span> <span class="nb">float</span> <span class="n">VIDEO_VOLUME</span> <span class="o">=</span> <span class="mf">10.0</span><span class="n">f</span><span class="p">;</span>
+
+    <span class="n">public</span> <span class="n">MagicNumbers_Good</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">startShow</span><span class="p">(</span><span class="n">SLIDE_INTERVAL</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="n">private</span> <span class="n">void</span> <span class="n">startShow</span><span class="p">(</span><span class="nb">int</span> <span class="n">slidesInterval</span><span class="p">)</span> <span class="p">{</span>
+        <span class="o">//</span> <span class="n">Do</span> <span class="n">slide</span> <span class="n">show</span>
+        <span class="n">playVideo</span><span class="p">(</span><span class="n">VIDEO_VOLUME</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="n">private</span> <span class="n">void</span> <span class="n">playVideo</span><span class="p">(</span><span class="nb">float</span> <span class="n">volume</span><span class="p">)</span> <span class="p">{</span>
+        <span class="o">//</span> <span class="n">Play</span> <span class="n">video</span> <span class="k">with</span> <span class="n">volume</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<span id="document-smells/program-design/copy-paste"></span><div class="section" id="copy-paste-leichen">
+<h3>Copy-Paste Leichen<a class="headerlink" href="#copy-paste-leichen" title="Permalink to this headline">¶</a></h3>
+<p>Oft werden Codeblöcke aufgrund gleicher oder ähnlicher Funktionalität kopiert, woanders eingefügt und leicht abgeändert.</p>
+<div class="section" id="bad-smell-weil">
+<h4>Bad Smell weil ...<a class="headerlink" href="#bad-smell-weil" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>Vielfach gehen dabei wichtige Änderungen (z.B. von Variablennamen) vergessen und es kommt zu Fehlverhalten.</li>
+<li>Code wird unübersichtlicher, da vieles ähnlich aussieht.</li>
+<li>Code ist u.U. für den neuen Einsatzzweck nicht optimal, da einfach kopiert.</li>
+</ul>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">smells.program_design</span><span class="o">;</span>
+
+<span class="cm">/**</span>
+<span class="cm"> * Copy Paste left-overs</span>
+<span class="cm"> */</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">CopyPaste_Bad</span> <span class="o">{</span>
+
+    <span class="kd">public</span> <span class="n">Vehicle</span> <span class="nf">createCar</span><span class="o">()</span> <span class="o">{</span>
+
+        <span class="n">Vehicle</span> <span class="n">vehicle</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Vehicle</span><span class="o">();</span>
+        <span class="n">vehicle</span><span class="o">.</span><span class="na">type</span> <span class="o">=</span> <span class="n">CAR</span><span class="o">;</span>
+        <span class="n">vehicle</span><span class="o">.</span><span class="na">hasMotor</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+
+        <span class="k">return</span> <span class="n">vehicle</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="n">Vehicle</span> <span class="nf">createBike</span><span class="o">()</span> <span class="o">{</span>
+
+        <span class="n">Vehicle</span> <span class="n">vehicle</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Vehicle</span><span class="o">();</span>
+        <span class="n">vehicle</span><span class="o">.</span><span class="na">type</span> <span class="o">=</span> <span class="n">CAR</span><span class="o">;</span>  <span class="c1">// &lt;--- Vergessen zu ändern !!!</span>
+        <span class="n">vehicle</span><span class="o">.</span><span class="na">hasMotor</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+
+        <span class="k">return</span> <span class="n">vehicle</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<span id="document-smells/program-design/long-parameter-lists"></span><div class="section" id="lange-methoden-parameterlisten-gleichen-typs">
+<h3>Lange Methoden-Parameterlisten (gleichen Typs)<a class="headerlink" href="#lange-methoden-parameterlisten-gleichen-typs" title="Permalink to this headline">¶</a></h3>
+<p>Methodensignaturen mit vielen und vor allem ähnlichen Datentypen (aber unterschiedlicher Bedeutung) sind schnell unübersichtlich und können zu fehlerhaften Aufrufen durch den Programmierer führen, insbesondere dann, wenn die Methode überladen wird.</p>
+<div class="section" id="bad-smell-weil">
+<h4>Bad Smell weil ...<a class="headerlink" href="#bad-smell-weil" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>Einfaches Vertauschen von Parametern wenn Methode überladen.</li>
+<li>Unübersichtlich</li>
+</ul>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">smells.program_design</span><span class="o">;</span>
+
+<span class="cm">/**</span>
+<span class="cm"> * Bad Parameter List Example</span>
+<span class="cm"> */</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MethodParameterLength_Bad</span> <span class="o">{</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">clearRect</span><span class="o">(</span><span class="kt">int</span> <span class="n">x</span><span class="o">,</span> <span class="kt">int</span> <span class="n">y</span><span class="o">,</span> <span class="kt">int</span> <span class="n">width</span><span class="o">,</span> <span class="kt">int</span> <span class="n">height</span><span class="o">)</span> <span class="o">{}</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">clearRect</span><span class="o">(</span><span class="kt">int</span> <span class="n">x1</span><span class="o">,</span> <span class="kt">int</span> <span class="n">y1</span><span class="o">,</span> <span class="kt">int</span> <span class="n">x2</span><span class="o">,</span> <span class="kt">int</span> <span class="n">y2</span><span class="o">,</span> <span class="kt">long</span> <span class="n">colorRGB</span><span class="o">)</span> <span class="o">{}</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">clearRect</span><span class="o">(</span><span class="kt">int</span> <span class="n">red</span><span class="o">,</span> <span class="kt">int</span> <span class="n">green</span><span class="o">,</span> <span class="kt">int</span> <span class="n">blue</span><span class="o">,</span>
+                          <span class="kt">int</span> <span class="n">x</span><span class="o">,</span> <span class="kt">int</span> <span class="n">y</span><span class="o">,</span> <span class="kt">int</span> <span class="n">width</span><span class="o">,</span> <span class="kt">int</span> <span class="n">height</span><span class="o">)</span> <span class="o">{}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="refactoring">
+<h4>Refactoring<a class="headerlink" href="#refactoring" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>Möglichst gleiche Reihenfolge der Parameter in den Überladenen Signaturen.</li>
+<li>Nach Bedeutung zusammengehörige Parameter möglichst in &#8220;Parameter Value Objects&#8221; kapseln</li>
+</ul>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">smells.program_design</span><span class="o">;</span>
+
+<span class="cm">/**</span>
+<span class="cm"> * Good Parameter List Example</span>
+<span class="cm"> */</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MethodParameterLength_Good</span> <span class="o">{</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">clearRect</span><span class="o">(</span><span class="n">Point</span> <span class="n">point</span><span class="o">,</span> <span class="n">Dimension</span> <span class="n">size</span><span class="o">)</span> <span class="o">{}</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">clearRect</span><span class="o">(</span><span class="n">Point</span> <span class="n">poin1</span><span class="o">,</span> <span class="n">Point</span> <span class="n">point2</span><span class="o">,</span> <span class="kt">long</span> <span class="n">colorRGB</span><span class="o">)</span> <span class="o">{}</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">clearRect</span><span class="o">(</span><span class="n">Color</span> <span class="n">clearColor</span><span class="o">,</span> <span class="n">Point</span> <span class="n">point</span><span class="o">,</span> <span class="n">Dimension</span> <span class="n">size</span><span class="o">)</span> <span class="o">{}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<span id="document-smells/program-design/magic-numbers"></span><div class="section" id="magic-numbers">
+<h3>Magic Numbers<a class="headerlink" href="#magic-numbers" title="Permalink to this headline">¶</a></h3>
+<p>Magic Numbers sind Zahlenwerte, die im Code «hardgecodet» hinterlegt werden (siehe Beispiel).</p>
+<div class="section" id="bad-smell-weil">
+<h4>Bad Smell weil ...<a class="headerlink" href="#bad-smell-weil" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>Magic Numbers sind semantisch nicht aussagekräftig, sprich: Man weiss nicht auf Anhieb, wofür die Zahl steht.</li>
+<li>Ein Ersetzen einer Magic Number, die an mehreren Stellen vorkommt ist sehr aufwändig und fehleranfällig!</li>
+</ul>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">package</span> <span class="n">smells</span><span class="o">.</span><span class="n">program_design</span><span class="p">;</span>
+
+<span class="o">/**</span>
+ <span class="o">*</span> <span class="n">Magic</span> <span class="n">Numbers</span> <span class="n">Bad</span> <span class="n">Smell</span> <span class="n">Example</span>
+ <span class="o">*/</span>
+<span class="n">public</span> <span class="k">class</span> <span class="nc">MagicNumbers_Bad</span> <span class="p">{</span>
+
+    <span class="n">public</span> <span class="n">MagicNumbers_Bad</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">startShow</span><span class="p">(</span><span class="mi">100</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="n">private</span> <span class="n">void</span> <span class="n">startShow</span><span class="p">(</span><span class="nb">int</span> <span class="n">slidesInterval</span><span class="p">)</span> <span class="p">{</span>
+        <span class="o">//</span> <span class="n">Do</span> <span class="n">slide</span> <span class="n">show</span>
+        <span class="n">playVideo</span><span class="p">(</span><span class="mf">10.0</span><span class="n">f</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="n">private</span> <span class="n">void</span> <span class="n">playVideo</span><span class="p">(</span><span class="nb">float</span> <span class="n">volume</span><span class="p">)</span> <span class="p">{</span>
+        <span class="o">//</span> <span class="n">Play</span> <span class="n">video</span> <span class="k">with</span> <span class="n">volume</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="refactoring">
+<h4>Refactoring<a class="headerlink" href="#refactoring" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>Konstanten verwenden.</li>
+</ul>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">package</span> <span class="n">smells</span><span class="o">.</span><span class="n">program_design</span><span class="p">;</span>
+
+<span class="o">/**</span>
+ <span class="o">*</span> <span class="n">Magic</span> <span class="n">Numbers</span> <span class="n">Bad</span> <span class="n">Smell</span> <span class="n">Example</span>
+ <span class="o">*/</span>
+<span class="n">public</span> <span class="k">class</span> <span class="nc">MagicNumbers_Good</span> <span class="p">{</span>
+
+    <span class="n">private</span> <span class="n">static</span> <span class="n">final</span> <span class="nb">int</span> <span class="n">SLIDE_INTERVAL</span> <span class="o">=</span> <span class="mi">100</span><span class="p">;</span>
+    <span class="n">private</span> <span class="n">static</span> <span class="n">final</span> <span class="nb">float</span> <span class="n">VIDEO_VOLUME</span> <span class="o">=</span> <span class="mf">10.0</span><span class="n">f</span><span class="p">;</span>
+
+    <span class="n">public</span> <span class="n">MagicNumbers_Good</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">startShow</span><span class="p">(</span><span class="n">SLIDE_INTERVAL</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="n">private</span> <span class="n">void</span> <span class="n">startShow</span><span class="p">(</span><span class="nb">int</span> <span class="n">slidesInterval</span><span class="p">)</span> <span class="p">{</span>
+        <span class="o">//</span> <span class="n">Do</span> <span class="n">slide</span> <span class="n">show</span>
+        <span class="n">playVideo</span><span class="p">(</span><span class="n">VIDEO_VOLUME</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="n">private</span> <span class="n">void</span> <span class="n">playVideo</span><span class="p">(</span><span class="nb">float</span> <span class="n">volume</span><span class="p">)</span> <span class="p">{</span>
+        <span class="o">//</span> <span class="n">Play</span> <span class="n">video</span> <span class="k">with</span> <span class="n">volume</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></li>
+<li><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></li>
+<li><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></li>
+</ul>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, Samuel Blattner.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
