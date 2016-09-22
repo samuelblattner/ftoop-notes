@@ -73,11 +73,11 @@
             
             
                 <ul>
-<li class="toctree-l1"><a class="reference internal" href="index.html#document-patterns/index">Patterns</a></li>
-<li class="toctree-l1"><a class="reference internal" href="index.html#document-threading/index">Threading</a></li>
-<li class="toctree-l1"><a class="reference internal" href="index.html#document-advanced-techniques/index">Advanced Techniques</a></li>
-<li class="toctree-l1"><a class="reference internal" href="index.html#document-gui/gui">GUI</a></li>
-<li class="toctree-l1"><a class="reference internal" href="index.html#document-smells/smells">Smells</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html#document-patterns/index">1. Patterns</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html#document-threading/index">2. Threading</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html#document-advanced-techniques/index">3. Advanced Techniques</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html#document-gui/gui">4. GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html#document-smells/smells">5. Smells</a></li>
 </ul>
 
             
@@ -125,10 +125,10 @@
 <p>Contents:</p>
 <div class="toctree-wrapper compound">
 <span id="document-patterns/index"></span><div class="section" id="patterns">
-<h2>Patterns<a class="headerlink" href="#patterns" title="Permalink to this headline">¶</a></h2>
+<h2>1. Patterns<a class="headerlink" href="#patterns" title="Permalink to this headline">¶</a></h2>
 <div class="toctree-wrapper compound">
 <span id="document-patterns/erzeugungsmuster/erbauer"></span><div class="section" id="erbauer-builder">
-<h3>Erbauer (Builder)<a class="headerlink" href="#erbauer-builder" title="Permalink to this headline">¶</a></h3>
+<h3>1.1. Erbauer (Builder)<a class="headerlink" href="#erbauer-builder" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>Ebenfalls eine «Konfigurationsmethode»</li>
 <li>Unterschied zu <code class="docutils literal"><span class="pre">`Fabrikmethode`</span></code>: Es wird eine Instanz des Builders (innere statische Klasse von Produkt) erstellt, die durch gekettete Aufrufe von Konfigurationsmethoden konfiguriert werden kann.</li>
@@ -143,7 +143,7 @@
 <div class="line"><br /></div>
 </div>
 <div class="section" id="beispiel">
-<h4>Beispiel<a class="headerlink" href="#beispiel" title="Permalink to this headline">¶</a></h4>
+<h4>1.1.1. Beispiel<a class="headerlink" href="#beispiel" title="Permalink to this headline">¶</a></h4>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">package</span> <span class="n">patterns</span><span class="o">.</span><span class="n">erzeugungsmuster</span><span class="o">.</span><span class="n">erbauer</span><span class="p">;</span>
 
 <span class="o">/**</span>
@@ -211,7 +211,7 @@
 </div>
 </div>
 <span id="document-patterns/erzeugungsmuster/erzeugungsmethode"></span><div class="section" id="erzeugungsmethode">
-<h3>Erzeugungsmethode<a class="headerlink" href="#erzeugungsmethode" title="Permalink to this headline">¶</a></h3>
+<h3>1.2. Erzeugungsmethode<a class="headerlink" href="#erzeugungsmethode" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>Analog zu Bestellung in Restaurant</li>
 <li>Statische Produktionsmethode damit komplizierter Konstruktor nicht von aussen aufgerufen werden muss.</li>
@@ -223,7 +223,7 @@
 <div class="line"><br /></div>
 </div>
 <div class="section" id="beispiel">
-<h4>Beispiel<a class="headerlink" href="#beispiel" title="Permalink to this headline">¶</a></h4>
+<h4>1.2.1. Beispiel<a class="headerlink" href="#beispiel" title="Permalink to this headline">¶</a></h4>
 <div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">patterns.erzeugungsmuster.erzeugungsmethode</span><span class="o">;</span>
 
 <span class="cm">/**</span>
@@ -262,7 +262,7 @@
 </div>
 </div>
 <span id="document-patterns/erzeugungsmuster/fabrikmethode"></span><div class="section" id="fabrikmethode-factory">
-<h3>Fabrikmethode (Factory)<a class="headerlink" href="#fabrikmethode-factory" title="Permalink to this headline">¶</a></h3>
+<h3>1.3. Fabrikmethode (Factory)<a class="headerlink" href="#fabrikmethode-factory" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>Ebenfalls eine «Konfigurationsmethode»</li>
 <li>Unterschied zu <code class="docutils literal"><span class="pre">`Erzeugungsmethode`</span></code>: Den Job der Konstruktion übernimmt eine separate Fabrik-Klasse</li>
@@ -278,7 +278,7 @@
 <div class="line"><br /></div>
 </div>
 <div class="section" id="beispiel">
-<h4>Beispiel<a class="headerlink" href="#beispiel" title="Permalink to this headline">¶</a></h4>
+<h4>1.3.1. Beispiel<a class="headerlink" href="#beispiel" title="Permalink to this headline">¶</a></h4>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">package</span> <span class="n">patterns</span><span class="o">.</span><span class="n">erzeugungsmuster</span><span class="o">.</span><span class="n">fabrikmethode</span><span class="p">;</span>
 
 <span class="o">/**</span>
@@ -324,7 +324,7 @@
 </div>
 </div>
 <span id="document-patterns/erzeugungsmuster/singleton"></span><div class="section" id="singleton">
-<h3>Singleton<a class="headerlink" href="#singleton" title="Permalink to this headline">¶</a></h3>
+<h3>1.4. Singleton<a class="headerlink" href="#singleton" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>Max. 1 Instanz soll existieren</li>
 <li>Z.B. zentrale Registrierung oder Ressourcen-Handler</li>
@@ -341,7 +341,7 @@
 <div class="line"><br /></div>
 </div>
 <div class="section" id="beispiel">
-<h4>Beispiel<a class="headerlink" href="#beispiel" title="Permalink to this headline">¶</a></h4>
+<h4>1.4.1. Beispiel<a class="headerlink" href="#beispiel" title="Permalink to this headline">¶</a></h4>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">package</span> <span class="n">patterns</span><span class="o">.</span><span class="n">erzeugungsmuster</span><span class="o">.</span><span class="n">singleton</span><span class="p">;</span>
 
 <span class="o">/**</span>
@@ -367,16 +367,16 @@
 </div>
 </div>
 <span id="document-threading/index"></span><div class="section" id="threading">
-<h2>Threading<a class="headerlink" href="#threading" title="Permalink to this headline">¶</a></h2>
+<h2>2. Threading<a class="headerlink" href="#threading" title="Permalink to this headline">¶</a></h2>
 <div class="toctree-wrapper compound">
 <span id="document-threading/alternator/alternator"></span><div class="section" id="alternator">
-<h3>Alternator<a class="headerlink" href="#alternator" title="Permalink to this headline">¶</a></h3>
+<h3>2.1. Alternator<a class="headerlink" href="#alternator" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li>Threads mit alternierender Ausführung</li>
 <li>Alternierung über ein zentrales Lock-Objekt geregelt (boolean[])</li>
 </ul>
 <div class="section" id="beispiel">
-<h4>Beispiel<a class="headerlink" href="#beispiel" title="Permalink to this headline">¶</a></h4>
+<h4>2.1.1. Beispiel<a class="headerlink" href="#beispiel" title="Permalink to this headline">¶</a></h4>
 <div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">threading.alternator</span><span class="o">;</span>
 
 <span class="cm">/**</span>
@@ -453,17 +453,17 @@
 </div>
 </div>
 <span id="document-advanced-techniques/index"></span><div class="section" id="advanced-techniques">
-<h2>Advanced Techniques<a class="headerlink" href="#advanced-techniques" title="Permalink to this headline">¶</a></h2>
+<h2>3. Advanced Techniques<a class="headerlink" href="#advanced-techniques" title="Permalink to this headline">¶</a></h2>
 <div class="toctree-wrapper compound">
 <span id="document-advanced-techniques/reflection/reflection"></span><div class="section" id="reflection">
-<h3>Reflection<a class="headerlink" href="#reflection" title="Permalink to this headline">¶</a></h3>
+<h3>3.1. Reflection<a class="headerlink" href="#reflection" title="Permalink to this headline">¶</a></h3>
 <p>Die Reflection-API bildet ein Modell der Java-Sprache. Die Reflection-API beschreibt
 mittels Klassen wie Method, Constructor, Class, Field, etc. die Elemente von Java.
 Mit Reflection kann die Struktur unbekannter Objekte und Klassen zur Laufzeit analysiert
 werden. Ausserdem können damit Methoden und Konstruktoren aufgerufen und
 Felder gesetzt werden.</p>
 <div class="section" id="vorteile">
-<h4>Vorteile<a class="headerlink" href="#vorteile" title="Permalink to this headline">¶</a></h4>
+<h4>3.1.1. Vorteile<a class="headerlink" href="#vorteile" title="Permalink to this headline">¶</a></h4>
 <ol class="arabic simple">
 <li>Von der Klasse, die Reflection benutzt, gibt es nie eine direkte (binäre) Abhängigkeit auf die mit Reflection verwendeten Klassen. Sie kann deshalb unabhängig vom Vorhandensein der benutzten Klasse geladen und ausgeführt werden.</li>
 <li>Die mit Reflection aufgerufenen Klassen müssen z.B. keinen bestimmten Typ haben, sondern nur Methoden mit einer bestimmten Signatur anbieten.</li>
@@ -472,13 +472,13 @@ Felder gesetzt werden.</p>
 </ol>
 </div>
 <div class="section" id="nachteile">
-<h4>Nachteile<a class="headerlink" href="#nachteile" title="Permalink to this headline">¶</a></h4>
+<h4>3.1.2. Nachteile<a class="headerlink" href="#nachteile" title="Permalink to this headline">¶</a></h4>
 <ol class="arabic simple">
 <li>Die Reflection-API arbeitet mit Strings. Dadurch entsteht nur eine implizite Abhängigkeit / Kopplung zu den benutzen Klassen. Bei einer Veränderung der API der benutzten Klassen kann diese (vom Compiler unbemerkt) gebrochen werden.</li>
 </ol>
 </div>
 <div class="section" id="beispiel">
-<h4>Beispiel<a class="headerlink" href="#beispiel" title="Permalink to this headline">¶</a></h4>
+<h4>3.1.3. Beispiel<a class="headerlink" href="#beispiel" title="Permalink to this headline">¶</a></h4>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">package</span> <span class="n">advanced_techniques</span><span class="o">.</span><span class="n">reflection</span><span class="p">;</span>
 
 <span class="o">/**</span>
@@ -493,17 +493,17 @@ Felder gesetzt werden.</p>
 </div>
 </div>
 <span id="document-gui/gui"></span><div class="section" id="gui">
-<h2>GUI<a class="headerlink" href="#gui" title="Permalink to this headline">¶</a></h2>
+<h2>4. GUI<a class="headerlink" href="#gui" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="swing">
-<h3>Swing<a class="headerlink" href="#swing" title="Permalink to this headline">¶</a></h3>
+<h3>4.1. Swing<a class="headerlink" href="#swing" title="Permalink to this headline">¶</a></h3>
 <div class="section" id="elements">
-<h4>Elements<a class="headerlink" href="#elements" title="Permalink to this headline">¶</a></h4>
+<h4>4.1.1. Elements<a class="headerlink" href="#elements" title="Permalink to this headline">¶</a></h4>
 </div>
 <div class="section" id="layouts">
-<h4>Layouts<a class="headerlink" href="#layouts" title="Permalink to this headline">¶</a></h4>
+<h4>4.1.2. Layouts<a class="headerlink" href="#layouts" title="Permalink to this headline">¶</a></h4>
 </div>
 <div class="section" id="example">
-<h4>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h4>
+<h4>4.1.3. Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h4>
 <div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">gui</span><span class="o">;</span>
 
 <span class="kn">import</span> <span class="nn">javax.swing.*</span><span class="o">;</span>
@@ -562,7 +562,7 @@ Felder gesetzt werden.</p>
 </div>
 </div>
 <div class="section" id="example-2">
-<h4>Example 2<a class="headerlink" href="#example-2" title="Permalink to this headline">¶</a></h4>
+<h4>4.1.4. Example 2<a class="headerlink" href="#example-2" title="Permalink to this headline">¶</a></h4>
 <div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">gui</span><span class="o">;</span>
 
 <span class="kn">import</span> <span class="nn">javax.swing.*</span><span class="o">;</span>
@@ -646,120 +646,19 @@ Felder gesetzt werden.</p>
 </div>
 </div>
 <span id="document-smells/smells"></span><div class="section" id="smells">
-<h2>Smells<a class="headerlink" href="#smells" title="Permalink to this headline">¶</a></h2>
+<h2>5. Smells<a class="headerlink" href="#smells" title="Permalink to this headline">¶</a></h2>
 <p>Qualitativ guter Code ist der Schlüssel zum langfristigen Erfolg einer Software
 * Minimiert # Fehler, die erst im Betrieb auftauchen
 * Hilft, Fehler rasch zu finden und zu beheben
 * Unterstützt die rasche Entwicklung von Erweiterungen zu einem späteren Zeitpunkt
 * Ermöglicht Wartung durch Personen, die an der Entwicklung nicht beteiligt waren</p>
 <div class="toctree-wrapper compound">
-<span id="document-smells/program-design/TD_declaration-scope-973"></span><div class="section" id="lange-methoden-parameterlisten-gleichen-typs">
-<h3>Lange Methoden-Parameterlisten (gleichen Typs)<a class="headerlink" href="#lange-methoden-parameterlisten-gleichen-typs" title="Permalink to this headline">¶</a></h3>
-<p>Methodensignaturen mit vielen und vor allem ähnlichen Datentypen sind schnell unübersichtlich und können zu fehlerhaften Aufrufen durch den Programmierer führen, insbesondere dann, wenn die Methode überladen wird.</p>
-<div class="section" id="bad-smell-weil">
-<h4>Bad Smell weil ...<a class="headerlink" href="#bad-smell-weil" title="Permalink to this headline">¶</a></h4>
-<ul class="simple">
-<li>Einfaches Vertauschen von Parametern wenn Methode überladen.</li>
-<li>Unübersichtlich</li>
-</ul>
-<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">smells.program_design</span><span class="o">;</span>
-
-<span class="cm">/**</span>
-<span class="cm"> * Copy Paste left-overs</span>
-<span class="cm"> */</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">CopyPaste_Bad</span> <span class="o">{</span>
-
-    <span class="kd">public</span> <span class="n">Vehicle</span> <span class="nf">createCar</span><span class="o">()</span> <span class="o">{</span>
-
-        <span class="n">Vehicle</span> <span class="n">vehicle</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Vehicle</span><span class="o">();</span>
-        <span class="n">vehicle</span><span class="o">.</span><span class="na">type</span> <span class="o">=</span> <span class="n">CAR</span><span class="o">;</span>
-        <span class="n">vehicle</span><span class="o">.</span><span class="na">hasMotor</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
-
-        <span class="k">return</span> <span class="n">vehicle</span><span class="o">;</span>
-    <span class="o">}</span>
-
-    <span class="kd">public</span> <span class="n">Vehicle</span> <span class="nf">createBike</span><span class="o">()</span> <span class="o">{</span>
-
-        <span class="n">Vehicle</span> <span class="n">vehicle</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Vehicle</span><span class="o">();</span>
-        <span class="n">vehicle</span><span class="o">.</span><span class="na">type</span> <span class="o">=</span> <span class="n">CAR</span><span class="o">;</span>  <span class="c1">// &lt;--- Vergessen zu ändern !!!</span>
-        <span class="n">vehicle</span><span class="o">.</span><span class="na">hasMotor</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
-
-        <span class="k">return</span> <span class="n">vehicle</span><span class="o">;</span>
-    <span class="o">}</span>
-<span class="o">}</span>
-</pre></div>
-</div>
-</div>
-</div>
-<span id="document-smells/program-design/constants-interfaces"></span><div class="section" id="magic-numbers">
-<h3>Magic Numbers<a class="headerlink" href="#magic-numbers" title="Permalink to this headline">¶</a></h3>
-<p>Magic Numbers sind Zahlenwerte, die im Code «hardgecodet» hinterlegt werden (siehe Beispiel).</p>
-<div class="section" id="bad-smell-weil">
-<h4>Bad Smell weil ...<a class="headerlink" href="#bad-smell-weil" title="Permalink to this headline">¶</a></h4>
-<ul class="simple">
-<li>Magic Numbers sind semantisch nicht aussagekräftig, sprich: Man weiss nicht auf Anhieb, wofür die Zahl steht.</li>
-<li>Ein Ersetzen einer Magic Number, die an mehreren Stellen vorkommt ist sehr aufwändig und fehleranfällig!</li>
-</ul>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">package</span> <span class="n">smells</span><span class="o">.</span><span class="n">program_design</span><span class="p">;</span>
-
-<span class="o">/**</span>
- <span class="o">*</span> <span class="n">Magic</span> <span class="n">Numbers</span> <span class="n">Bad</span> <span class="n">Smell</span> <span class="n">Example</span>
- <span class="o">*/</span>
-<span class="n">public</span> <span class="k">class</span> <span class="nc">MagicNumbers_Bad</span> <span class="p">{</span>
-
-    <span class="n">public</span> <span class="n">MagicNumbers_Bad</span><span class="p">()</span> <span class="p">{</span>
-        <span class="n">startShow</span><span class="p">(</span><span class="mi">100</span><span class="p">);</span>
-    <span class="p">}</span>
-
-    <span class="n">private</span> <span class="n">void</span> <span class="n">startShow</span><span class="p">(</span><span class="nb">int</span> <span class="n">slidesInterval</span><span class="p">)</span> <span class="p">{</span>
-        <span class="o">//</span> <span class="n">Do</span> <span class="n">slide</span> <span class="n">show</span>
-        <span class="n">playVideo</span><span class="p">(</span><span class="mf">10.0</span><span class="n">f</span><span class="p">);</span>
-    <span class="p">}</span>
-
-    <span class="n">private</span> <span class="n">void</span> <span class="n">playVideo</span><span class="p">(</span><span class="nb">float</span> <span class="n">volume</span><span class="p">)</span> <span class="p">{</span>
-        <span class="o">//</span> <span class="n">Play</span> <span class="n">video</span> <span class="k">with</span> <span class="n">volume</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="refactoring">
-<h4>Refactoring<a class="headerlink" href="#refactoring" title="Permalink to this headline">¶</a></h4>
-<ul class="simple">
-<li>Konstanten verwenden.</li>
-</ul>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">package</span> <span class="n">smells</span><span class="o">.</span><span class="n">program_design</span><span class="p">;</span>
-
-<span class="o">/**</span>
- <span class="o">*</span> <span class="n">Magic</span> <span class="n">Numbers</span> <span class="n">Bad</span> <span class="n">Smell</span> <span class="n">Example</span>
- <span class="o">*/</span>
-<span class="n">public</span> <span class="k">class</span> <span class="nc">MagicNumbers_Good</span> <span class="p">{</span>
-
-    <span class="n">private</span> <span class="n">static</span> <span class="n">final</span> <span class="nb">int</span> <span class="n">SLIDE_INTERVAL</span> <span class="o">=</span> <span class="mi">100</span><span class="p">;</span>
-    <span class="n">private</span> <span class="n">static</span> <span class="n">final</span> <span class="nb">float</span> <span class="n">VIDEO_VOLUME</span> <span class="o">=</span> <span class="mf">10.0</span><span class="n">f</span><span class="p">;</span>
-
-    <span class="n">public</span> <span class="n">MagicNumbers_Good</span><span class="p">()</span> <span class="p">{</span>
-        <span class="n">startShow</span><span class="p">(</span><span class="n">SLIDE_INTERVAL</span><span class="p">);</span>
-    <span class="p">}</span>
-
-    <span class="n">private</span> <span class="n">void</span> <span class="n">startShow</span><span class="p">(</span><span class="nb">int</span> <span class="n">slidesInterval</span><span class="p">)</span> <span class="p">{</span>
-        <span class="o">//</span> <span class="n">Do</span> <span class="n">slide</span> <span class="n">show</span>
-        <span class="n">playVideo</span><span class="p">(</span><span class="n">VIDEO_VOLUME</span><span class="p">);</span>
-    <span class="p">}</span>
-
-    <span class="n">private</span> <span class="n">void</span> <span class="n">playVideo</span><span class="p">(</span><span class="nb">float</span> <span class="n">volume</span><span class="p">)</span> <span class="p">{</span>
-        <span class="o">//</span> <span class="n">Play</span> <span class="n">video</span> <span class="k">with</span> <span class="n">volume</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-</div>
-</div>
+<span id="document-smells/program-design/TD_declaration-scope-973"></span><p>TODO</p>
+<span id="document-smells/program-design/constants-interfaces"></span><p>TODO</p>
 <span id="document-smells/program-design/copy-paste"></span><div class="section" id="copy-paste-leichen">
-<h3>Copy-Paste Leichen<a class="headerlink" href="#copy-paste-leichen" title="Permalink to this headline">¶</a></h3>
+<h3>5.1. Copy-Paste Leichen<a class="headerlink" href="#copy-paste-leichen" title="Permalink to this headline">¶</a></h3>
 <p>Oft werden Codeblöcke aufgrund gleicher oder ähnlicher Funktionalität kopiert, woanders eingefügt und leicht abgeändert.</p>
-<div class="section" id="bad-smell-weil">
-<h4>Bad Smell weil ...<a class="headerlink" href="#bad-smell-weil" title="Permalink to this headline">¶</a></h4>
+<p><strong>Bad Smell weil ...</strong></p>
 <ul class="simple">
 <li>Vielfach gehen dabei wichtige Änderungen (z.B. von Variablennamen) vergessen und es kommt zu Fehlverhalten.</li>
 <li>Code wird unübersichtlicher, da vieles ähnlich aussieht.</li>
@@ -793,12 +692,10 @@ Felder gesetzt werden.</p>
 </pre></div>
 </div>
 </div>
-</div>
 <span id="document-smells/program-design/long-parameter-lists"></span><div class="section" id="lange-methoden-parameterlisten-gleichen-typs">
-<h3>Lange Methoden-Parameterlisten (gleichen Typs)<a class="headerlink" href="#lange-methoden-parameterlisten-gleichen-typs" title="Permalink to this headline">¶</a></h3>
+<h3>5.2. Lange Methoden-Parameterlisten (gleichen Typs)<a class="headerlink" href="#lange-methoden-parameterlisten-gleichen-typs" title="Permalink to this headline">¶</a></h3>
 <p>Methodensignaturen mit vielen und vor allem ähnlichen Datentypen (aber unterschiedlicher Bedeutung) sind schnell unübersichtlich und können zu fehlerhaften Aufrufen durch den Programmierer führen, insbesondere dann, wenn die Methode überladen wird.</p>
-<div class="section" id="bad-smell-weil">
-<h4>Bad Smell weil ...<a class="headerlink" href="#bad-smell-weil" title="Permalink to this headline">¶</a></h4>
+<p><strong>Bad Smell weil ...</strong></p>
 <ul class="simple">
 <li>Einfaches Vertauschen von Parametern wenn Methode überladen.</li>
 <li>Unübersichtlich</li>
@@ -817,9 +714,7 @@ Felder gesetzt werden.</p>
 <span class="o">}</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="refactoring">
-<h4>Refactoring<a class="headerlink" href="#refactoring" title="Permalink to this headline">¶</a></h4>
+<p><strong>Refactoring</strong></p>
 <ul class="simple">
 <li>Möglichst gleiche Reihenfolge der Parameter in den Überladenen Signaturen.</li>
 <li>Nach Bedeutung zusammengehörige Parameter möglichst in &#8220;Parameter Value Objects&#8221; kapseln</li>
@@ -838,12 +733,10 @@ Felder gesetzt werden.</p>
 </pre></div>
 </div>
 </div>
-</div>
 <span id="document-smells/program-design/magic-numbers"></span><div class="section" id="magic-numbers">
-<h3>Magic Numbers<a class="headerlink" href="#magic-numbers" title="Permalink to this headline">¶</a></h3>
+<h3>5.3. Magic Numbers<a class="headerlink" href="#magic-numbers" title="Permalink to this headline">¶</a></h3>
 <p>Magic Numbers sind Zahlenwerte, die im Code «hardgecodet» hinterlegt werden (siehe Beispiel).</p>
-<div class="section" id="bad-smell-weil">
-<h4>Bad Smell weil ...<a class="headerlink" href="#bad-smell-weil" title="Permalink to this headline">¶</a></h4>
+<p><strong>Bad Smell weil ...</strong></p>
 <ul class="simple">
 <li>Magic Numbers sind semantisch nicht aussagekräftig, sprich: Man weiss nicht auf Anhieb, wofür die Zahl steht.</li>
 <li>Ein Ersetzen einer Magic Number, die an mehreren Stellen vorkommt ist sehr aufwändig und fehleranfällig!</li>
@@ -870,9 +763,7 @@ Felder gesetzt werden.</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="refactoring">
-<h4>Refactoring<a class="headerlink" href="#refactoring" title="Permalink to this headline">¶</a></h4>
+<p><strong>Refactoring</strong></p>
 <ul class="simple">
 <li>Konstanten verwenden.</li>
 </ul>
@@ -900,7 +791,6 @@ Felder gesetzt werden.</p>
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
-</div>
 </div>
 </div>
 </div>
