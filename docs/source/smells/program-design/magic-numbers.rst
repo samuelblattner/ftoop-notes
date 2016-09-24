@@ -1,5 +1,5 @@
-Magic Numbers
-=============
+Magic Numbers (S.953)
+=====================
 
 Magic Numbers sind Zahlenwerte, die im Code «hardgecodet» hinterlegt werden (siehe Beispiel).
 

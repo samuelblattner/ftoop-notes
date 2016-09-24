@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>5.4. Lange Methoden-Parameterlisten (gleichen Typs) &mdash; FTOOP Java Examples 1.0 documentation</title>
+  <title>5.9. Lange Methoden-Parameterlisten (gleichen Typs) &mdash; FTOOP Java Examples 1.0 documentation</title>
   
 
   
@@ -32,8 +32,8 @@
   
     <link rel="top" title="FTOOP Java Examples 1.0 documentation" href="../../index.html"/>
         <link rel="up" title="5. Smells" href="../smells.html"/>
-        <link rel="next" title="5.5. Magic Numbers" href="magic-numbers.html"/>
-        <link rel="prev" title="5.3. Copy-Paste Leichen" href="copy-paste.html"/> 
+        <link rel="next" title="5.10. Magic Numbers (S.953)" href="magic-numbers.html"/>
+        <link rel="prev" title="5.8. Zusammengehörende Konstanten nicht als Typ definiert (S.956)" href="enums-instead-of-constants.html"/> 
 
   
   <script src="../../_static/js/modernizr.min.js"></script>
@@ -88,11 +88,16 @@
 <li class="toctree-l1"><a class="reference internal" href="../../advanced-techniques/index.html">3. Advanced Techniques</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../gui/gui.html">4. GUI</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../smells.html">5. Smells</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="TD_declaration-scope-973.html">5.1. TODO</a></li>
-<li class="toctree-l2"><a class="reference internal" href="constants-interfaces.html">5.2. TODO</a></li>
-<li class="toctree-l2"><a class="reference internal" href="copy-paste.html">5.3. Copy-Paste Leichen</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">5.4. Lange Methoden-Parameterlisten (gleichen Typs)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="magic-numbers.html">5.5. Magic Numbers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../exception-handling/careless-returns.html">5.1. Fangen der allgemeinsten Exception (S.993)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../exception-handling/io-no-finally.html">5.2. I/O ohne finally (S.1004)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../exception-handling/too-broad-exception-clause.html">5.3. Fangen der allgemeinsten Exception (S.993)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pitfalls/complex-boolean-expressions.html">5.4. Einsatz komplizierter boolescher Bedingungen (S.1017)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="TD_declaration-scope-973.html">5.5. TODO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="constants-interfaces.html">5.6. Konstanten in Interfaces definieren (S.954)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="copy-paste.html">5.7. Copy-Paste Leichen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="enums-instead-of-constants.html">5.8. Zusammengehörende Konstanten nicht als Typ definiert (S.956)</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">5.9. Lange Methoden-Parameterlisten (gleichen Typs)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="magic-numbers.html">5.10. Magic Numbers (S.953)</a></li>
 </ul>
 </li>
 </ul>
@@ -127,7 +132,7 @@
       
           <li><a href="../smells.html">5. Smells</a> &raquo;</li>
       
-    <li>5.4. Lange Methoden-Parameterlisten (gleichen Typs)</li>
+    <li>5.9. Lange Methoden-Parameterlisten (gleichen Typs)</li>
       <li class="wy-breadcrumbs-aside">
         
           
@@ -142,7 +147,7 @@
            <div itemprop="articleBody">
             
   <div class="section" id="lange-methoden-parameterlisten-gleichen-typs">
-<h1>5.4. Lange Methoden-Parameterlisten (gleichen Typs)<a class="headerlink" href="#lange-methoden-parameterlisten-gleichen-typs" title="Permalink to this headline">¶</a></h1>
+<h1>5.9. Lange Methoden-Parameterlisten (gleichen Typs)<a class="headerlink" href="#lange-methoden-parameterlisten-gleichen-typs" title="Permalink to this headline">¶</a></h1>
 <p>Methodensignaturen mit vielen und vor allem ähnlichen Datentypen (aber unterschiedlicher Bedeutung) sind schnell unübersichtlich und können zu fehlerhaften Aufrufen durch den Programmierer führen, insbesondere dann, wenn die Methode überladen wird.</p>
 <p><strong>Bad Smell weil ...</strong></p>
 <ul class="simple">
@@ -190,10 +195,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="magic-numbers.html" class="btn btn-neutral float-right" title="5.5. Magic Numbers" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="magic-numbers.html" class="btn btn-neutral float-right" title="5.10. Magic Numbers (S.953)" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="copy-paste.html" class="btn btn-neutral" title="5.3. Copy-Paste Leichen" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="enums-instead-of-constants.html" class="btn btn-neutral" title="5.8. Zusammengehörende Konstanten nicht als Typ definiert (S.956)" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Reflection &mdash; FTOOP Java Examples 1.0 documentation</title>
+  <title>3.1. Reflection &mdash; FTOOP Java Examples 1.0 documentation</title>
   
 
   
@@ -31,9 +31,9 @@
 
   
     <link rel="top" title="FTOOP Java Examples 1.0 documentation" href="../../index.html"/>
-        <link rel="up" title="Advanced Techniques" href="../index.html"/>
-        <link rel="next" title="GUI" href="../../gui/gui.html"/>
-        <link rel="prev" title="Advanced Techniques" href="../index.html"/> 
+        <link rel="up" title="3. Advanced Techniques" href="../index.html"/>
+        <link rel="next" title="4. GUI" href="../../gui/gui.html"/>
+        <link rel="prev" title="3. Advanced Techniques" href="../index.html"/> 
 
   
   <script src="../../_static/js/modernizr.min.js"></script>
@@ -83,19 +83,19 @@
             
             
                 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../../patterns/index.html">Patterns</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../threading/index.html">Threading</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Advanced Techniques</a><ul class="current">
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Reflection</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#vorteile">Vorteile</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#nachteile">Nachteile</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#beispiel">Beispiel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../patterns/index.html">1. Patterns</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../threading/index.html">2. Threading</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">3. Advanced Techniques</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">3.1. Reflection</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#vorteile">3.1.1. Vorteile</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#nachteile">3.1.2. Nachteile</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#beispiel">3.1.3. Beispiel</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../../gui/gui.html">GUI</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../smells/smells.html">Smells</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../gui/gui.html">4. GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../smells/smells.html">5. Smells</a></li>
 </ul>
 
             
@@ -126,9 +126,9 @@
   <ul class="wy-breadcrumbs">
     <li><a href="../../index.html">Docs</a> &raquo;</li>
       
-          <li><a href="../index.html">Advanced Techniques</a> &raquo;</li>
+          <li><a href="../index.html">3. Advanced Techniques</a> &raquo;</li>
       
-    <li>Reflection</li>
+    <li>3.1. Reflection</li>
       <li class="wy-breadcrumbs-aside">
         
           
@@ -143,14 +143,14 @@
            <div itemprop="articleBody">
             
   <div class="section" id="reflection">
-<h1>Reflection<a class="headerlink" href="#reflection" title="Permalink to this headline">¶</a></h1>
+<h1>3.1. Reflection<a class="headerlink" href="#reflection" title="Permalink to this headline">¶</a></h1>
 <p>Die Reflection-API bildet ein Modell der Java-Sprache. Die Reflection-API beschreibt
 mittels Klassen wie Method, Constructor, Class, Field, etc. die Elemente von Java.
 Mit Reflection kann die Struktur unbekannter Objekte und Klassen zur Laufzeit analysiert
 werden. Ausserdem können damit Methoden und Konstruktoren aufgerufen und
 Felder gesetzt werden.</p>
 <div class="section" id="vorteile">
-<h2>Vorteile<a class="headerlink" href="#vorteile" title="Permalink to this headline">¶</a></h2>
+<h2>3.1.1. Vorteile<a class="headerlink" href="#vorteile" title="Permalink to this headline">¶</a></h2>
 <ol class="arabic simple">
 <li>Von der Klasse, die Reflection benutzt, gibt es nie eine direkte (binäre) Abhängigkeit auf die mit Reflection verwendeten Klassen. Sie kann deshalb unabhängig vom Vorhandensein der benutzten Klasse geladen und ausgeführt werden.</li>
 <li>Die mit Reflection aufgerufenen Klassen müssen z.B. keinen bestimmten Typ haben, sondern nur Methoden mit einer bestimmten Signatur anbieten.</li>
@@ -159,13 +159,13 @@ Felder gesetzt werden.</p>
 </ol>
 </div>
 <div class="section" id="nachteile">
-<h2>Nachteile<a class="headerlink" href="#nachteile" title="Permalink to this headline">¶</a></h2>
+<h2>3.1.2. Nachteile<a class="headerlink" href="#nachteile" title="Permalink to this headline">¶</a></h2>
 <ol class="arabic simple">
 <li>Die Reflection-API arbeitet mit Strings. Dadurch entsteht nur eine implizite Abhängigkeit / Kopplung zu den benutzen Klassen. Bei einer Veränderung der API der benutzten Klassen kann diese (vom Compiler unbemerkt) gebrochen werden.</li>
 </ol>
 </div>
 <div class="section" id="beispiel">
-<h2>Beispiel<a class="headerlink" href="#beispiel" title="Permalink to this headline">¶</a></h2>
+<h2>3.1.3. Beispiel<a class="headerlink" href="#beispiel" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">package</span> <span class="n">advanced_techniques</span><span class="o">.</span><span class="n">reflection</span><span class="p">;</span>
 
 <span class="o">/**</span>
@@ -185,10 +185,10 @@ Felder gesetzt werden.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../../gui/gui.html" class="btn btn-neutral float-right" title="GUI" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="../../gui/gui.html" class="btn btn-neutral float-right" title="4. GUI" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="../index.html" class="btn btn-neutral" title="Advanced Techniques" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="../index.html" class="btn btn-neutral" title="3. Advanced Techniques" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

@@ -31,7 +31,7 @@
 
   
     <link rel="top" title="FTOOP Java Examples 1.0 documentation" href="../index.html"/>
-        <link rel="next" title="5.1. TODO" href="program-design/TD_declaration-scope-973.html"/>
+        <link rel="next" title="5.1. Unbedachter Rückgabewert (S.996)" href="exception-handling/careless-returns.html"/>
         <link rel="prev" title="4. GUI" href="../gui/gui.html"/> 
 
   
@@ -87,11 +87,16 @@
 <li class="toctree-l1"><a class="reference internal" href="../advanced-techniques/index.html">3. Advanced Techniques</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../gui/gui.html">4. GUI</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">5. Smells</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="program-design/TD_declaration-scope-973.html">5.1. TODO</a></li>
-<li class="toctree-l2"><a class="reference internal" href="program-design/constants-interfaces.html">5.2. TODO</a></li>
-<li class="toctree-l2"><a class="reference internal" href="program-design/copy-paste.html">5.3. Copy-Paste Leichen</a></li>
-<li class="toctree-l2"><a class="reference internal" href="program-design/long-parameter-lists.html">5.4. Lange Methoden-Parameterlisten (gleichen Typs)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="program-design/magic-numbers.html">5.5. Magic Numbers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exception-handling/careless-returns.html">5.1. Unbedachter Rückgabewert (S.996)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exception-handling/io-no-finally.html">5.2. I/O ohne finally (S.1004)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exception-handling/too-broad-exception-clause.html">5.3. Fangen der allgemeinsten Exception (S.993)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pitfalls/complex-boolean-expressions.html">5.4. Einsatz komplizierter boolescher Bedingungen (S.1017)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="program-design/TD_declaration-scope-973.html">5.5. TODO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="program-design/constants-interfaces.html">5.6. Konstanten in Interfaces definieren (S.954)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="program-design/copy-paste.html">5.7. Copy-Paste Leichen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="program-design/enums-instead-of-constants.html">5.8. Zusammengehörende Konstanten nicht als Typ definiert (S.956)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="program-design/long-parameter-lists.html">5.9. Lange Methoden-Parameterlisten (gleichen Typs)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="program-design/magic-numbers.html">5.10. Magic Numbers (S.953)</a></li>
 </ul>
 </li>
 </ul>
@@ -147,11 +152,16 @@
 * Ermöglicht Wartung durch Personen, die an der Entwicklung nicht beteiligt waren</p>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="program-design/TD_declaration-scope-973.html">5.1. TODO</a></li>
-<li class="toctree-l1"><a class="reference internal" href="program-design/constants-interfaces.html">5.2. TODO</a></li>
-<li class="toctree-l1"><a class="reference internal" href="program-design/copy-paste.html">5.3. Copy-Paste Leichen</a></li>
-<li class="toctree-l1"><a class="reference internal" href="program-design/long-parameter-lists.html">5.4. Lange Methoden-Parameterlisten (gleichen Typs)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="program-design/magic-numbers.html">5.5. Magic Numbers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="exception-handling/careless-returns.html">5.1. Unbedachter Rückgabewert (S.996)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="exception-handling/io-no-finally.html">5.2. I/O ohne finally (S.1004)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="exception-handling/too-broad-exception-clause.html">5.3. Fangen der allgemeinsten Exception (S.993)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pitfalls/complex-boolean-expressions.html">5.4. Einsatz komplizierter boolescher Bedingungen (S.1017)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="program-design/TD_declaration-scope-973.html">5.5. TODO</a></li>
+<li class="toctree-l1"><a class="reference internal" href="program-design/constants-interfaces.html">5.6. Konstanten in Interfaces definieren (S.954)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="program-design/copy-paste.html">5.7. Copy-Paste Leichen</a></li>
+<li class="toctree-l1"><a class="reference internal" href="program-design/enums-instead-of-constants.html">5.8. Zusammengehörende Konstanten nicht als Typ definiert (S.956)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="program-design/long-parameter-lists.html">5.9. Lange Methoden-Parameterlisten (gleichen Typs)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="program-design/magic-numbers.html">5.10. Magic Numbers (S.953)</a></li>
 </ul>
 </div>
 </div>
@@ -163,7 +173,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="program-design/TD_declaration-scope-973.html" class="btn btn-neutral float-right" title="5.1. TODO" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="exception-handling/careless-returns.html" class="btn btn-neutral float-right" title="5.1. Unbedachter Rückgabewert (S.996)" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="../gui/gui.html" class="btn btn-neutral" title="4. GUI" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>

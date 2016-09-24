@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>5.2. TODO &mdash; FTOOP Java Examples 1.0 documentation</title>
+  <title>5.6. Konstanten in Interfaces definieren (S.954) &mdash; FTOOP Java Examples 1.0 documentation</title>
   
 
   
@@ -32,8 +32,8 @@
   
     <link rel="top" title="FTOOP Java Examples 1.0 documentation" href="../../index.html"/>
         <link rel="up" title="5. Smells" href="../smells.html"/>
-        <link rel="next" title="5.3. Copy-Paste Leichen" href="copy-paste.html"/>
-        <link rel="prev" title="5.1. TODO" href="TD_declaration-scope-973.html"/> 
+        <link rel="next" title="5.7. Copy-Paste Leichen" href="copy-paste.html"/>
+        <link rel="prev" title="5.5. TODO" href="TD_declaration-scope-973.html"/> 
 
   
   <script src="../../_static/js/modernizr.min.js"></script>
@@ -88,11 +88,16 @@
 <li class="toctree-l1"><a class="reference internal" href="../../advanced-techniques/index.html">3. Advanced Techniques</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../gui/gui.html">4. GUI</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../smells.html">5. Smells</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="TD_declaration-scope-973.html">5.1. TODO</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">5.2. TODO</a></li>
-<li class="toctree-l2"><a class="reference internal" href="copy-paste.html">5.3. Copy-Paste Leichen</a></li>
-<li class="toctree-l2"><a class="reference internal" href="long-parameter-lists.html">5.4. Lange Methoden-Parameterlisten (gleichen Typs)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="magic-numbers.html">5.5. Magic Numbers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../exception-handling/careless-returns.html">5.1. Fangen der allgemeinsten Exception (S.993)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../exception-handling/io-no-finally.html">5.2. I/O ohne finally (S.1004)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../exception-handling/too-broad-exception-clause.html">5.3. Fangen der allgemeinsten Exception (S.993)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pitfalls/complex-boolean-expressions.html">5.4. Einsatz komplizierter boolescher Bedingungen (S.1017)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="TD_declaration-scope-973.html">5.5. TODO</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">5.6. Konstanten in Interfaces definieren (S.954)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="copy-paste.html">5.7. Copy-Paste Leichen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="enums-instead-of-constants.html">5.8. Zusammengehörende Konstanten nicht als Typ definiert (S.956)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="long-parameter-lists.html">5.9. Lange Methoden-Parameterlisten (gleichen Typs)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="magic-numbers.html">5.10. Magic Numbers (S.953)</a></li>
 </ul>
 </li>
 </ul>
@@ -127,7 +132,7 @@
       
           <li><a href="../smells.html">5. Smells</a> &raquo;</li>
       
-    <li>5.2. TODO</li>
+    <li>5.6. Konstanten in Interfaces definieren (S.954)</li>
       <li class="wy-breadcrumbs-aside">
         
           
@@ -141,8 +146,20 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="todo">
-<h1>5.2. TODO<a class="headerlink" href="#todo" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="konstanten-in-interfaces-definieren-s-954">
+<h1>5.6. Konstanten in Interfaces definieren (S.954)<a class="headerlink" href="#konstanten-in-interfaces-definieren-s-954" title="Permalink to this headline">¶</a></h1>
+<p>Entweder werden Interfaces ausschliesslich zur Definition von Konstanten verwendet, oder sie werden zusammen mit Methodendefinitionen aufgeführt.</p>
+<p><strong>Bad Smell, weil...</strong></p>
+<ul class="simple">
+<li>Sichtbarkeit kann nicht eingeschränkt werden, da jede Konstante in einem Interface implizit <code class="docutils literal"><span class="pre">`public`</span></code> ist.</li>
+<li>Wenn eine Klasse das Interface implementiert ist nur schwer erkennbar, woher die Konstanten effektiv entstammen.</li>
+<li>Wenn eine Klasse das Interface implementiert und eine Subklasse dieser Klasse ein andere Interface implementiert, das zufällig gleiche Konstantennamen definiert, kommt es zu Mehrdeutitgkeiten der Konstanten und das Programm kann nicht kompiliert werden.</li>
+</ul>
+<p><strong>Refactorings</strong></p>
+<ul class="simple">
+<li>Interfaces nicht für Konstantensammlungen verwenden.</li>
+<li>Stattdessen dedizierte Klassen oder enums verwenden.</li>
+</ul>
 </div>
 
 
@@ -152,10 +169,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="copy-paste.html" class="btn btn-neutral float-right" title="5.3. Copy-Paste Leichen" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="copy-paste.html" class="btn btn-neutral float-right" title="5.7. Copy-Paste Leichen" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="TD_declaration-scope-973.html" class="btn btn-neutral" title="5.1. TODO" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="TD_declaration-scope-973.html" class="btn btn-neutral" title="5.5. TODO" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
