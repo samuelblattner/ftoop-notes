@@ -288,6 +288,7 @@
 
     <span class="n">public</span> <span class="nb">int</span> <span class="n">getNumWheels</span><span class="p">();</span>
     <span class="n">public</span> <span class="n">void</span> <span class="n">setSpeed</span><span class="p">(</span><span class="nb">float</span> <span class="n">speed</span><span class="p">);</span>
+
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -444,6 +445,160 @@
         <span class="n">Thread</span> <span class="n">alternator2</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Thread</span><span class="o">(</span><span class="k">new</span> <span class="n">Alternator</span><span class="o">(</span><span class="s">&quot;Second Alternator&quot;</span><span class="o">,</span> <span class="kc">false</span><span class="o">,</span> <span class="n">chosen_alternator_lock</span><span class="o">));</span>
         <span class="n">alternator1</span><span class="o">.</span><span class="na">start</span><span class="o">();</span>
         <span class="n">alternator2</span><span class="o">.</span><span class="na">start</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<span id="document-threading/consumer-producer/consumer-producer"></span><div class="section" id="queued-consumer-producer">
+<h3>2.2. Queued Consumer Producer<a class="headerlink" href="#queued-consumer-producer" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="beispiel">
+<h4>2.2.1. Beispiel<a class="headerlink" href="#beispiel" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">threading.consumer_producer</span><span class="o">;</span>
+
+<span class="cm">/**</span>
+<span class="cm"> * Created by samuelblattner on 24/09/16.</span>
+<span class="cm"> */</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Queue</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="n">Integer</span><span class="o">[]</span> <span class="n">queue</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kt">int</span> <span class="n">stackPointer</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kt">int</span> <span class="n">dequeuePointer</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">Queue</span><span class="o">(</span><span class="kt">int</span> <span class="n">size</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">queue</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Integer</span><span class="o">[</span><span class="n">size</span><span class="o">];</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">queue</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="n">queue</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kd">synchronized</span> <span class="kt">boolean</span> <span class="nf">enqueue</span><span class="o">(</span><span class="n">Integer</span> <span class="n">newElement</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">InterruptedException</span> <span class="o">{</span>
+
+        <span class="k">while</span><span class="o">(</span><span class="n">queue</span><span class="o">[</span><span class="n">stackPointer</span><span class="o">]</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;---&gt; QUEUE: Enqueuing suspended!&quot;</span><span class="o">);</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">wait</span><span class="o">();</span>
+        <span class="o">}</span>
+
+        <span class="n">queue</span><span class="o">[</span><span class="n">stackPointer</span><span class="o">]</span> <span class="o">=</span> <span class="n">newElement</span><span class="o">;</span>
+        <span class="n">stackPointer</span><span class="o">++;</span>
+
+        <span class="k">if</span> <span class="o">(</span><span class="n">stackPointer</span> <span class="o">&gt;=</span> <span class="n">queue</span><span class="o">.</span><span class="na">length</span><span class="o">)</span> <span class="o">{</span>
+           <span class="n">stackPointer</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+        <span class="o">}</span>
+
+        <span class="k">this</span><span class="o">.</span><span class="na">notifyAll</span><span class="o">();</span>
+        <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kd">synchronized</span> <span class="n">Integer</span> <span class="nf">dequeue</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">InterruptedException</span> <span class="o">{</span>
+
+        <span class="k">while</span> <span class="o">(</span><span class="n">queue</span><span class="o">[</span><span class="n">dequeuePointer</span><span class="o">]</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;---&gt; QUEUE: Dequeuing suspended!&quot;</span><span class="o">);</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">wait</span><span class="o">();</span>
+        <span class="o">}</span>
+
+        <span class="n">Integer</span> <span class="n">returnElement</span> <span class="o">=</span> <span class="n">queue</span><span class="o">[</span><span class="n">dequeuePointer</span><span class="o">];</span>
+        <span class="n">queue</span><span class="o">[</span><span class="n">dequeuePointer</span><span class="o">]</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+
+        <span class="n">dequeuePointer</span><span class="o">++;</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">dequeuePointer</span> <span class="o">&gt;=</span> <span class="n">queue</span><span class="o">.</span><span class="na">length</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">dequeuePointer</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+        <span class="o">}</span>
+
+        <span class="k">this</span><span class="o">.</span><span class="na">notifyAll</span><span class="o">();</span>
+        <span class="k">return</span> <span class="n">returnElement</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">threading.consumer_producer</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">java.util.Random</span><span class="o">;</span>
+
+<span class="cm">/**</span>
+<span class="cm"> * Created by samuelblattner on 21/09/16.</span>
+<span class="cm"> */</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Producer</span> <span class="kd">implements</span> <span class="n">Runnable</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="n">Queue</span> <span class="n">queue</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">Random</span> <span class="n">randomizer</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">Producer</span><span class="o">(</span><span class="n">Queue</span> <span class="n">queue</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">queue</span> <span class="o">=</span> <span class="n">queue</span><span class="o">;</span>
+        <span class="n">randomizer</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Random</span><span class="o">();</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
+
+        <span class="k">while</span><span class="o">(</span><span class="kc">true</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">try</span> <span class="o">{</span>
+
+                <span class="n">Thread</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="mi">2000</span><span class="o">);</span>
+                <span class="kt">int</span> <span class="n">rndNumber</span> <span class="o">=</span> <span class="n">randomizer</span><span class="o">.</span><span class="na">nextInt</span><span class="o">();</span>
+
+                <span class="n">queue</span><span class="o">.</span><span class="na">enqueue</span><span class="o">(</span><span class="n">rndNumber</span><span class="o">);</span>
+
+                <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="s">&quot;PRODUCER: Produced %d\n&quot;</span><span class="o">,</span> <span class="n">rndNumber</span><span class="o">);</span>
+
+            <span class="o">}</span> <span class="k">catch</span><span class="o">(</span><span class="n">InterruptedException</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">Thread</span><span class="o">.</span><span class="na">currentThread</span><span class="o">().</span><span class="na">interrupt</span><span class="o">();</span>
+                <span class="k">break</span><span class="o">;</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">threading.consumer_producer</span><span class="o">;</span>
+
+<span class="cm">/**</span>
+<span class="cm"> * Created by samuelblattner on 21/09/16.</span>
+<span class="cm"> */</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Consumer</span> <span class="kd">implements</span> <span class="n">Runnable</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="n">Queue</span> <span class="n">queue</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">Consumer</span><span class="o">(</span><span class="n">Queue</span> <span class="n">queue</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">queue</span> <span class="o">=</span> <span class="n">queue</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">while</span><span class="o">(</span><span class="kc">true</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">try</span> <span class="o">{</span>
+
+                <span class="n">Thread</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="mi">4000</span><span class="o">);</span>
+                <span class="n">Integer</span> <span class="n">dequeuedNumber</span> <span class="o">=</span> <span class="n">queue</span><span class="o">.</span><span class="na">dequeue</span><span class="o">();</span>
+
+                <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">String</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="s">&quot;CONSUMER: Read number %d&quot;</span><span class="o">,</span> <span class="n">dequeuedNumber</span><span class="o">));</span>
+
+            <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">InterruptedException</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">Thread</span><span class="o">.</span><span class="na">currentThread</span><span class="o">().</span><span class="na">interrupt</span><span class="o">();</span>
+                <span class="k">break</span><span class="o">;</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+<span class="o">}</span>
+</pre></div>
+</div>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">threading.consumer_producer</span><span class="o">;</span>
+
+<span class="cm">/**</span>
+<span class="cm"> * Created by samuelblattner on 24/09/16.</span>
+<span class="cm"> */</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Runner</span> <span class="o">{</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span> <span class="n">args</span><span class="o">[])</span> <span class="o">{</span>
+        <span class="n">Queue</span> <span class="n">queue</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Queue</span><span class="o">(</span><span class="mi">2</span><span class="o">);</span>
+
+        <span class="n">Thread</span> <span class="n">producer</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Thread</span><span class="o">(</span><span class="k">new</span> <span class="n">Producer</span><span class="o">(</span><span class="n">queue</span><span class="o">));</span>
+        <span class="n">Thread</span> <span class="n">consumer</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Thread</span><span class="o">(</span><span class="k">new</span> <span class="n">Consumer</span><span class="o">(</span><span class="n">queue</span><span class="o">));</span>
+
+        <span class="n">producer</span><span class="o">.</span><span class="na">start</span><span class="o">();</span>
+        <span class="n">consumer</span><span class="o">.</span><span class="na">start</span><span class="o">();</span>
     <span class="o">}</span>
 <span class="o">}</span>
 </pre></div>
@@ -685,6 +840,10 @@ Meist wird das Öffnen und Schliessen einer Datei innerhalb eines try/catch Bloc
 <span class="cm"> */</span>
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">IONoFinally_Bad</span> <span class="o">{</span>
 
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">loadProperties</span><span class="o">(</span><span class="n">FileInputStream</span> <span class="n">stream</span><span class="o">)</span> <span class="o">{</span>
+
+    <span class="o">}</span>
+
     <span class="kd">private</span> <span class="kt">boolean</span> <span class="nf">readProperties</span><span class="o">(</span><span class="kd">final</span> <span class="n">String</span> <span class="n">fileName</span><span class="o">)</span> <span class="o">{</span>
 
         <span class="k">try</span> <span class="o">{</span>
@@ -692,7 +851,7 @@ Meist wird das Öffnen und Schliessen einer Datei innerhalb eines try/catch Bloc
             <span class="n">loadProperties</span><span class="o">(</span><span class="n">inputStream</span><span class="o">);</span>
             <span class="n">inputStream</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
         <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="kd">final</span> <span class="n">IOException</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
-            <span class="n">log</span><span class="o">.</span><span class="na">warn</span><span class="o">(</span><span class="s">&quot;Error opening file&quot;</span><span class="o">);</span>
+            <span class="c1">// log.warn(&quot;Error opening file&quot;);</span>
             <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
         <span class="o">}</span>
         <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
@@ -717,6 +876,10 @@ Meist wird das Öffnen und Schliessen einer Datei innerhalb eines try/catch Bloc
 <span class="cm"> */</span>
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">IONoFinally_Good</span> <span class="o">{</span>
 
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">loadProperties</span><span class="o">(</span><span class="n">FileInputStream</span> <span class="n">stream</span><span class="o">)</span> <span class="o">{</span>
+
+    <span class="o">}</span>
+
     <span class="kd">private</span> <span class="kt">boolean</span> <span class="nf">readProperties</span><span class="o">(</span><span class="kd">final</span> <span class="n">String</span> <span class="n">fileName</span><span class="o">)</span> <span class="o">{</span>
 
         <span class="k">try</span> <span class="o">{</span>
@@ -724,11 +887,11 @@ Meist wird das Öffnen und Schliessen einer Datei innerhalb eines try/catch Bloc
             <span class="n">loadProperties</span><span class="o">(</span><span class="n">inputStream</span><span class="o">);</span>
             <span class="n">inputStream</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
         <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="kd">final</span> <span class="n">IOException</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
-            <span class="n">log</span><span class="o">.</span><span class="na">warn</span><span class="o">(</span><span class="s">&quot;Error opening file&quot;</span><span class="o">);</span>
+            <span class="c1">// log.warn(&quot;Error opening file&quot;);</span>
             <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
         <span class="o">}</span> <span class="k">finally</span> <span class="o">{</span>
             <span class="c1">// Save close</span>
-            <span class="n">IOUtils</span><span class="o">.</span><span class="na">closeQuietly</span><span class="o">(</span><span class="n">inputStream</span><span class="o">);</span>
+            <span class="c1">//IOUtils.closeQuietly(inputStream);</span>
         <span class="o">}</span>
         <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
     <span class="o">}</span>
@@ -744,18 +907,23 @@ Meist wird das Öffnen und Schliessen einer Datei innerhalb eines try/catch Bloc
 
 <span class="kn">import</span> <span class="nn">java.io.FileInputStream</span><span class="p">;</span>
 <span class="kn">import</span> <span class="nn">java.io.IOException</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">java.io.InputStream</span><span class="p">;</span>
 
 <span class="o">/**</span>
  <span class="o">*</span> <span class="n">IO</span> <span class="n">without</span> <span class="k">finally</span><span class="p">,</span> <span class="n">Good</span>
  <span class="o">*/</span>
 <span class="n">public</span> <span class="k">class</span> <span class="nc">IONoFinally_Good2</span> <span class="p">{</span>
 
+    <span class="n">private</span> <span class="n">void</span> <span class="n">loadProperties</span><span class="p">(</span><span class="n">InputStream</span> <span class="n">stream</span><span class="p">)</span> <span class="p">{</span>
+
+    <span class="p">}</span>
+
     <span class="n">private</span> <span class="n">boolean</span> <span class="n">readProperties</span><span class="p">(</span><span class="n">final</span> <span class="n">String</span> <span class="n">fileName</span><span class="p">)</span> <span class="p">{</span>
 
         <span class="k">try</span> <span class="p">(</span><span class="n">final</span> <span class="n">InputStream</span> <span class="n">inputStream</span> <span class="o">=</span> <span class="n">new</span> <span class="n">FileInputStream</span><span class="p">(</span><span class="n">fileName</span><span class="p">))</span> <span class="p">{</span>
             <span class="n">loadProperties</span><span class="p">(</span><span class="n">inputStream</span><span class="p">);</span>
         <span class="p">}</span> <span class="n">catch</span> <span class="p">(</span><span class="n">final</span> <span class="n">IOException</span> <span class="n">ex</span><span class="p">)</span> <span class="p">{</span>
-            <span class="n">log</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;Error opening the file&quot;</span><span class="p">);</span>
+            <span class="o">//</span> <span class="n">log</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;Error opening the file&quot;</span><span class="p">);</span>
             <span class="k">return</span> <span class="n">false</span><span class="p">;</span>
         <span class="p">}</span>
         <span class="k">return</span> <span class="n">true</span><span class="p">;</span>
@@ -845,7 +1013,7 @@ Meist wird das Öffnen und Schliessen einer Datei innerhalb eines try/catch Bloc
     <span class="kd">public</span> <span class="n">Vehicle</span> <span class="nf">createCar</span><span class="o">()</span> <span class="o">{</span>
 
         <span class="n">Vehicle</span> <span class="n">vehicle</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Vehicle</span><span class="o">();</span>
-        <span class="n">vehicle</span><span class="o">.</span><span class="na">type</span> <span class="o">=</span> <span class="n">CAR</span><span class="o">;</span>
+        <span class="n">vehicle</span><span class="o">.</span><span class="na">type</span> <span class="o">=</span> <span class="s">&quot;CAR&quot;</span><span class="o">;</span>
         <span class="n">vehicle</span><span class="o">.</span><span class="na">hasMotor</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
 
         <span class="k">return</span> <span class="n">vehicle</span><span class="o">;</span>
@@ -854,7 +1022,7 @@ Meist wird das Öffnen und Schliessen einer Datei innerhalb eines try/catch Bloc
     <span class="kd">public</span> <span class="n">Vehicle</span> <span class="nf">createBike</span><span class="o">()</span> <span class="o">{</span>
 
         <span class="n">Vehicle</span> <span class="n">vehicle</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Vehicle</span><span class="o">();</span>
-        <span class="n">vehicle</span><span class="o">.</span><span class="na">type</span> <span class="o">=</span> <span class="n">CAR</span><span class="o">;</span>  <span class="c1">// &lt;--- Vergessen zu ändern !!!</span>
+        <span class="n">vehicle</span><span class="o">.</span><span class="na">type</span> <span class="o">=</span> <span class="s">&quot;CAR&quot;</span><span class="o">;</span>  <span class="c1">// &lt;--- Vergessen zu ändern !!!</span>
         <span class="n">vehicle</span><span class="o">.</span><span class="na">hasMotor</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
 
         <span class="k">return</span> <span class="n">vehicle</span><span class="o">;</span>
@@ -946,6 +1114,8 @@ public class EnumConstants_Good {
 <li>Nach Bedeutung zusammengehörige Parameter möglichst in &#8220;Parameter Value Objects&#8221; kapseln</li>
 </ul>
 <div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">smells.program_design</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">java.awt.*</span><span class="o">;</span>
 
 <span class="cm">/**</span>
 <span class="cm"> * Good Parameter List Example</span>
