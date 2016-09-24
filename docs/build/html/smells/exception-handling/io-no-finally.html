@@ -33,7 +33,7 @@
     <link rel="top" title="FTOOP Java Examples 1.0 documentation" href="../../index.html"/>
         <link rel="up" title="5. Smells" href="../smells.html"/>
         <link rel="next" title="5.3. Fangen der allgemeinsten Exception (S.993)" href="too-broad-exception-clause.html"/>
-        <link rel="prev" title="5.1. Fangen der allgemeinsten Exception (S.993)" href="careless-returns.html"/> 
+        <link rel="prev" title="5.1. Unbedachter Rückgabewert (S.996)" href="careless-returns.html"/> 
 
   
   <script src="../../_static/js/modernizr.min.js"></script>
@@ -88,7 +88,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../advanced-techniques/index.html">3. Advanced Techniques</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../gui/gui.html">4. GUI</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../smells.html">5. Smells</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="careless-returns.html">5.1. Fangen der allgemeinsten Exception (S.993)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="careless-returns.html">5.1. Unbedachter Rückgabewert (S.996)</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">5.2. I/O ohne finally (S.1004)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="too-broad-exception-clause.html">5.3. Fangen der allgemeinsten Exception (S.993)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../pitfalls/complex-boolean-expressions.html">5.4. Einsatz komplizierter boolescher Bedingungen (S.1017)</a></li>
@@ -165,6 +165,10 @@ Meist wird das Öffnen und Schliessen einer Datei innerhalb eines try/catch Bloc
 <span class="cm"> */</span>
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">IONoFinally_Bad</span> <span class="o">{</span>
 
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">loadProperties</span><span class="o">(</span><span class="n">FileInputStream</span> <span class="n">stream</span><span class="o">)</span> <span class="o">{</span>
+
+    <span class="o">}</span>
+
     <span class="kd">private</span> <span class="kt">boolean</span> <span class="nf">readProperties</span><span class="o">(</span><span class="kd">final</span> <span class="n">String</span> <span class="n">fileName</span><span class="o">)</span> <span class="o">{</span>
 
         <span class="k">try</span> <span class="o">{</span>
@@ -172,7 +176,7 @@ Meist wird das Öffnen und Schliessen einer Datei innerhalb eines try/catch Bloc
             <span class="n">loadProperties</span><span class="o">(</span><span class="n">inputStream</span><span class="o">);</span>
             <span class="n">inputStream</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
         <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="kd">final</span> <span class="n">IOException</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
-            <span class="n">log</span><span class="o">.</span><span class="na">warn</span><span class="o">(</span><span class="s">&quot;Error opening file&quot;</span><span class="o">);</span>
+            <span class="c1">// log.warn(&quot;Error opening file&quot;);</span>
             <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
         <span class="o">}</span>
         <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
@@ -197,6 +201,10 @@ Meist wird das Öffnen und Schliessen einer Datei innerhalb eines try/catch Bloc
 <span class="cm"> */</span>
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">IONoFinally_Good</span> <span class="o">{</span>
 
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">loadProperties</span><span class="o">(</span><span class="n">FileInputStream</span> <span class="n">stream</span><span class="o">)</span> <span class="o">{</span>
+
+    <span class="o">}</span>
+
     <span class="kd">private</span> <span class="kt">boolean</span> <span class="nf">readProperties</span><span class="o">(</span><span class="kd">final</span> <span class="n">String</span> <span class="n">fileName</span><span class="o">)</span> <span class="o">{</span>
 
         <span class="k">try</span> <span class="o">{</span>
@@ -204,11 +212,11 @@ Meist wird das Öffnen und Schliessen einer Datei innerhalb eines try/catch Bloc
             <span class="n">loadProperties</span><span class="o">(</span><span class="n">inputStream</span><span class="o">);</span>
             <span class="n">inputStream</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
         <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="kd">final</span> <span class="n">IOException</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
-            <span class="n">log</span><span class="o">.</span><span class="na">warn</span><span class="o">(</span><span class="s">&quot;Error opening file&quot;</span><span class="o">);</span>
+            <span class="c1">// log.warn(&quot;Error opening file&quot;);</span>
             <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
         <span class="o">}</span> <span class="k">finally</span> <span class="o">{</span>
             <span class="c1">// Save close</span>
-            <span class="n">IOUtils</span><span class="o">.</span><span class="na">closeQuietly</span><span class="o">(</span><span class="n">inputStream</span><span class="o">);</span>
+            <span class="c1">//IOUtils.closeQuietly(inputStream);</span>
         <span class="o">}</span>
         <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
     <span class="o">}</span>
@@ -224,18 +232,23 @@ Meist wird das Öffnen und Schliessen einer Datei innerhalb eines try/catch Bloc
 
 <span class="kn">import</span> <span class="nn">java.io.FileInputStream</span><span class="p">;</span>
 <span class="kn">import</span> <span class="nn">java.io.IOException</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">java.io.InputStream</span><span class="p">;</span>
 
 <span class="o">/**</span>
  <span class="o">*</span> <span class="n">IO</span> <span class="n">without</span> <span class="k">finally</span><span class="p">,</span> <span class="n">Good</span>
  <span class="o">*/</span>
 <span class="n">public</span> <span class="k">class</span> <span class="nc">IONoFinally_Good2</span> <span class="p">{</span>
 
+    <span class="n">private</span> <span class="n">void</span> <span class="n">loadProperties</span><span class="p">(</span><span class="n">InputStream</span> <span class="n">stream</span><span class="p">)</span> <span class="p">{</span>
+
+    <span class="p">}</span>
+
     <span class="n">private</span> <span class="n">boolean</span> <span class="n">readProperties</span><span class="p">(</span><span class="n">final</span> <span class="n">String</span> <span class="n">fileName</span><span class="p">)</span> <span class="p">{</span>
 
         <span class="k">try</span> <span class="p">(</span><span class="n">final</span> <span class="n">InputStream</span> <span class="n">inputStream</span> <span class="o">=</span> <span class="n">new</span> <span class="n">FileInputStream</span><span class="p">(</span><span class="n">fileName</span><span class="p">))</span> <span class="p">{</span>
             <span class="n">loadProperties</span><span class="p">(</span><span class="n">inputStream</span><span class="p">);</span>
         <span class="p">}</span> <span class="n">catch</span> <span class="p">(</span><span class="n">final</span> <span class="n">IOException</span> <span class="n">ex</span><span class="p">)</span> <span class="p">{</span>
-            <span class="n">log</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;Error opening the file&quot;</span><span class="p">);</span>
+            <span class="o">//</span> <span class="n">log</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;Error opening the file&quot;</span><span class="p">);</span>
             <span class="k">return</span> <span class="n">false</span><span class="p">;</span>
         <span class="p">}</span>
         <span class="k">return</span> <span class="n">true</span><span class="p">;</span>
@@ -263,7 +276,7 @@ Meist wird das Öffnen und Schliessen einer Datei innerhalb eines try/catch Bloc
         <a href="too-broad-exception-clause.html" class="btn btn-neutral float-right" title="5.3. Fangen der allgemeinsten Exception (S.993)" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="careless-returns.html" class="btn btn-neutral" title="5.1. Fangen der allgemeinsten Exception (S.993)" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="careless-returns.html" class="btn btn-neutral" title="5.1. Unbedachter Rückgabewert (S.996)" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
