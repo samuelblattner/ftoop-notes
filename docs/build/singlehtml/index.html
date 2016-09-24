@@ -120,8 +120,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="welcome-to-ftoop-java-examples-s-documentation">
-<h1>Welcome to FTOOP Java Examples&#8217;s documentation!<a class="headerlink" href="#welcome-to-ftoop-java-examples-s-documentation" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="welcome-to-ftoop-java-examples">
+<h1>Welcome to FTOOP Java Examples<a class="headerlink" href="#welcome-to-ftoop-java-examples" title="Permalink to this headline">¶</a></h1>
 <p>Contents:</p>
 <div class="toctree-wrapper compound">
 <span id="document-patterns/index"></span><div class="section" id="patterns">
@@ -653,10 +653,181 @@ Felder gesetzt werden.</p>
 * Unterstützt die rasche Entwicklung von Erweiterungen zu einem späteren Zeitpunkt
 * Ermöglicht Wartung durch Personen, die an der Entwicklung nicht beteiligt waren</p>
 <div class="toctree-wrapper compound">
-<span id="document-smells/program-design/TD_declaration-scope-973"></span><p>TODO</p>
-<span id="document-smells/program-design/constants-interfaces"></span><p>TODO</p>
+<span id="document-smells/exception-handling/careless-returns"></span><div class="section" id="unbedachter-ruckgabewert-s-996">
+<h3>5.1. Unbedachter Rückgabewert (S.996)<a class="headerlink" href="#unbedachter-ruckgabewert-s-996" title="Permalink to this headline">¶</a></h3>
+<p>Bei Methoden mit einem Objekt als Rückgabewert, wird oft null zurückgegeben, z.B. falls der Eingabewert ungültig oder leer ist.</p>
+<p><strong>Bad Smell, weil...</strong></p>
+<ul class="simple">
+<li>Rückgabewert null unerwartet, da Signatur z.B. String als Rückgabewert definiert =&gt; Potentielle NullPointerException</li>
+<li>Null-Rückgabewerte müssen als Randfall speziell behandelt werden</li>
+</ul>
+<p><strong>Refactorings</strong></p>
+<ul class="simple">
+<li>Im Falle eines String-Rückgabewertes lieber einen leeren String verwenden</li>
+</ul>
+</div>
+<span id="document-smells/exception-handling/io-no-finally"></span><div class="section" id="i-o-ohne-finally-s-1004">
+<h3>5.2. I/O ohne finally (S.1004)<a class="headerlink" href="#i-o-ohne-finally-s-1004" title="Permalink to this headline">¶</a></h3>
+<p>Bei Arbeit mit Stream-Objekten werden neben einem Java-Objekt auch Systemressourcen alloziert. Diese werden bei Zerstörung des Java-Objektes nicht automatisch freigegeben und bedürfen eines manuellen Aufrufs von close().
+Meist wird das Öffnen und Schliessen einer Datei innerhalb eines try/catch Blocks ohne finally abgehandelt.</p>
+<p><strong>Bad Smell, weil...</strong></p>
+<ul class="simple">
+<li>Im Fehlerfall wird u.U. die close()-Methode nicht ausgeführt =&gt; «verlorene» Ressourcen.</li>
+<li>Null-Rückgabewerte müssen als Randfall speziell behandelt werden</li>
+</ul>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">smells.exception_handling</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">java.io.FileInputStream</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.io.IOException</span><span class="o">;</span>
+
+<span class="cm">/**</span>
+<span class="cm"> * IO without finally, Bad Smell</span>
+<span class="cm"> */</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">IONoFinally_Bad</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="kt">boolean</span> <span class="nf">readProperties</span><span class="o">(</span><span class="kd">final</span> <span class="n">String</span> <span class="n">fileName</span><span class="o">)</span> <span class="o">{</span>
+
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="kd">final</span> <span class="n">FileInputStream</span> <span class="n">inputStream</span> <span class="o">=</span> <span class="k">new</span> <span class="n">FileInputStream</span><span class="o">(</span><span class="n">fileName</span><span class="o">);</span>
+            <span class="n">loadProperties</span><span class="o">(</span><span class="n">inputStream</span><span class="o">);</span>
+            <span class="n">inputStream</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="kd">final</span> <span class="n">IOException</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">log</span><span class="o">.</span><span class="na">warn</span><span class="o">(</span><span class="s">&quot;Error opening file&quot;</span><span class="o">);</span>
+            <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p><strong>Refactorings</strong></p>
+<ul class="simple">
+<li>Finally-Block verwenden, der in jedem Fall ausgeführt wird</li>
+</ul>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">smells.exception_handling</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">sun.misc.IOUtils</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">sun.nio.ch.IOUtil</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">java.io.FileInputStream</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.io.IOException</span><span class="o">;</span>
+
+<span class="cm">/**</span>
+<span class="cm"> * IO without finally, Good</span>
+<span class="cm"> */</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">IONoFinally_Good</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="kt">boolean</span> <span class="nf">readProperties</span><span class="o">(</span><span class="kd">final</span> <span class="n">String</span> <span class="n">fileName</span><span class="o">)</span> <span class="o">{</span>
+
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="kd">final</span> <span class="n">FileInputStream</span> <span class="n">inputStream</span> <span class="o">=</span> <span class="k">new</span> <span class="n">FileInputStream</span><span class="o">(</span><span class="n">fileName</span><span class="o">);</span>
+            <span class="n">loadProperties</span><span class="o">(</span><span class="n">inputStream</span><span class="o">);</span>
+            <span class="n">inputStream</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="kd">final</span> <span class="n">IOException</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">log</span><span class="o">.</span><span class="na">warn</span><span class="o">(</span><span class="s">&quot;Error opening file&quot;</span><span class="o">);</span>
+            <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+        <span class="o">}</span> <span class="k">finally</span> <span class="o">{</span>
+            <span class="c1">// Save close</span>
+            <span class="n">IOUtils</span><span class="o">.</span><span class="na">closeQuietly</span><span class="o">(</span><span class="n">inputStream</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>Oder ab JDK 7 ARM (Automatic Resource Management) verwenden:</li>
+</ul>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">package</span> <span class="n">smells</span><span class="o">.</span><span class="n">exception_handling</span><span class="p">;</span>
+
+<span class="kn">import</span> <span class="nn">sun.misc.IOUtils</span><span class="p">;</span>
+
+<span class="kn">import</span> <span class="nn">java.io.FileInputStream</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">java.io.IOException</span><span class="p">;</span>
+
+<span class="o">/**</span>
+ <span class="o">*</span> <span class="n">IO</span> <span class="n">without</span> <span class="k">finally</span><span class="p">,</span> <span class="n">Good</span>
+ <span class="o">*/</span>
+<span class="n">public</span> <span class="k">class</span> <span class="nc">IONoFinally_Good2</span> <span class="p">{</span>
+
+    <span class="n">private</span> <span class="n">boolean</span> <span class="n">readProperties</span><span class="p">(</span><span class="n">final</span> <span class="n">String</span> <span class="n">fileName</span><span class="p">)</span> <span class="p">{</span>
+
+        <span class="k">try</span> <span class="p">(</span><span class="n">final</span> <span class="n">InputStream</span> <span class="n">inputStream</span> <span class="o">=</span> <span class="n">new</span> <span class="n">FileInputStream</span><span class="p">(</span><span class="n">fileName</span><span class="p">))</span> <span class="p">{</span>
+            <span class="n">loadProperties</span><span class="p">(</span><span class="n">inputStream</span><span class="p">);</span>
+        <span class="p">}</span> <span class="n">catch</span> <span class="p">(</span><span class="n">final</span> <span class="n">IOException</span> <span class="n">ex</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;Error opening the file&quot;</span><span class="p">);</span>
+            <span class="k">return</span> <span class="n">false</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="n">true</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">language:</th><td class="field-body">java</td>
+</tr>
+</tbody>
+</table>
+</div>
+<span id="document-smells/exception-handling/too-broad-exception-clause"></span><div class="section" id="fangen-der-allgemeinsten-exception-s-993">
+<h3>5.3. Fangen der allgemeinsten Exception (S.993)<a class="headerlink" href="#fangen-der-allgemeinsten-exception-s-993" title="Permalink to this headline">¶</a></h3>
+<p>Meist aus Bequemlichkeit wird für alle Exceptions lediglich der allgemeinte Typ Exception gefangen.</p>
+<p><strong>Bad Smell, weil...</strong></p>
+<ul class="simple">
+<li>Fehlerbehandling nicht Zweckorientiert.</li>
+<li>Andere, unbekannte schwerwiegende Fehler können unerkannt bleiben und zu unerklärlichem Fehlverhalten des Programms führen.</li>
+<li>Wertebereichsüberprüfung aufwändig, wenn neue gültige Werte hinzugefügt werden sollen.</li>
+</ul>
+<p><strong>Refactorings</strong></p>
+<ul class="simple">
+<li>Spezifische Exceptions fangen</li>
+<li>Im Falle, dass auf die spezifischen Ausnahmen immer gleich reagiert wird, kann ausnahmsweise Exception gefangen werden.</li>
+<li>Ab JDK 7 steht «Multi Catch» zur Verfügung, um mehrere spezifische Ausnahmen mit einem Catch zu fangen:</li>
+</ul>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="k">try</span> <span class="o">{</span>
+ <span class="o">...</span>
+<span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="kd">final</span> <span class="n">RemoteException</span> <span class="o">|</span> <span class="n">FinderException</span> <span class="o">|</span> <span class="n">RemoveException</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
+ <span class="o">...</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+<span id="document-smells/pitfalls/complex-boolean-expressions"></span><div class="section" id="einsatz-komplizierter-boolescher-bedingungen-s-1017">
+<h3>5.4. Einsatz komplizierter boolescher Bedingungen (S.1017)<a class="headerlink" href="#einsatz-komplizierter-boolescher-bedingungen-s-1017" title="Permalink to this headline">¶</a></h3>
+<p>Bedingungen durch Verkettung boolescher Ausdrücke sind oft unbedacht und zu kompliziert geschrieben.</p>
+<p><strong>Beispiel</strong></p>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="o">((</span><span class="n">lastWorkingState</span> <span class="o">==</span> <span class="kc">false</span> <span class="o">&amp;&amp;</span> <span class="n">newWorkingState</span> <span class="o">==</span> <span class="kc">true</span><span class="o">)</span> <span class="o">||</span>
+    <span class="o">(</span><span class="n">lastWorkingState</span> <span class="o">==</span> <span class="kc">true</span> <span class="o">&amp;&amp;</span> <span class="n">newWorkingState</span> <span class="o">==</span> <span class="kc">false</span><span class="o">))</span>
+</pre></div>
+</div>
+<p><strong>Refactorings</strong></p>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="o">(</span><span class="n">lastWorkingState</span> <span class="o">!=</span> <span class="n">newWorkingState</span><span class="o">)</span>
+</pre></div>
+</div>
+</div>
+<span id="document-smells/program-design/TD_declaration-scope-973"></span><div class="section" id="todo">
+<h3>5.5. TODO<a class="headerlink" href="#todo" title="Permalink to this headline">¶</a></h3>
+</div>
+<span id="document-smells/program-design/constants-interfaces"></span><div class="section" id="konstanten-in-interfaces-definieren-s-954">
+<h3>5.6. Konstanten in Interfaces definieren (S.954)<a class="headerlink" href="#konstanten-in-interfaces-definieren-s-954" title="Permalink to this headline">¶</a></h3>
+<p>Entweder werden Interfaces ausschliesslich zur Definition von Konstanten verwendet, oder sie werden zusammen mit Methodendefinitionen aufgeführt.</p>
+<p><strong>Bad Smell, weil...</strong></p>
+<ul class="simple">
+<li>Sichtbarkeit kann nicht eingeschränkt werden, da jede Konstante in einem Interface implizit <code class="docutils literal"><span class="pre">`public`</span></code> ist.</li>
+<li>Wenn eine Klasse das Interface implementiert ist nur schwer erkennbar, woher die Konstanten effektiv entstammen.</li>
+<li>Wenn eine Klasse das Interface implementiert und eine Subklasse dieser Klasse ein andere Interface implementiert, das zufällig gleiche Konstantennamen definiert, kommt es zu Mehrdeutitgkeiten der Konstanten und das Programm kann nicht kompiliert werden.</li>
+</ul>
+<p><strong>Refactorings</strong></p>
+<ul class="simple">
+<li>Interfaces nicht für Konstantensammlungen verwenden.</li>
+<li>Stattdessen dedizierte Klassen oder enums verwenden.</li>
+</ul>
+</div>
 <span id="document-smells/program-design/copy-paste"></span><div class="section" id="copy-paste-leichen">
-<h3>5.1. Copy-Paste Leichen<a class="headerlink" href="#copy-paste-leichen" title="Permalink to this headline">¶</a></h3>
+<h3>5.7. Copy-Paste Leichen<a class="headerlink" href="#copy-paste-leichen" title="Permalink to this headline">¶</a></h3>
 <p>Oft werden Codeblöcke aufgrund gleicher oder ähnlicher Funktionalität kopiert, woanders eingefügt und leicht abgeändert.</p>
 <p><strong>Bad Smell weil ...</strong></p>
 <ul class="simple">
@@ -692,8 +863,63 @@ Felder gesetzt werden.</p>
 </pre></div>
 </div>
 </div>
+<span id="document-smells/program-design/enums-instead-of-constants"></span><div class="section" id="zusammengehorende-konstanten-nicht-als-typ-definiert-s-956">
+<h3>5.8. Zusammengehörende Konstanten nicht als Typ definiert (S.956)<a class="headerlink" href="#zusammengehorende-konstanten-nicht-als-typ-definiert-s-956" title="Permalink to this headline">¶</a></h3>
+<p>Zusammenhängede Konstanten werden &#8216;lose&#8217; definiert (z.B. Konstanten für Befehle mittels int).</p>
+<p><strong>Bad Smell, weil...</strong></p>
+<ul class="simple">
+<li>Beim Aufruf der verwendenden Funktion wäre theoretisch auch jeder andere int-Wert möglich =&gt; Fehlerpotenzial!</li>
+<li>Es wäre eine Wertebereichsüberprüfung nötig, um ungültige Werte auszuschliessen.</li>
+<li>Wertebereichsüberprüfung aufwändig, wenn neue gültige Werte hinzugefügt werden sollen.</li>
+</ul>
+<div class="highlight-default"><div class="highlight"><pre><span></span>package smells.program_design;
+
+/**
+ * Created by samuelblattner on 24/09/16.
+ */
+public class EnumConstants_Bad {
+
+    public static final int COMMAND_REDO = 1;
+    public static final int COMMAND_UNDO = 2;
+    public static final int COMMAND_SAVE = 3;
+
+    public void execute_command(final int strategy) {        // &lt;--- Theoretisch jeder int-Wert möglich!!!
+        // u.U. Wertebereichsüberprüfung von strategy
+        // Ausführen des Commands
+        // ...
+    }
+}
+</pre></div>
+</div>
+<p><strong>Refactorings</strong></p>
+<ul class="simple">
+<li>Zusammenhängende Konstanten als Typ (mit enum) lösen.</li>
+</ul>
+<div class="highlight-default"><div class="highlight"><pre><span></span>package smells.program_design;
+
+/**
+ * Example grouped constants, good
+ */
+
+
+enum CommandStrategies {
+    COMMAND_REDO,
+    COMMAND_UNDO,
+    COMMAND_SAVE
+}
+
+public class EnumConstants_Good {
+
+    public void execute_command(final CommandStrategies strategy) {     // &lt;--- Nur noch Argument vom Typ CommandStrategies möglich!
+        // Ausführen des Commands
+        // ...
+    }
+}
+</pre></div>
+</div>
+</div>
 <span id="document-smells/program-design/long-parameter-lists"></span><div class="section" id="lange-methoden-parameterlisten-gleichen-typs">
-<h3>5.2. Lange Methoden-Parameterlisten (gleichen Typs)<a class="headerlink" href="#lange-methoden-parameterlisten-gleichen-typs" title="Permalink to this headline">¶</a></h3>
+<h3>5.9. Lange Methoden-Parameterlisten (gleichen Typs)<a class="headerlink" href="#lange-methoden-parameterlisten-gleichen-typs" title="Permalink to this headline">¶</a></h3>
 <p>Methodensignaturen mit vielen und vor allem ähnlichen Datentypen (aber unterschiedlicher Bedeutung) sind schnell unübersichtlich und können zu fehlerhaften Aufrufen durch den Programmierer führen, insbesondere dann, wenn die Methode überladen wird.</p>
 <p><strong>Bad Smell weil ...</strong></p>
 <ul class="simple">
@@ -733,8 +959,8 @@ Felder gesetzt werden.</p>
 </pre></div>
 </div>
 </div>
-<span id="document-smells/program-design/magic-numbers"></span><div class="section" id="magic-numbers">
-<h3>5.3. Magic Numbers<a class="headerlink" href="#magic-numbers" title="Permalink to this headline">¶</a></h3>
+<span id="document-smells/program-design/magic-numbers"></span><div class="section" id="magic-numbers-s-953">
+<h3>5.10. Magic Numbers (S.953)<a class="headerlink" href="#magic-numbers-s-953" title="Permalink to this headline">¶</a></h3>
 <p>Magic Numbers sind Zahlenwerte, die im Code «hardgecodet» hinterlegt werden (siehe Beispiel).</p>
 <p><strong>Bad Smell weil ...</strong></p>
 <ul class="simple">
