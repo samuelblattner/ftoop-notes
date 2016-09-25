@@ -18,6 +18,6 @@ Example
 
 Example 2
 ^^^^^^^^^
-
+.. image:: GuiExample2.png
 .. literalinclude:: ../../../src/gui/GuiExample2.java
    :language: java

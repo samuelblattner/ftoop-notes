@@ -610,15 +610,24 @@
 <span id="document-advanced-techniques/index"></span><div class="section" id="advanced-techniques">
 <h2>3. Advanced Techniques<a class="headerlink" href="#advanced-techniques" title="Permalink to this headline">¶</a></h2>
 <div class="toctree-wrapper compound">
+<span id="document-advanced-techniques/annotation/annoations"></span><div class="section" id="annotations">
+<h3>3.1. Annotations<a class="headerlink" href="#annotations" title="Permalink to this headline">¶</a></h3>
+</div>
 <span id="document-advanced-techniques/reflection/reflection"></span><div class="section" id="reflection">
-<h3>3.1. Reflection<a class="headerlink" href="#reflection" title="Permalink to this headline">¶</a></h3>
+<h3>3.2. Reflection<a class="headerlink" href="#reflection" title="Permalink to this headline">¶</a></h3>
 <p>Die Reflection-API bildet ein Modell der Java-Sprache. Die Reflection-API beschreibt
 mittels Klassen wie Method, Constructor, Class, Field, etc. die Elemente von Java.
 Mit Reflection kann die Struktur unbekannter Objekte und Klassen zur Laufzeit analysiert
 werden. Ausserdem können damit Methoden und Konstruktoren aufgerufen und
 Felder gesetzt werden.</p>
+<p><strong>Class-Objekte erhält man über</strong></p>
+<ul class="simple">
+<li>anyObject.getClass()</li>
+<li>AnyClass.class</li>
+<li>Class.forName(&#8220;fully.qualified.Name&#8221;)</li>
+</ul>
 <div class="section" id="vorteile">
-<h4>3.1.1. Vorteile<a class="headerlink" href="#vorteile" title="Permalink to this headline">¶</a></h4>
+<h4>3.2.1. Vorteile<a class="headerlink" href="#vorteile" title="Permalink to this headline">¶</a></h4>
 <ol class="arabic simple">
 <li>Von der Klasse, die Reflection benutzt, gibt es nie eine direkte (binäre) Abhängigkeit auf die mit Reflection verwendeten Klassen. Sie kann deshalb unabhängig vom Vorhandensein der benutzten Klasse geladen und ausgeführt werden.</li>
 <li>Die mit Reflection aufgerufenen Klassen müssen z.B. keinen bestimmten Typ haben, sondern nur Methoden mit einer bestimmten Signatur anbieten.</li>
@@ -627,22 +636,232 @@ Felder gesetzt werden.</p>
 </ol>
 </div>
 <div class="section" id="nachteile">
-<h4>3.1.2. Nachteile<a class="headerlink" href="#nachteile" title="Permalink to this headline">¶</a></h4>
+<h4>3.2.2. Nachteile<a class="headerlink" href="#nachteile" title="Permalink to this headline">¶</a></h4>
 <ol class="arabic simple">
 <li>Die Reflection-API arbeitet mit Strings. Dadurch entsteht nur eine implizite Abhängigkeit / Kopplung zu den benutzen Klassen. Bei einer Veränderung der API der benutzten Klassen kann diese (vom Compiler unbemerkt) gebrochen werden.</li>
 </ol>
 </div>
-<div class="section" id="beispiel">
-<h4>3.1.3. Beispiel<a class="headerlink" href="#beispiel" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="beispiel-allgemein">
+<h4>3.2.3. Beispiel Allgemein<a class="headerlink" href="#beispiel-allgemein" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">advanced_techniques.reflection</span><span class="o">;</span>
+
+<span class="cm">/**</span>
+<span class="cm"> * Reflection Example: Dummy Class to be loaded and instantiated dynamically</span>
+<span class="cm"> */</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">DummyClass</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="kt">int</span> <span class="n">myVar</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">sayHello</span><span class="o">(</span><span class="n">String</span> <span class="n">yourName</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="s">&quot;Hello World, hello %s\n&quot;</span><span class="o">,</span> <span class="n">yourName</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">advanced_techniques.reflection</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">java.lang.reflect.Field</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.lang.reflect.InvocationTargetException</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.lang.reflect.Method</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.lang.reflect.Modifier</span><span class="o">;</span>
+
+<span class="cm">/**</span>
+<span class="cm"> * Reflection example</span>
+<span class="cm"> */</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Reflection</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="n">Class</span><span class="o">&lt;?&gt;</span> <span class="n">myClass</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">helloMethodName</span> <span class="o">=</span> <span class="s">&quot;sayHello&quot;</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">Reflection</span><span class="o">(</span><span class="n">String</span> <span class="n">className</span><span class="o">)</span> <span class="o">{</span>
+
+        <span class="k">try</span> <span class="o">{</span>
+
+            <span class="c1">// Get Class by String</span>
+            <span class="n">myClass</span> <span class="o">=</span> <span class="n">Class</span><span class="o">.</span><span class="na">forName</span><span class="o">(</span><span class="n">className</span><span class="o">);</span>
+
+            <span class="c1">// Get Method by String</span>
+            <span class="n">Method</span> <span class="n">helloMethod</span> <span class="o">=</span> <span class="n">myClass</span><span class="o">.</span><span class="na">getMethod</span><span class="o">(</span><span class="n">helloMethodName</span><span class="o">,</span> <span class="n">String</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+
+            <span class="c1">// Create an instance</span>
+            <span class="n">Object</span> <span class="n">instance</span> <span class="o">=</span> <span class="n">myClass</span><span class="o">.</span><span class="na">newInstance</span><span class="o">();</span>
+
+            <span class="c1">// Invoke method</span>
+            <span class="n">helloMethod</span><span class="o">.</span><span class="na">invoke</span><span class="o">(</span><span class="n">instance</span><span class="o">,</span> <span class="s">&quot;Samuel&quot;</span><span class="o">);</span>
+
+            <span class="c1">// Get Field and Method list</span>
+            <span class="n">Method</span><span class="o">[]</span> <span class="n">methods</span> <span class="o">=</span> <span class="n">myClass</span><span class="o">.</span><span class="na">getDeclaredMethods</span><span class="o">();</span>
+            <span class="n">String</span> <span class="n">methodsString</span> <span class="o">=</span> <span class="s">&quot;&quot;</span><span class="o">;</span>
+            <span class="k">for</span><span class="o">(</span><span class="n">Method</span> <span class="n">method</span> <span class="o">:</span> <span class="n">methods</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">methodsString</span> <span class="o">+=</span>
+                        <span class="n">String</span><span class="o">.</span><span class="na">format</span><span class="o">(</span>
+                                <span class="s">&quot;%s %s(%s)&quot;</span><span class="o">,</span>
+                                <span class="n">Modifier</span><span class="o">.</span><span class="na">toString</span><span class="o">(</span><span class="n">method</span><span class="o">.</span><span class="na">getModifiers</span><span class="o">()),</span>
+                                <span class="n">method</span><span class="o">.</span><span class="na">getName</span><span class="o">(),</span>
+                                <span class="n">method</span><span class="o">.</span><span class="na">getParameterTypes</span><span class="o">()</span>
+                        <span class="o">);</span>
+            <span class="o">}</span>
+
+            <span class="n">Field</span><span class="o">[]</span> <span class="n">fields</span> <span class="o">=</span> <span class="n">myClass</span><span class="o">.</span><span class="na">getDeclaredFields</span><span class="o">();</span>
+            <span class="n">String</span> <span class="n">fieldStrings</span> <span class="o">=</span> <span class="s">&quot;&quot;</span><span class="o">;</span>
+            <span class="k">for</span><span class="o">(</span><span class="n">Field</span> <span class="n">field</span> <span class="o">:</span> <span class="n">fields</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">fieldStrings</span> <span class="o">+=</span>
+                        <span class="n">String</span><span class="o">.</span><span class="na">format</span><span class="o">(</span>
+                                <span class="s">&quot;%s %s %s&quot;</span><span class="o">,</span>
+                                <span class="n">Modifier</span><span class="o">.</span><span class="na">toString</span><span class="o">(</span><span class="n">field</span><span class="o">.</span><span class="na">getModifiers</span><span class="o">()),</span>
+                                <span class="n">field</span><span class="o">.</span><span class="na">getType</span><span class="o">(),</span>
+                                <span class="n">field</span><span class="o">.</span><span class="na">getName</span><span class="o">()</span>
+                        <span class="o">);</span>
+            <span class="o">}</span>
+
+
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">format</span><span class="o">(</span>
+                    <span class="s">&quot;\n\nCalled by class %s with \n\nMethods:\n%s\n\nFields:\n%s&quot;</span><span class="o">,</span>
+                    <span class="n">className</span><span class="o">,</span>
+                    <span class="n">methodsString</span><span class="o">,</span>
+                    <span class="n">fieldStrings</span>
+            <span class="o">);</span>
+
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">ClassNotFoundException</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="s">&quot;Class %s could not be found.&quot;</span><span class="o">,</span> <span class="n">className</span><span class="o">);</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">NoSuchMethodException</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="s">&quot;Method %s could not be found.&quot;</span><span class="o">,</span> <span class="n">helloMethodName</span><span class="o">);</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">IllegalAccessException</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="s">&quot;Illegal Access&quot;</span><span class="o">);</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">InstantiationException</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="s">&quot;Error when instantiating class %s&quot;</span><span class="o">,</span> <span class="n">className</span><span class="o">);</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">InvocationTargetException</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="s">&quot;Error when calling method %s&quot;</span><span class="o">,</span> <span class="n">helloMethodName</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span> <span class="o">(</span><span class="n">String</span> <span class="n">args</span><span class="o">[])</span> <span class="o">{</span>
+
+        <span class="c1">// Use Fully Qualified Module Name!</span>
+        <span class="k">new</span> <span class="n">Reflection</span><span class="o">(</span><span class="s">&quot;advanced_techniques.reflection.DummyClass&quot;</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="beispiel-aufgabe-interface-creator">
+<h4>3.2.4. Beispiel Aufgabe Interface Creator<a class="headerlink" href="#beispiel-aufgabe-interface-creator" title="Permalink to this headline">¶</a></h4>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">package</span> <span class="n">advanced_techniques</span><span class="o">.</span><span class="n">reflection</span><span class="p">;</span>
 
 <span class="o">/**</span>
- <span class="o">*</span> <span class="n">Created</span> <span class="n">by</span> <span class="n">samuelblattner</span> <span class="n">on</span> <span class="mi">21</span><span class="o">/</span><span class="mi">09</span><span class="o">/</span><span class="mf">16.</span>
+ <span class="o">*</span> <span class="n">Reflection</span> <span class="n">Example</span><span class="p">:</span> <span class="n">Dummy</span> <span class="n">Class</span> <span class="n">to</span> <span class="n">be</span> <span class="n">loaded</span> <span class="ow">and</span> <span class="n">instantiated</span> <span class="n">dynamically</span>
  <span class="o">*/</span>
-<span class="n">public</span> <span class="k">class</span> <span class="nc">Reflection</span> <span class="p">{</span>
+<span class="n">public</span> <span class="k">class</span> <span class="nc">DummyClass</span> <span class="p">{</span>
+
+    <span class="n">private</span> <span class="n">static</span> <span class="n">final</span> <span class="nb">int</span> <span class="n">myVar</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+    <span class="n">public</span> <span class="n">void</span> <span class="n">sayHello</span><span class="p">(</span><span class="n">String</span> <span class="n">yourName</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;Hello World, hello </span><span class="si">%s</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">yourName</span><span class="p">);</span>
+    <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 </div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">language:</th><td class="field-body">java</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default"><div class="highlight"><pre><span></span>package advanced_techniques.reflection;
+
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
+
+/**
+ * Reflection example
+ */
+public class Reflection {
+
+    private Class&lt;?&gt; myClass;
+    private static final String helloMethodName = &quot;sayHello&quot;;
+
+    public Reflection(String className) {
+
+        try {
+
+            // Get Class by String
+            myClass = Class.forName(className);
+
+            // Get Method by String
+            Method helloMethod = myClass.getMethod(helloMethodName, String.class);
+
+            // Create an instance
+            Object instance = myClass.newInstance();
+
+            // Invoke method
+            helloMethod.invoke(instance, &quot;Samuel&quot;);
+
+            // Get Field and Method list
+            Method[] methods = myClass.getDeclaredMethods();
+            String methodsString = &quot;&quot;;
+            for(Method method : methods) {
+                methodsString +=
+                        String.format(
+                                &quot;%s %s(%s)&quot;,
+                                Modifier.toString(method.getModifiers()),
+                                method.getName(),
+                                method.getParameterTypes()
+                        );
+            }
+
+            Field[] fields = myClass.getDeclaredFields();
+            String fieldStrings = &quot;&quot;;
+            for(Field field : fields) {
+                fieldStrings +=
+                        String.format(
+                                &quot;%s %s %s&quot;,
+                                Modifier.toString(field.getModifiers()),
+                                field.getType(),
+                                field.getName()
+                        );
+            }
+
+
+            System.out.format(
+                    &quot;\n\nCalled by class %s with \n\nMethods:\n%s\n\nFields:\n%s&quot;,
+                    className,
+                    methodsString,
+                    fieldStrings
+            );
+
+        } catch (ClassNotFoundException ex) {
+            System.out.format(&quot;Class %s could not be found.&quot;, className);
+        } catch (NoSuchMethodException ex) {
+            System.out.format(&quot;Method %s could not be found.&quot;, helloMethodName);
+        } catch (IllegalAccessException ex) {
+            System.out.format(&quot;Illegal Access&quot;);
+        } catch (InstantiationException ex) {
+            System.out.format(&quot;Error when instantiating class %s&quot;, className);
+        } catch (InvocationTargetException ex) {
+            System.out.format(&quot;Error when calling method %s&quot;, helloMethodName);
+        }
+    }
+
+    public static void main (String args[]) {
+
+        // Use Fully Qualified Module Name!
+        new Reflection(&quot;advanced_techniques.reflection.DummyClass&quot;);
+    }
+}
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">language:</th><td class="field-body">java</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 </div>
@@ -718,6 +937,7 @@ Felder gesetzt werden.</p>
 </div>
 <div class="section" id="example-2">
 <h4>4.1.4. Example 2<a class="headerlink" href="#example-2" title="Permalink to this headline">¶</a></h4>
+<img alt="_images/GuiExample2.png" src="_images/GuiExample2.png" />
 <div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">gui</span><span class="o">;</span>
 
 <span class="kn">import</span> <span class="nn">javax.swing.*</span><span class="o">;</span>
@@ -753,7 +973,7 @@ Felder gesetzt werden.</p>
         <span class="n">basePanel</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">leftScrollPane</span><span class="o">,</span> <span class="n">BorderLayout</span><span class="o">.</span><span class="na">WEST</span><span class="o">);</span>
 
         <span class="n">rightScrollPane</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JScrollPane</span><span class="o">();</span>
-        <span class="c1">//rightScrollPane.setPreferredSize(new Dimension(200, 200));</span>
+        <span class="n">rightScrollPane</span><span class="o">.</span><span class="na">setPreferredSize</span><span class="o">(</span><span class="k">new</span> <span class="n">Dimension</span><span class="o">(</span><span class="mi">200</span><span class="o">,</span> <span class="mi">200</span><span class="o">));</span>
         <span class="n">rightList</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JList</span><span class="o">&lt;&gt;();</span>
         <span class="n">rightScrollPane</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">rightList</span><span class="o">);</span>
         <span class="n">basePanel</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">rightScrollPane</span><span class="o">,</span> <span class="n">BorderLayout</span><span class="o">.</span><span class="na">EAST</span><span class="o">);</span>

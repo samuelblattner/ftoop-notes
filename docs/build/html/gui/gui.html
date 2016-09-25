@@ -32,7 +32,7 @@
   
     <link rel="top" title="FTOOP Java Examples 1.0 documentation" href="../index.html"/>
         <link rel="next" title="5. Smells" href="../smells/smells.html"/>
-        <link rel="prev" title="3.1. Reflection" href="../advanced-techniques/reflection/reflection.html"/> 
+        <link rel="prev" title="3.2. Reflection" href="../advanced-techniques/reflection/reflection.html"/> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
@@ -211,6 +211,7 @@
 </div>
 <div class="section" id="example-2">
 <h3>4.1.4. Example 2<a class="headerlink" href="#example-2" title="Permalink to this headline">¶</a></h3>
+<img alt="../_images/GuiExample2.png" src="../_images/GuiExample2.png" />
 <div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">gui</span><span class="o">;</span>
 
 <span class="kn">import</span> <span class="nn">javax.swing.*</span><span class="o">;</span>
@@ -246,7 +247,7 @@
         <span class="n">basePanel</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">leftScrollPane</span><span class="o">,</span> <span class="n">BorderLayout</span><span class="o">.</span><span class="na">WEST</span><span class="o">);</span>
 
         <span class="n">rightScrollPane</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JScrollPane</span><span class="o">();</span>
-        <span class="c1">//rightScrollPane.setPreferredSize(new Dimension(200, 200));</span>
+        <span class="n">rightScrollPane</span><span class="o">.</span><span class="na">setPreferredSize</span><span class="o">(</span><span class="k">new</span> <span class="n">Dimension</span><span class="o">(</span><span class="mi">200</span><span class="o">,</span> <span class="mi">200</span><span class="o">));</span>
         <span class="n">rightList</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JList</span><span class="o">&lt;&gt;();</span>
         <span class="n">rightScrollPane</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">rightList</span><span class="o">);</span>
         <span class="n">basePanel</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">rightScrollPane</span><span class="o">,</span> <span class="n">BorderLayout</span><span class="o">.</span><span class="na">EAST</span><span class="o">);</span>
@@ -304,7 +305,7 @@
         <a href="../smells/smells.html" class="btn btn-neutral float-right" title="5. Smells" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="../advanced-techniques/reflection/reflection.html" class="btn btn-neutral" title="3.1. Reflection" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="../advanced-techniques/reflection/reflection.html" class="btn btn-neutral" title="3.2. Reflection" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

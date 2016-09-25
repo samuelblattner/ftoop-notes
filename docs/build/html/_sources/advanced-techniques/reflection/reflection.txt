@@ -7,6 +7,11 @@ Mit Reflection kann die Struktur unbekannter Objekte und Klassen zur Laufzeit an
 werden. Ausserdem können damit Methoden und Konstruktoren aufgerufen und
 Felder gesetzt werden.
 
+**Class-Objekte erhält man über**
+
+* anyObject.getClass()
+* AnyClass.class
+* Class.forName("fully.qualified.Name")
 
 Vorteile
 --------
@@ -22,7 +27,21 @@ Nachteile
 1. Die Reflection-API arbeitet mit Strings. Dadurch entsteht nur eine implizite Abhängigkeit / Kopplung zu den benutzen Klassen. Bei einer Veränderung der API der benutzten Klassen kann diese (vom Compiler unbemerkt) gebrochen werden.
 
 
-Beispiel
---------
+Beispiel Allgemein
+------------------
+
+.. literalinclude:: ../../../../src/advanced_techniques/reflection/DummyClass.java
+    :language: java
 
 .. literalinclude:: ../../../../src/advanced_techniques/reflection/Reflection.java
+    :language: java
+
+
+Beispiel Aufgabe Interface Creator
+----------------------------------
+
+.. literalinclude:: ../../../../src/advanced_techniques/reflection/DummyClass.java
+:language: java
+
+.. literalinclude:: ../../../../src/advanced_techniques/reflection/Reflection.java
+:language: java
