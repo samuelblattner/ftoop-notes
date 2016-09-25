@@ -32,7 +32,7 @@
   
     <link rel="top" title="FTOOP Java Examples 1.0 documentation" href="../../index.html"/>
         <link rel="up" title="3. Advanced Techniques" href="../index.html"/>
-        <link rel="next" title="4. GUI" href="../../gui/gui.html"/>
+        <link rel="next" title="3.3. Beispiel Aufgabe Interface Creator" href="../z_exercises/InterfaceGenerator.html"/>
         <link rel="prev" title="3.1. Annotations" href="../annotation/annoations.html"/> 
 
   
@@ -91,9 +91,9 @@
 <li class="toctree-l3"><a class="reference internal" href="#vorteile">3.2.1. Vorteile</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#nachteile">3.2.2. Nachteile</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#beispiel-allgemein">3.2.3. Beispiel Allgemein</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#beispiel-aufgabe-interface-creator">3.2.4. Beispiel Aufgabe Interface Creator</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="../z_exercises/InterfaceGenerator.html">3.3. Beispiel Aufgabe Interface Creator</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../gui/gui.html">4. GUI</a></li>
@@ -275,125 +275,6 @@ Felder gesetzt werden.</p>
 </pre></div>
 </div>
 </div>
-<div class="section" id="beispiel-aufgabe-interface-creator">
-<h2>3.2.4. Beispiel Aufgabe Interface Creator<a class="headerlink" href="#beispiel-aufgabe-interface-creator" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">package</span> <span class="n">advanced_techniques</span><span class="o">.</span><span class="n">reflection</span><span class="p">;</span>
-
-<span class="o">/**</span>
- <span class="o">*</span> <span class="n">Reflection</span> <span class="n">Example</span><span class="p">:</span> <span class="n">Dummy</span> <span class="n">Class</span> <span class="n">to</span> <span class="n">be</span> <span class="n">loaded</span> <span class="ow">and</span> <span class="n">instantiated</span> <span class="n">dynamically</span>
- <span class="o">*/</span>
-<span class="n">public</span> <span class="k">class</span> <span class="nc">DummyClass</span> <span class="p">{</span>
-
-    <span class="n">private</span> <span class="n">static</span> <span class="n">final</span> <span class="nb">int</span> <span class="n">myVar</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-
-    <span class="n">public</span> <span class="n">void</span> <span class="n">sayHello</span><span class="p">(</span><span class="n">String</span> <span class="n">yourName</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">System</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;Hello World, hello </span><span class="si">%s</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">yourName</span><span class="p">);</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">language:</th><td class="field-body">java</td>
-</tr>
-</tbody>
-</table>
-<div class="highlight-default"><div class="highlight"><pre><span></span>package advanced_techniques.reflection;
-
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
-
-/**
- * Reflection example
- */
-public class Reflection {
-
-    private Class&lt;?&gt; myClass;
-    private static final String helloMethodName = &quot;sayHello&quot;;
-
-    public Reflection(String className) {
-
-        try {
-
-            // Get Class by String
-            myClass = Class.forName(className);
-
-            // Get Method by String
-            Method helloMethod = myClass.getMethod(helloMethodName, String.class);
-
-            // Create an instance
-            Object instance = myClass.newInstance();
-
-            // Invoke method
-            helloMethod.invoke(instance, &quot;Samuel&quot;);
-
-            // Get Field and Method list
-            Method[] methods = myClass.getDeclaredMethods();
-            String methodsString = &quot;&quot;;
-            for(Method method : methods) {
-                methodsString +=
-                        String.format(
-                                &quot;%s %s(%s)&quot;,
-                                Modifier.toString(method.getModifiers()),
-                                method.getName(),
-                                method.getParameterTypes()
-                        );
-            }
-
-            Field[] fields = myClass.getDeclaredFields();
-            String fieldStrings = &quot;&quot;;
-            for(Field field : fields) {
-                fieldStrings +=
-                        String.format(
-                                &quot;%s %s %s&quot;,
-                                Modifier.toString(field.getModifiers()),
-                                field.getType(),
-                                field.getName()
-                        );
-            }
-
-
-            System.out.format(
-                    &quot;\n\nCalled by class %s with \n\nMethods:\n%s\n\nFields:\n%s&quot;,
-                    className,
-                    methodsString,
-                    fieldStrings
-            );
-
-        } catch (ClassNotFoundException ex) {
-            System.out.format(&quot;Class %s could not be found.&quot;, className);
-        } catch (NoSuchMethodException ex) {
-            System.out.format(&quot;Method %s could not be found.&quot;, helloMethodName);
-        } catch (IllegalAccessException ex) {
-            System.out.format(&quot;Illegal Access&quot;);
-        } catch (InstantiationException ex) {
-            System.out.format(&quot;Error when instantiating class %s&quot;, className);
-        } catch (InvocationTargetException ex) {
-            System.out.format(&quot;Error when calling method %s&quot;, helloMethodName);
-        }
-    }
-
-    public static void main (String args[]) {
-
-        // Use Fully Qualified Module Name!
-        new Reflection(&quot;advanced_techniques.reflection.DummyClass&quot;);
-    }
-}
-</pre></div>
-</div>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">language:</th><td class="field-body">java</td>
-</tr>
-</tbody>
-</table>
-</div>
 </div>
 
 
@@ -403,7 +284,7 @@ public class Reflection {
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../../gui/gui.html" class="btn btn-neutral float-right" title="4. GUI" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="../z_exercises/InterfaceGenerator.html" class="btn btn-neutral float-right" title="3.3. Beispiel Aufgabe Interface Creator" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="../annotation/annoations.html" class="btn btn-neutral" title="3.1. Annotations" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>

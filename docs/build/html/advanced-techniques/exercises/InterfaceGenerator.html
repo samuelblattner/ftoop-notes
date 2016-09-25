@@ -1,0 +1,569 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>3.2. Beispiel Aufgabe Interface Creator &mdash; FTOOP Java Examples 1.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="FTOOP Java Examples 1.0 documentation" href="../../index.html"/>
+        <link rel="up" title="3. Advanced Techniques" href="../index.html"/>
+        <link rel="next" title="3.3. Reflection" href="../reflection/reflection.html"/>
+        <link rel="prev" title="3.1. Annotations" href="../annotation/annoations.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> FTOOP Java Examples
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../patterns/index.html">1. Patterns</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../threading/index.html">2. Threading</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">3. Advanced Techniques</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../annotation/annoations.html">3.1. Annotations</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">3.2. Beispiel Aufgabe Interface Creator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reflection/reflection.html">3.3. Reflection</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../gui/gui.html">4. GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../smells/smells.html">5. Smells</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../index.html">FTOOP Java Examples</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../index.html">3. Advanced Techniques</a> &raquo;</li>
+      
+    <li>3.2. Beispiel Aufgabe Interface Creator</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../../_sources/advanced-techniques/exercises/InterfaceGenerator.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="beispiel-aufgabe-interface-creator">
+<h1>3.2. Beispiel Aufgabe Interface Creator<a class="headerlink" href="#beispiel-aufgabe-interface-creator" title="Permalink to this headline">¶</a></h1>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">package</span> <span class="n">advanced_techniques</span><span class="o">.</span><span class="n">exercises</span><span class="p">;</span>
+
+<span class="kn">import</span> <span class="nn">java.lang.annotation.Retention</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">java.lang.annotation.RetentionPolicy</span><span class="p">;</span>
+
+<span class="nd">@Retention</span><span class="p">(</span><span class="n">RetentionPolicy</span><span class="o">.</span><span class="n">RUNTIME</span><span class="p">)</span>
+
+<span class="n">public</span> <span class="nd">@interface</span> <span class="n">DummyAnnotation</span> <span class="p">{</span>
+
+<span class="p">}</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">language:</th><td class="field-body">java</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">package</span> <span class="n">advanced_techniques</span><span class="o">.</span><span class="n">exercises</span><span class="p">;</span>
+
+<span class="kn">import</span> <span class="nn">java.lang.annotation.Retention</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">java.lang.annotation.RetentionPolicy</span><span class="p">;</span>
+
+<span class="nd">@Retention</span><span class="p">(</span><span class="n">RetentionPolicy</span><span class="o">.</span><span class="n">RUNTIME</span><span class="p">)</span>
+
+
+<span class="n">public</span> <span class="nd">@interface</span> <span class="n">TODO</span> <span class="p">{</span>
+	<span class="n">String</span> <span class="n">what</span><span class="p">()</span> <span class="n">default</span> <span class="s2">&quot;&quot;</span><span class="p">;</span>
+	<span class="nb">int</span> <span class="n">when</span><span class="p">()</span> <span class="n">default</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">language:</th><td class="field-body">java</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">package</span> <span class="n">advanced_techniques</span><span class="o">.</span><span class="n">exercises</span><span class="p">;</span>
+
+<span class="kn">import</span> <span class="nn">java.lang.reflect.Method</span><span class="p">;</span>
+<span class="kn">import</span> <span class="nn">java.util.Comparator</span><span class="p">;</span>
+
+<span class="o">/**</span>
+ <span class="o">*</span> <span class="n">Compares</span> <span class="n">Method</span> <span class="n">objects</span> <span class="n">by</span> <span class="n">their</span> <span class="n">method</span> <span class="n">name</span> <span class="k">for</span> <span class="n">sorting</span><span class="o">.</span>
+ <span class="o">*</span> <span class="nd">@author</span> <span class="n">samuelblattner</span>
+ <span class="o">*</span>
+ <span class="o">*/</span>
+<span class="n">public</span> <span class="k">class</span> <span class="nc">MethodComparator</span> <span class="n">implements</span> <span class="n">Comparator</span><span class="o">&lt;</span><span class="n">Method</span><span class="o">&gt;</span> <span class="p">{</span>
+    <span class="n">public</span> <span class="nb">int</span> <span class="n">compare</span><span class="p">(</span><span class="n">Method</span> <span class="n">m1</span><span class="p">,</span> <span class="n">Method</span> <span class="n">m2</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">m1</span><span class="o">.</span><span class="n">getName</span><span class="p">()</span><span class="o">.</span><span class="n">compareTo</span><span class="p">(</span><span class="n">m2</span><span class="o">.</span><span class="n">getName</span><span class="p">());</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">language:</th><td class="field-body">java</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">package</span> <span class="n">advanced_techniques</span><span class="o">.</span><span class="n">exercises</span><span class="p">;</span>
+
+<span class="nd">@TODO</span><span class="p">(</span><span class="n">what</span><span class="o">=</span><span class="s2">&quot;Make this class fancy&quot;</span><span class="p">,</span> <span class="n">when</span><span class="o">=</span><span class="mi">123</span><span class="p">)</span>
+<span class="n">public</span> <span class="k">class</span> <span class="nc">MyClass</span> <span class="p">{</span>
+
+	<span class="n">private</span> <span class="nb">int</span> <span class="n">var1</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+	<span class="n">private</span> <span class="nb">int</span> <span class="n">var2</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+	<span class="n">public</span> <span class="nb">int</span> <span class="n">var3</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+	<span class="n">public</span> <span class="n">String</span> <span class="n">test</span> <span class="o">=</span> <span class="s2">&quot;hello&quot;</span><span class="p">;</span>
+	
+	<span class="nd">@TODO</span><span class="p">(</span><span class="n">what</span><span class="o">=</span><span class="s2">&quot;Maybe make this method private&quot;</span><span class="p">,</span> <span class="n">when</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>	
+	<span class="nd">@DummyAnnotation</span>	
+	<span class="n">public</span> <span class="n">void</span> <span class="n">HelloWorld</span><span class="p">(</span><span class="nb">int</span> <span class="n">howMany</span><span class="p">,</span> <span class="n">String</span> <span class="n">gugus</span><span class="p">)</span> <span class="p">{</span>
+		<span class="n">System</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">println</span><span class="p">(</span><span class="s2">&quot;Hello world.&quot;</span><span class="p">);</span>
+		<span class="n">System</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">println</span><span class="p">(</span><span class="n">var1</span><span class="p">);</span>
+		<span class="n">System</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">println</span><span class="p">(</span><span class="n">var2</span><span class="p">);</span>
+	<span class="p">}</span>
+	
+	<span class="nd">@TODO</span><span class="p">(</span><span class="n">what</span><span class="o">=</span><span class="s2">&quot;Make this method public&quot;</span><span class="p">,</span> <span class="n">when</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+	<span class="n">private</span> <span class="n">String</span> <span class="n">PrivateMethod</span><span class="p">(</span><span class="nb">int</span> <span class="n">param</span><span class="p">)</span> <span class="p">{</span>
+		<span class="k">return</span> <span class="s2">&quot;Hello World&quot;</span><span class="p">;</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">language:</th><td class="field-body">java</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default"><div class="highlight"><pre><span></span>package advanced_techniques.exercises;
+
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
+import java.util.Arrays;
+
+
+/**
+ * The Interfacer creates a String representation of an interface that is 
+ * implemented by a given class name. 
+ * @author samuelblattner
+ *
+ */
+public class Interfacer {
+	
+	private Class&lt;?&gt; classTemplate;
+	private Method[] classMethods;
+	
+	private int indentationLevel = 0;
+	private boolean formattedOutput = false;
+	
+	/** Methods with the following modifiers should not be rendered in the interface */
+	private static final String[] INVALID_MODIFIERS = new String[]{&quot;protected&quot;, &quot;private&quot;, &quot;static&quot;, &quot;final&quot;};
+	
+	/**
+	 * Returns a line break if formatted output is turned on.
+	 * @return Line break or empty String.
+	 */
+	private String formattedLineBreak() {
+		return formattedOutput ? &quot;\n&quot; : &quot; &quot;;
+	}
+	
+	/**
+	 * Returns an indentation corresponding to the current indentation level 
+	 * if formatted output is turned on.
+	 * @return A multitude of tab characters.
+	 */
+	private String formattedIndentation() {
+		if (formattedOutput) {
+			String indentation = &quot;&quot;;
+			for (int i = 0; i &lt; indentationLevel; i++) {
+				indentation += &quot;\t&quot;;
+			}
+			return indentation;
+		}
+		return &quot;&quot;;
+	}
+	
+	/**
+	 * Tries to retrieve a Class object by name. 
+	 * @param className The class name for which to find a Class
+	 * @return true if Class could be found, false if not
+	 */
+	private boolean getClassByName(final String className) {
+		try {
+			this.classTemplate = Class.forName(className);
+			return true;
+		} catch (ClassNotFoundException e) {
+			return false;
+		}
+	}
+	
+	/**
+	 * Gets the actual class name from a fully qualified
+	 * class name.
+	 * @param className
+	 * @return The actual class name
+	 */
+	private String renderClassName(final String className) {
+		int lastPosDot = className.lastIndexOf(&quot;.&quot;);
+		int lastPosDollar = className.lastIndexOf(&quot;$&quot;);
+		int nameStartPos = Math.max(lastPosDot, lastPosDollar);
+		return className.substring(nameStartPos + 1);
+	}
+	
+	/**
+	 * Check if the modifiers of a given method contain 
+	 * any modifier that is illegal for an interface declaration.
+	 * @param modifiers
+	 * @return True if modifiers are valid
+	 */
+	private boolean validateModifiers(final String modifiers) {
+		boolean valid = true;
+		int i = Interfacer.INVALID_MODIFIERS.length;
+		while (valid &amp;&amp; i-- &gt; 0) {
+			if (modifiers.contains(Interfacer.INVALID_MODIFIERS[i])) {
+				valid = false;
+				return valid;
+			}
+		}
+		return valid;
+	}
+	
+	/**
+	 * Renders all annotations for a given class or method. If the annotation
+	 * is of type TODO, it will be replaced with a comment representation instead.
+	 * @param annotatedObject
+	 * @return
+	 */
+	private String renderAnnotationsForObject(Object annotatedObject) {
+		Annotation[] annotationClasses;
+		boolean isMethod = true;
+		
+		if ( annotatedObject.getClass() == Method.class ) {
+			annotationClasses = ((Method)annotatedObject).getDeclaredAnnotations();
+		} else if ( annotatedObject.getClass() == Class.class ) {
+			annotationClasses = ((Class&lt;?&gt;)annotatedObject).getDeclaredAnnotations();
+			isMethod = false;
+		} else {
+			return &quot;&quot;;
+		}
+		
+		if (annotationClasses.length &gt; 0) {
+			String annotations = &quot;&quot;;
+			for (Annotation annotation: annotationClasses) {
+				if (annotation.annotationType() == TODO.class) {
+					TODO todo;
+					if (isMethod) {
+						todo = ((Method)annotatedObject).getAnnotation(TODO.class);
+					} else {
+						todo = (TODO)((Class&lt;?&gt;)annotatedObject).getAnnotation(TODO.class);
+					}
+					
+					annotations += String.format(&quot;%s/** TODO what=%s when=Release %d */%s&quot;,
+							formattedIndentation(),
+							todo.what(),
+							todo.when(),
+							formattedLineBreak()
+							);
+				} else {
+					annotations += String.format(&quot;%s%s%s&quot;,
+							formattedIndentation(),
+							annotation.toString(),
+							formattedLineBreak());
+				}
+			}
+			return annotations;
+		}
+		return &quot;&quot;;
+	}
+	
+	/**
+	 * Renders a method with its modifiers, return type and
+	 * parameter types. The string is rendered with a concluding
+	 * semicolon.
+	 * @param method A Method instance of which a String representation
+	 * should be rendered.
+	 * @return A String representation of the method.
+	 */
+	private String renderMethodSignature(Method method) {
+		/** 
+		 * Retrieve method modifiers and check if valid.
+		 * Do not render if method signature contains any invalid modifiers */
+		String methodModifiers = Modifier.toString(method.getModifiers());
+		
+		if (validateModifiers(methodModifiers)) {
+			
+			/** Retrieve parameter types */
+			String params = &quot;&quot;;
+			Class&lt;?&gt;[] paramClasses = method.getParameterTypes();
+			
+			for (int i = 0; i &lt; paramClasses.length; i++) {
+				params += String.format(&quot;%s param%d%s&quot;,
+						paramClasses[i].getName(),
+						i,
+						i + 1 &lt; paramClasses.length ? &quot;, &quot; : &quot;&quot; );
+			}
+			
+			return String.format(&quot;%s%s%s %s %s(%s);&quot;,
+					renderAnnotationsForObject(method),
+					formattedIndentation(),
+					Modifier.toString(method.getModifiers()),
+					method.getReturnType().getName(),
+					method.getName(),
+					params
+			);
+		}
+		return &quot;&quot;;
+	}
+	
+	/**
+	 * Outputs an interfacer description that is compatible to 
+	 * the given class.
+	 * @param patternClass
+	 */
+	public String renderInterfaceForClassName(final String className) {
+		if (getClassByName(className)) {
+			classMethods = classTemplate.getDeclaredMethods();
+
+			String output = String.format(&quot;%spublic interface %sIf{%s&quot;,
+					renderAnnotationsForObject(this.classTemplate),
+					renderClassName(className),
+					formattedLineBreak());
+			
+			indentationLevel++;
+						
+			/** Methods. */
+			Arrays.sort(classMethods, new MethodComparator());
+			
+			for (Method classMethod : classMethods) {
+				String methodSignature = renderMethodSignature(classMethod);
+				if (methodSignature != &quot;&quot;) {
+					output += String.format(&quot;%s%s&quot;,
+							renderMethodSignature(classMethod),
+							formattedLineBreak());
+				}
+			}
+			
+			indentationLevel--;
+			
+			output += &quot;}&quot;;
+			System.out.println(output);
+			return output;
+		} else {
+			System.err.format(&quot;Class \&quot;%s\&quot; could not be found!&quot;, className);
+			return &quot;&quot;;
+		}		
+	}
+	
+	/**
+	 * Overloaded method for formatted output.
+	 * @param className
+	 * @param formattedOutput
+	 */
+	public String renderInterfaceForClassName(final String className, boolean formattedOutput) {
+		this.formattedOutput = formattedOutput;
+		return renderInterfaceForClassName(className);
+	}
+	
+	/**
+	 * Main method
+	 * @param args Arguments
+	 */
+	public static void main(String[] args) {
+		Interfacer interfacer = new Interfacer();
+		if (args.length != 2) {
+			interfacer.renderInterfaceForClassName(&quot;block2.MyClass&quot;, false);
+		} else {
+			String className = args[0];
+			boolean formatted = (args[1] == &quot;true&quot; ? true : false);
+			interfacer.renderInterfaceForClassName(className, formatted);
+		}
+	}
+}
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">language:</th><td class="field-body">java</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../reflection/reflection.html" class="btn btn-neutral float-right" title="3.3. Reflection" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../annotation/annoations.html" class="btn btn-neutral" title="3.1. Annotations" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, Samuel Blattner.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

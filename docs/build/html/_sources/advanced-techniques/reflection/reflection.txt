@@ -36,12 +36,3 @@ Beispiel Allgemein
 .. literalinclude:: ../../../../src/advanced_techniques/reflection/Reflection.java
     :language: java
 
-
-Beispiel Aufgabe Interface Creator
-----------------------------------
-
-.. literalinclude:: ../../../../src/advanced_techniques/reflection/DummyClass.java
-:language: java
-
-.. literalinclude:: ../../../../src/advanced_techniques/reflection/Reflection.java
-:language: java

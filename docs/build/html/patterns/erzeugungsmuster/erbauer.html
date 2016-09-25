@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>1.1. Erbauer (Builder) &mdash; FTOOP Java Examples 1.0 documentation</title>
+  <title>1.9. Erbauer (Builder) &mdash; FTOOP Java Examples 1.0 documentation</title>
   
 
   
@@ -32,8 +32,8 @@
   
     <link rel="top" title="FTOOP Java Examples 1.0 documentation" href="../../index.html"/>
         <link rel="up" title="1. Patterns" href="../index.html"/>
-        <link rel="next" title="1.2. Erzeugungsmethode" href="erzeugungsmethode.html"/>
-        <link rel="prev" title="1. Patterns" href="../index.html"/> 
+        <link rel="next" title="1.10. Erzeugungsmethode" href="erzeugungsmethode.html"/>
+        <link rel="prev" title="1.8. TODO: Template Method (S.1123)" href="../behavior-patterns/template-method.html"/> 
 
   
   <script src="../../_static/js/modernizr.min.js"></script>
@@ -84,13 +84,26 @@
             
                 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">1. Patterns</a><ul class="current">
-<li class="toctree-l2 current"><a class="current reference internal" href="#">1.1. Erbauer (Builder)</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#beispiel">1.1.1. Beispiel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../behavior-patterns/Iterator.html">1.1. TODO: Iterator (S.1118)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../behavior-patterns/MVC.html">1.2. TODO: MVC (S.1152)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../behavior-patterns/command.html">1.3. TODO: Command (S.1134)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../behavior-patterns/null-object.html">1.4. TODO: Null-Objekt (S.1120)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../behavior-patterns/observer.html">1.5. TODO: Observer (S.1144)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../behavior-patterns/proxy.html">1.6. TODO: Proxy (S.1142)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../behavior-patterns/strategy.html">1.7. TODO: Strategie (S.1127)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../behavior-patterns/template-method.html">1.8. TODO: Template Method (S.1123)</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">1.9. Erbauer (Builder)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#beispiel">1.9.1. Beispiel</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="erzeugungsmethode.html">1.2. Erzeugungsmethode</a></li>
-<li class="toctree-l2"><a class="reference internal" href="fabrikmethode.html">1.3. Fabrikmethode (Factory)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="singleton.html">1.4. Singleton</a></li>
+<li class="toctree-l2"><a class="reference internal" href="erzeugungsmethode.html">1.10. Erzeugungsmethode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fabrikmethode.html">1.11. Fabrikmethode (Factory)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="prototype.html">1.12. Prototyp (S.1102)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="singleton.html">1.13. Singleton</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../structure-patterns/adapter.html">1.14. Adapter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../structure-patterns/decorator.html">1.15. Decorator (aka «Wrapper») (S.1111)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../structure-patterns/facade.html">1.16. Fassade</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../structure-patterns/kompositum.html">1.17. TODO: Kompositum (S.1114)</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../threading/index.html">2. Threading</a></li>
@@ -129,7 +142,7 @@
       
           <li><a href="../index.html">1. Patterns</a> &raquo;</li>
       
-    <li>1.1. Erbauer (Builder)</li>
+    <li>1.9. Erbauer (Builder)</li>
       <li class="wy-breadcrumbs-aside">
         
           
@@ -144,7 +157,7 @@
            <div itemprop="articleBody">
             
   <div class="section" id="erbauer-builder">
-<h1>1.1. Erbauer (Builder)<a class="headerlink" href="#erbauer-builder" title="Permalink to this headline">¶</a></h1>
+<h1>1.9. Erbauer (Builder)<a class="headerlink" href="#erbauer-builder" title="Permalink to this headline">¶</a></h1>
 <ul class="simple">
 <li>Ebenfalls eine «Konfigurationsmethode»</li>
 <li>Unterschied zu <code class="docutils literal"><span class="pre">`Fabrikmethode`</span></code>: Es wird eine Instanz des Builders (innere statische Klasse von Produkt) erstellt, die durch gekettete Aufrufe von Konfigurationsmethoden konfiguriert werden kann.</li>
@@ -159,7 +172,7 @@
 <div class="line"><br /></div>
 </div>
 <div class="section" id="beispiel">
-<h2>1.1.1. Beispiel<a class="headerlink" href="#beispiel" title="Permalink to this headline">¶</a></h2>
+<h2>1.9.1. Beispiel<a class="headerlink" href="#beispiel" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">package</span> <span class="n">patterns</span><span class="o">.</span><span class="n">erzeugungsmuster</span><span class="o">.</span><span class="n">erbauer</span><span class="p">;</span>
 
 <span class="o">/**</span>
@@ -234,10 +247,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="erzeugungsmethode.html" class="btn btn-neutral float-right" title="1.2. Erzeugungsmethode" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="erzeugungsmethode.html" class="btn btn-neutral float-right" title="1.10. Erzeugungsmethode" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="../index.html" class="btn btn-neutral" title="1. Patterns" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="../behavior-patterns/template-method.html" class="btn btn-neutral" title="1.8. TODO: Template Method (S.1123)" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
