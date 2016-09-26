@@ -1,7 +1,10 @@
 package patterns.erzeugungsmuster.prototype;
 
 /**
- * Created by samuelblattner on 25/09/16.
+ * Abstract Prototype Class
  */
-public class AbstractGraphicsElement {
+public abstract class AbstractGraphicsElement {
+
+    public abstract void makeCopy();
+
 }

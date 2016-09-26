@@ -1,5 +1,7 @@
 package smells.program_design;
 
+import java.awt.*;
+
 /**
  * Good Parameter List Example
  */

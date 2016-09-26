@@ -1,7 +1,13 @@
 package advanced_techniques.reflection;
 
 /**
- * Created by samuelblattner on 25/09/16.
+ * Reflection Example: Dummy Class to be loaded and instantiated dynamically
  */
 public class DummyClass {
+
+    private static final int myVar = 0;
+
+    public void sayHello(String yourName) {
+        System.out.format("Hello World, hello %s\n", yourName);
+    }
 }

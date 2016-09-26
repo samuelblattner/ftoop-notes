@@ -4,41 +4,48 @@ package testing;
 import junit.framework.TestCase;
 
 /**
- * Created by samuelblattner on 21/09/16.
+ * Example Unit Testing for the Class «Car»
  */
 public class CarTest extends TestCase {
 
     private Car myCar;
 
     @Override
+    /**
+     * Basic setup method that is run for every single test
+     */
     public void setUp() {
-        System.out.println("SETUP");
-        myCar = new Car(6);
+        myCar = new Car("Honda", "Integra", 4);
     }
 
+    /**
+     * Testing if number of doors has been set correctly.
+     */
     public void testNumDoorGetter() {
 
         assertEquals(
-                "Hey, das geht so nicht! :-(",
+                "Car's number of doors is not set correctly!",
                 myCar.getNumDoors(),
-                6
+                4
         );
-
     }
 
-    public void testNumDoorGetter2() {
+    /**
+     * Testing if String representation of Car is <make> <model>
+     */
+    public void testStringRepresentation() {
 
         assertEquals(
-                "Hey, das geht so nicht! :-(",
-                myCar.getNumDoors(),
-                6
+                "Car.toString() does not return representation of the form: <make> <model>!",
+                String.format("%s", myCar),
+                "Honda Integra"
         );
-
     }
 
+    /**
+     * Tear down method that cleans up for next test
+     */
     public void tearDown() {
-        System.out.println("TEAR DOWN");
         myCar = null;
     }
-
 }

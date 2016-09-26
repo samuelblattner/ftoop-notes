@@ -1,9 +1,7 @@
 package advanced_techniques.exercises;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import student.TestCase;
+import junit.framework.TestCase;
+
 
 public class InterfacerTest extends TestCase {
 	
@@ -42,12 +40,10 @@ public class InterfacerTest extends TestCase {
 		}		
 	}
 	
-	@Before
 	public void setUp() {
 		interfacer = new Interfacer();
 	}
 	
-	@Test
 	public void testOneLineInterfaceOutput() {
 		String result = interfacer.renderInterfaceForClassName("block2.InterfacerTest$DummyClass");
 		TestCase.assertEquals("@block2.DummyAnnotation() /** TODO what=Go to bed! when=Release 1 */ "
@@ -58,7 +54,6 @@ public class InterfacerTest extends TestCase {
 				+ "public java.lang.String publicStringFunction(java.lang.String param0); }", result);
 	}
 	
-	@Test
 	public void testFormattedInterfaceOutput() {
 		String result = interfacer.renderInterfaceForClassName("block2.InterfacerTest$DummyClass", true);
 		TestCase.assertEquals("@block2.DummyAnnotation()\n/** TODO what=Go to bed! when=Release 1 */\n"
@@ -70,7 +65,6 @@ public class InterfacerTest extends TestCase {
 				+ "\tpublic java.lang.String publicStringFunction(java.lang.String param0);\n}", result);
 	}	
 	
-	@After
 	public void TearDown() {
 		interfacer = null;
 	}

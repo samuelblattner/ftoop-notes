@@ -21,7 +21,7 @@ public class GuiExample {
 
     public GuiExample() {
         createBaseDialog();
-        createBaseDialog();
+        createButtons();
 
         baseFrame.setVisible(true);
     }

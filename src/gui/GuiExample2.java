@@ -33,7 +33,7 @@ public class GuiExample2 {
         basePanel.add(leftScrollPane, BorderLayout.WEST);
 
         rightScrollPane = new JScrollPane();
-        //rightScrollPane.setPreferredSize(new Dimension(200, 200));
+        rightScrollPane.setPreferredSize(new Dimension(200, 200));
         rightList = new JList<>();
         rightScrollPane.add(rightList);
         basePanel.add(rightScrollPane, BorderLayout.EAST);

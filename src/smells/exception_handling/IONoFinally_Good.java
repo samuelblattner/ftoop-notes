@@ -11,6 +11,10 @@ import java.io.IOException;
  */
 public class IONoFinally_Good {
 
+    private void loadProperties(FileInputStream stream) {
+
+    }
+
     private boolean readProperties(final String fileName) {
 
         try {
@@ -18,11 +22,11 @@ public class IONoFinally_Good {
             loadProperties(inputStream);
             inputStream.close();
         } catch (final IOException ex) {
-            log.warn("Error opening file");
+            // log.warn("Error opening file");
             return false;
         } finally {
             // Save close
-            IOUtils.closeQuietly(inputStream);
+            //IOUtils.closeQuietly(inputStream);
         }
         return true;
     }

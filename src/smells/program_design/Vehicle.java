@@ -5,11 +5,14 @@ package smells.program_design;
  */
 public class Vehicle {
 
-    private String type, color;
+    public String type, color;
     private int nWheels;
-    private boolean hasMotor;
+    public boolean hasMotor;
     private float maxSpeed;
 
+    public Vehicle() {
+
+    }
     /**
      * This constructor is too complicated for mortals, wrap it in two literal and easy constructors
      */

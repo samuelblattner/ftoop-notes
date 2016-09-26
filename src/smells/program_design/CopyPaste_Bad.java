@@ -8,7 +8,7 @@ public class CopyPaste_Bad {
     public Vehicle createCar() {
 
         Vehicle vehicle = new Vehicle();
-        vehicle.type = CAR;
+        vehicle.type = "CAR";
         vehicle.hasMotor = true;
 
         return vehicle;
@@ -17,7 +17,7 @@ public class CopyPaste_Bad {
     public Vehicle createBike() {
 
         Vehicle vehicle = new Vehicle();
-        vehicle.type = CAR;  // <--- Vergessen zu ändern !!!
+        vehicle.type = "CAR";  // <--- Vergessen zu ändern !!!
         vehicle.hasMotor = false;
 
         return vehicle;

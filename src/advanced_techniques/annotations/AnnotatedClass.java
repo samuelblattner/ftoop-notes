@@ -8,6 +8,8 @@ package advanced_techniques.annotations;
 public class AnnotatedClass {
 
     public AnnotatedClass() {
+
+        // Get Annotation name-Attribute using Reflection
         String nameOfAnnotation = this.getClass().getAnnotation(MyAnnotation.class).name();
         System.out.println(nameOfAnnotation);
     }

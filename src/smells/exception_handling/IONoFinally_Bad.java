@@ -8,6 +8,10 @@ import java.io.IOException;
  */
 public class IONoFinally_Bad {
 
+    private void loadProperties(FileInputStream stream) {
+
+    }
+
     private boolean readProperties(final String fileName) {
 
         try {
@@ -15,7 +19,7 @@ public class IONoFinally_Bad {
             loadProperties(inputStream);
             inputStream.close();
         } catch (final IOException ex) {
-            log.warn("Error opening file");
+            // log.warn("Error opening file");
             return false;
         }
         return true;
