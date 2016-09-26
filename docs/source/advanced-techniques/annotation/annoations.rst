@@ -17,8 +17,17 @@ CLASS
 RUNTIME
     Annotations stehen auch zur Laufzeit zur Verfügung (über Reflection)
 
-Beispiel
---------
+Beispiel 1
+----------
+.. literalinclude:: ../../../../src/advanced_techniques/annotations/MyAnnotation.java
+   :language: java
 
+
+.. literalinclude:: ../../../../src/advanced_techniques/annotations/AnnotatedClass.java
+   :language: java
+
+
+Beispiel 2
+----------
 .. literalinclude:: ../../../../src/advanced_techniques/exercises/TODO.java
    :language: java

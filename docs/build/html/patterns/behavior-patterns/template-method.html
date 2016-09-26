@@ -177,6 +177,97 @@
 <li>Zugriff auf Spezialisierungen schwieriger möglich</li>
 <li>Implementierungsaufwand</li>
 </ul>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">patterns.verhaltensmuster.template</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">abstract</span> <span class="kd">class</span> <span class="nc">AirplaneChecklist</span> <span class="o">{</span>
+	
+	<span class="c1">// Mandatory template methods</span>
+	<span class="kd">abstract</span> <span class="kd">protected</span> <span class="kt">boolean</span> <span class="nf">checkControls</span><span class="o">();</span>
+	<span class="kd">abstract</span> <span class="kd">protected</span> <span class="kt">boolean</span> <span class="nf">checkGearStatus</span><span class="o">();</span>
+	<span class="kd">abstract</span> <span class="kd">protected</span> <span class="kt">boolean</span> <span class="nf">checkFuel</span><span class="o">();</span>
+	
+	<span class="c1">// Optional hook methods</span>
+	<span class="kd">protected</span> <span class="kt">void</span> <span class="nf">beforeChecklist</span><span class="o">()</span> <span class="o">{}</span>
+	<span class="kd">protected</span> <span class="kt">void</span> <span class="nf">checklistSuccessful</span><span class="o">()</span> <span class="o">{}</span>
+	<span class="kd">protected</span> <span class="kt">void</span> <span class="nf">checklistFailed</span><span class="o">()</span> <span class="o">{}</span>
+	
+	<span class="kd">public</span> <span class="nf">AirplaneChecklist</span><span class="o">()</span> <span class="o">{</span>
+		<span class="n">doChecklist</span><span class="o">();</span>
+	<span class="o">}</span>
+	
+	<span class="kd">public</span> <span class="kd">final</span> <span class="kt">void</span> <span class="nf">doChecklist</span><span class="o">()</span> <span class="o">{</span>
+		
+		<span class="kt">boolean</span> <span class="n">checklistOK</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+		
+		<span class="c1">// Call before Checklist hook</span>
+		<span class="n">beforeChecklist</span><span class="o">();</span>
+		
+		<span class="c1">// Call mandatory checks</span>
+		<span class="n">checklistOK</span> <span class="o">=</span> <span class="n">checkControls</span><span class="o">()</span> <span class="o">&amp;&amp;</span> <span class="n">checkGearStatus</span><span class="o">()</span> <span class="o">&amp;&amp;</span> <span class="n">checkFuel</span><span class="o">();</span>
+		
+		<span class="c1">// Call success / fail checklist hook</span>
+		<span class="k">if</span> <span class="o">(</span><span class="n">checklistOK</span><span class="o">)</span> <span class="o">{</span>
+			<span class="n">checklistSuccessful</span><span class="o">();</span>
+		<span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+			<span class="n">checklistFailed</span><span class="o">();</span>
+		<span class="o">}</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">patterns.verhaltensmuster.template</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">CessnaChecklist</span> <span class="kd">extends</span> <span class="n">AirplaneChecklist</span> <span class="o">{</span>
+
+	<span class="nd">@Override</span>
+	<span class="kd">protected</span> <span class="kt">boolean</span> <span class="nf">checkControls</span><span class="o">()</span> <span class="o">{</span>
+		<span class="kt">boolean</span> <span class="n">check</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+		<span class="c1">// Execute specific controls checks</span>
+		<span class="c1">// ...</span>
+		<span class="k">return</span> <span class="n">check</span><span class="o">;</span>
+	<span class="o">}</span>
+
+	<span class="nd">@Override</span>
+	<span class="kd">protected</span> <span class="kt">boolean</span> <span class="nf">checkGearStatus</span><span class="o">()</span> <span class="o">{</span>
+		<span class="kt">boolean</span> <span class="n">check</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+		<span class="c1">// Execute specific gear checks</span>
+		<span class="c1">// ...</span>
+		<span class="k">return</span> <span class="n">check</span><span class="o">;</span>
+	<span class="o">}</span>
+
+	<span class="nd">@Override</span>
+	<span class="kd">protected</span> <span class="kt">boolean</span> <span class="nf">checkFuel</span><span class="o">()</span> <span class="o">{</span>
+		<span class="kt">boolean</span> <span class="n">check</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+		<span class="c1">// Execute specific fuel checks</span>
+		<span class="c1">// ...</span>
+		<span class="k">return</span> <span class="n">check</span><span class="o">;</span>
+	<span class="o">}</span>
+	
+	<span class="nd">@Override</span>
+	<span class="kd">protected</span> <span class="kt">void</span> <span class="nf">checklistSuccessful</span><span class="o">()</span> <span class="o">{</span>
+		<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Cessna is checked and ready!&quot;</span><span class="o">);</span>
+	<span class="o">}</span>
+	
+	<span class="nd">@Override</span>
+	<span class="kd">protected</span> <span class="kt">void</span> <span class="nf">checklistFailed</span><span class="o">()</span> <span class="o">{</span>
+		<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;There&#39;s something wrong with your Cessna!&quot;</span><span class="o">);</span>
+	<span class="o">}</span>	
+<span class="o">}</span>
+</pre></div>
+</div>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">patterns.verhaltensmuster.template</span><span class="o">;</span>
+
+<span class="cm">/**</span>
+<span class="cm"> * A Simple Template Pattern Example</span>
+<span class="cm"> */</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">TemplatePatternExample</span> <span class="o">{</span>
+
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+		<span class="n">CessnaChecklist</span> <span class="n">cessnaChecklist</span> <span class="o">=</span> <span class="k">new</span> <span class="n">CessnaChecklist</span><span class="o">();</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
 </div>
 </div>
 

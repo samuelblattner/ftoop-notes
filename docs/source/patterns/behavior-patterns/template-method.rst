@@ -16,3 +16,12 @@ Nachteile
 * Fehlende Kontrolle über Einsatz von Entwickler (z.B. mehrfache Hintereinanderschaltung, sinnvoll?)
 * Zugriff auf Spezialisierungen schwieriger möglich
 * Implementierungsaufwand
+
+.. literalinclude:: ../../../../src/patterns/verhaltensmuster/template/AirplaneChecklist.java
+   :language: java
+
+.. literalinclude:: ../../../../src/patterns/verhaltensmuster/template/CessnaChecklist.java
+   :language: java
+
+.. literalinclude:: ../../../../src/patterns/verhaltensmuster/template/TemplatePatternExample.java
+   :language: java

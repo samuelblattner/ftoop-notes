@@ -78,6 +78,7 @@
 <li class="toctree-l1"><a class="reference internal" href="index.html#document-advanced-techniques/index">3. Advanced Techniques</a></li>
 <li class="toctree-l1"><a class="reference internal" href="index.html#document-gui/gui">4. GUI</a></li>
 <li class="toctree-l1"><a class="reference internal" href="index.html#document-smells/smells">5. Smells</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html#document-testing/testing">6. Testing</a></li>
 </ul>
 
             
@@ -301,6 +302,97 @@
 <li>Zugriff auf Spezialisierungen schwieriger möglich</li>
 <li>Implementierungsaufwand</li>
 </ul>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">patterns.verhaltensmuster.template</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">abstract</span> <span class="kd">class</span> <span class="nc">AirplaneChecklist</span> <span class="o">{</span>
+	
+	<span class="c1">// Mandatory template methods</span>
+	<span class="kd">abstract</span> <span class="kd">protected</span> <span class="kt">boolean</span> <span class="nf">checkControls</span><span class="o">();</span>
+	<span class="kd">abstract</span> <span class="kd">protected</span> <span class="kt">boolean</span> <span class="nf">checkGearStatus</span><span class="o">();</span>
+	<span class="kd">abstract</span> <span class="kd">protected</span> <span class="kt">boolean</span> <span class="nf">checkFuel</span><span class="o">();</span>
+	
+	<span class="c1">// Optional hook methods</span>
+	<span class="kd">protected</span> <span class="kt">void</span> <span class="nf">beforeChecklist</span><span class="o">()</span> <span class="o">{}</span>
+	<span class="kd">protected</span> <span class="kt">void</span> <span class="nf">checklistSuccessful</span><span class="o">()</span> <span class="o">{}</span>
+	<span class="kd">protected</span> <span class="kt">void</span> <span class="nf">checklistFailed</span><span class="o">()</span> <span class="o">{}</span>
+	
+	<span class="kd">public</span> <span class="nf">AirplaneChecklist</span><span class="o">()</span> <span class="o">{</span>
+		<span class="n">doChecklist</span><span class="o">();</span>
+	<span class="o">}</span>
+	
+	<span class="kd">public</span> <span class="kd">final</span> <span class="kt">void</span> <span class="nf">doChecklist</span><span class="o">()</span> <span class="o">{</span>
+		
+		<span class="kt">boolean</span> <span class="n">checklistOK</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+		
+		<span class="c1">// Call before Checklist hook</span>
+		<span class="n">beforeChecklist</span><span class="o">();</span>
+		
+		<span class="c1">// Call mandatory checks</span>
+		<span class="n">checklistOK</span> <span class="o">=</span> <span class="n">checkControls</span><span class="o">()</span> <span class="o">&amp;&amp;</span> <span class="n">checkGearStatus</span><span class="o">()</span> <span class="o">&amp;&amp;</span> <span class="n">checkFuel</span><span class="o">();</span>
+		
+		<span class="c1">// Call success / fail checklist hook</span>
+		<span class="k">if</span> <span class="o">(</span><span class="n">checklistOK</span><span class="o">)</span> <span class="o">{</span>
+			<span class="n">checklistSuccessful</span><span class="o">();</span>
+		<span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+			<span class="n">checklistFailed</span><span class="o">();</span>
+		<span class="o">}</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">patterns.verhaltensmuster.template</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">CessnaChecklist</span> <span class="kd">extends</span> <span class="n">AirplaneChecklist</span> <span class="o">{</span>
+
+	<span class="nd">@Override</span>
+	<span class="kd">protected</span> <span class="kt">boolean</span> <span class="nf">checkControls</span><span class="o">()</span> <span class="o">{</span>
+		<span class="kt">boolean</span> <span class="n">check</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+		<span class="c1">// Execute specific controls checks</span>
+		<span class="c1">// ...</span>
+		<span class="k">return</span> <span class="n">check</span><span class="o">;</span>
+	<span class="o">}</span>
+
+	<span class="nd">@Override</span>
+	<span class="kd">protected</span> <span class="kt">boolean</span> <span class="nf">checkGearStatus</span><span class="o">()</span> <span class="o">{</span>
+		<span class="kt">boolean</span> <span class="n">check</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+		<span class="c1">// Execute specific gear checks</span>
+		<span class="c1">// ...</span>
+		<span class="k">return</span> <span class="n">check</span><span class="o">;</span>
+	<span class="o">}</span>
+
+	<span class="nd">@Override</span>
+	<span class="kd">protected</span> <span class="kt">boolean</span> <span class="nf">checkFuel</span><span class="o">()</span> <span class="o">{</span>
+		<span class="kt">boolean</span> <span class="n">check</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+		<span class="c1">// Execute specific fuel checks</span>
+		<span class="c1">// ...</span>
+		<span class="k">return</span> <span class="n">check</span><span class="o">;</span>
+	<span class="o">}</span>
+	
+	<span class="nd">@Override</span>
+	<span class="kd">protected</span> <span class="kt">void</span> <span class="nf">checklistSuccessful</span><span class="o">()</span> <span class="o">{</span>
+		<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Cessna is checked and ready!&quot;</span><span class="o">);</span>
+	<span class="o">}</span>
+	
+	<span class="nd">@Override</span>
+	<span class="kd">protected</span> <span class="kt">void</span> <span class="nf">checklistFailed</span><span class="o">()</span> <span class="o">{</span>
+		<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;There&#39;s something wrong with your Cessna!&quot;</span><span class="o">);</span>
+	<span class="o">}</span>	
+<span class="o">}</span>
+</pre></div>
+</div>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">patterns.verhaltensmuster.template</span><span class="o">;</span>
+
+<span class="cm">/**</span>
+<span class="cm"> * A Simple Template Pattern Example</span>
+<span class="cm"> */</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">TemplatePatternExample</span> <span class="o">{</span>
+
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+		<span class="n">CessnaChecklist</span> <span class="n">cessnaChecklist</span> <span class="o">=</span> <span class="k">new</span> <span class="n">CessnaChecklist</span><span class="o">();</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
 </div>
 </div>
 <span id="document-patterns/erzeugungsmuster/erbauer"></span><div class="section" id="erbauer-builder">
@@ -895,6 +987,9 @@
 </div>
 </div>
 </div>
+<span id="document-threading/thread-pool/thread-pool"></span><div class="section" id="thread-pool">
+<h3>2.3. Thread Pool<a class="headerlink" href="#thread-pool" title="Permalink to this headline">¶</a></h3>
+</div>
 </div>
 </div>
 <span id="document-advanced-techniques/index"></span><div class="section" id="advanced-techniques">
@@ -919,8 +1014,53 @@ Weitere Typen: ANNOTATION_TYPE(Annotations), CONSTRUCTOR, METHOD, FIELD, PARAMET
 <dd>Annotations stehen auch zur Laufzeit zur Verfügung (über Reflection)</dd>
 </dl>
 </div>
-<div class="section" id="beispiel">
-<h4>3.1.3. Beispiel<a class="headerlink" href="#beispiel" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="beispiel-1">
+<h4>3.1.3. Beispiel 1<a class="headerlink" href="#beispiel-1" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">advanced_techniques.annotations</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">java.lang.annotation.ElementType</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.lang.annotation.Retention</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.lang.annotation.RetentionPolicy</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.lang.annotation.Target</span><span class="o">;</span>
+
+<span class="nd">@Target</span><span class="o">(</span><span class="n">ElementType</span><span class="o">.</span><span class="na">TYPE</span><span class="o">)</span>
+<span class="nd">@Retention</span><span class="o">(</span><span class="n">RetentionPolicy</span><span class="o">.</span><span class="na">RUNTIME</span><span class="o">)</span>
+
+<span class="cm">/**</span>
+<span class="cm"> * Example of an Annotation</span>
+<span class="cm"> */</span>
+<span class="kd">public</span> <span class="nd">@interface</span> <span class="n">MyAnnotation</span> <span class="o">{</span>
+
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">name</span><span class="o">()</span> <span class="k">default</span> <span class="s">&quot;MyAnnotation&quot;</span><span class="o">;</span>
+
+<span class="o">}</span>
+</pre></div>
+</div>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">advanced_techniques.annotations</span><span class="o">;</span>
+
+<span class="cm">/**</span>
+<span class="cm"> * Example of an annotated class</span>
+<span class="cm"> */</span>
+
+<span class="nd">@MyAnnotation</span><span class="o">(</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;An annotated class&quot;</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">AnnotatedClass</span> <span class="o">{</span>
+
+    <span class="kd">public</span> <span class="nf">AnnotatedClass</span><span class="o">()</span> <span class="o">{</span>
+
+        <span class="c1">// Get Annotation name-Attribute using Reflection</span>
+        <span class="n">String</span> <span class="n">nameOfAnnotation</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">getClass</span><span class="o">().</span><span class="na">getAnnotation</span><span class="o">(</span><span class="n">MyAnnotation</span><span class="o">.</span><span class="na">class</span><span class="o">).</span><span class="na">name</span><span class="o">();</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">nameOfAnnotation</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span> <span class="n">args</span><span class="o">[])</span> <span class="o">{</span>
+        <span class="n">AnnotatedClass</span> <span class="n">annClass</span> <span class="o">=</span> <span class="k">new</span> <span class="n">AnnotatedClass</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="beispiel-2">
+<h4>3.1.4. Beispiel 2<a class="headerlink" href="#beispiel-2" title="Permalink to this headline">¶</a></h4>
 <div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">advanced_techniques.exercises</span><span class="o">;</span>
 
 <span class="kn">import</span> <span class="nn">java.lang.annotation.Retention</span><span class="o">;</span>
@@ -1425,7 +1565,7 @@ Felder gesetzt werden.</p>
 
     <span class="kd">public</span> <span class="nf">GuiExample</span><span class="o">()</span> <span class="o">{</span>
         <span class="n">createBaseDialog</span><span class="o">();</span>
-        <span class="n">createBaseDialog</span><span class="o">();</span>
+        <span class="n">createButtons</span><span class="o">();</span>
 
         <span class="n">baseFrame</span><span class="o">.</span><span class="na">setVisible</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
     <span class="o">}</span>
@@ -1932,6 +2072,93 @@ public class EnumConstants_Good {
 <span class="p">}</span>
 </pre></div>
 </div>
+</div>
+</div>
+</div>
+<span id="document-testing/testing"></span><div class="section" id="testing">
+<h2>6. Testing<a class="headerlink" href="#testing" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="beispiel">
+<h3>6.1. Beispiel<a class="headerlink" href="#beispiel" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">testing</span><span class="o">;</span>
+
+<span class="cm">/**</span>
+<span class="cm"> * Car Class</span>
+<span class="cm"> */</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Car</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="kt">int</span> <span class="n">numDoors</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">make</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">model</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">Car</span><span class="o">(</span><span class="n">String</span> <span class="n">make</span><span class="o">,</span> <span class="n">String</span> <span class="n">model</span><span class="o">,</span> <span class="kt">int</span> <span class="n">numDoors</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">make</span> <span class="o">=</span> <span class="n">make</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">model</span> <span class="o">=</span> <span class="n">model</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">numDoors</span> <span class="o">=</span> <span class="n">numDoors</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">getNumDoors</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">numDoors</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">toString</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">String</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="s">&quot;%s %s&quot;</span><span class="o">,</span> <span class="n">make</span><span class="o">,</span> <span class="n">model</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">testing</span><span class="o">;</span>
+
+
+<span class="kn">import</span> <span class="nn">junit.framework.TestCase</span><span class="o">;</span>
+
+<span class="cm">/**</span>
+<span class="cm"> * Example Unit Testing for the Class «Car»</span>
+<span class="cm"> */</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">CarTest</span> <span class="kd">extends</span> <span class="n">TestCase</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="n">Car</span> <span class="n">myCar</span><span class="o">;</span>
+
+    <span class="nd">@Override</span>
+    <span class="cm">/**</span>
+<span class="cm">     * Basic setup method that is run for every single test</span>
+<span class="cm">     */</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setUp</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">myCar</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Car</span><span class="o">(</span><span class="s">&quot;Honda&quot;</span><span class="o">,</span> <span class="s">&quot;Integra&quot;</span><span class="o">,</span> <span class="mi">4</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * Testing if number of doors has been set correctly.</span>
+<span class="cm">     */</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">testNumDoorGetter</span><span class="o">()</span> <span class="o">{</span>
+
+        <span class="n">assertEquals</span><span class="o">(</span>
+                <span class="s">&quot;Car&#39;s number of doors is not set correctly!&quot;</span><span class="o">,</span>
+                <span class="n">myCar</span><span class="o">.</span><span class="na">getNumDoors</span><span class="o">(),</span>
+                <span class="mi">4</span>
+        <span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * Testing if String representation of Car is &lt;make&gt; &lt;model&gt;</span>
+<span class="cm">     */</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">testStringRepresentation</span><span class="o">()</span> <span class="o">{</span>
+
+        <span class="n">assertEquals</span><span class="o">(</span>
+                <span class="s">&quot;Car.toString() does not return representation of the form: &lt;make&gt; &lt;model&gt;!&quot;</span><span class="o">,</span>
+                <span class="n">String</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="s">&quot;%s&quot;</span><span class="o">,</span> <span class="n">myCar</span><span class="o">),</span>
+                <span class="s">&quot;Honda Integra&quot;</span>
+        <span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * Tear down method that cleans up for next test</span>
+<span class="cm">     */</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">tearDown</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">myCar</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
 </div>
 </div>
 </div>

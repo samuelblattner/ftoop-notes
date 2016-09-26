@@ -18,6 +18,7 @@ Contents:
    advanced-techniques/*
    gui/*
    smells/*
+   testing/*
 
 Indices and tables
 ==================
