@@ -1,21 +1,24 @@
-TODO: Template Method (S.1123)
-==============================
+Template Method («Schablonenmethode»)
+=====================================
 
-Eine bestehende Klasse wird von einer Wrapper-Klasse umhült und erweitert. Grundlage dabei ist ein gemeinsamer Basistyp oder Interface. Eine best. Methode wird dabei erst vom Wrapper aufgerufen und dann vom «gewrappten» Objekt.
+(S.1123)
+
+Bei dieser Pattern wird eine abstrakte Basisklasse («Schablone») erstellt, die einen bestimmten logischen Ablauf durch Aufruf entsprechender Methoden vorgibt.
+Diese aufgerufenen Methoden werden als ``protected`` deklariert, damit sie in Unterklassen überschrieben werden können.
+
+Es gibt dabei Methoden, die freiwillig überschrieben werden *können* und solche, die überschrieben werden *müssen*. Letztere werden in der Basisklasse
+als ``abstract``deklariert.
 
 Vorteile
 --------
-* Transparent zusätzliche Funktionalität ohne Vererbung
-* Hintereinanderschaltung mehrerer Decorators möglich
-* Fexibilität: Zu dekorierende Klasse nicht festgelegt, da nur gegen gemeinsames Interface programmiert wird => Wrapper können für mehrere verschiedene Klassen genutzt werden.
-* Vereinfachung von Vererbungshierarchien (im Gegensatz zu Vererbung)
+* **Definition von Erweiterungsstellen:** Es wird ein Algorithmus vorgegeben, Funktionalitäten können an bestimmten Stellen überschrieben werden.
 
 Nachteile
 ---------
-* Gemeinsamer Basistyp benötigt
-* Fehlende Kontrolle über Einsatz von Entwickler (z.B. mehrfache Hintereinanderschaltung, sinnvoll?)
-* Zugriff auf Spezialisierungen schwieriger möglich
-* Implementierungsaufwand
+* **Weniger Flexibilität:** Algoritmus vorgegeben und schwierig modifizierbar. In diesem Fall ist dieses Verhalten aber erwünscht.
+
+Beispiel
+--------
 
 .. literalinclude:: ../../../../src/patterns/verhaltensmuster/template/AirplaneChecklist.java
    :language: java

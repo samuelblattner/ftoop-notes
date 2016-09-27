@@ -1,0 +1,260 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>1.3.8. MVC &mdash; FTOOP Java Examples 1.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="FTOOP Java Examples 1.0 documentation" href="../../index.html"/>
+        <link rel="up" title="1.3. Verhaltensmuster" href="index.html"/>
+        <link rel="next" title="2. Threading" href="../../threading/index.html"/>
+        <link rel="prev" title="1.3.7. Observer" href="060_observer.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> FTOOP Java Examples
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">1. Patterns</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../erzeugungsmuster/index.html">1.1. Erzeugungsmuster</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../structure-patterns/index.html">1.2. Strukturmuster</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">1.3. Verhaltensmuster</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="000_Iterator.html">1.3.1. Iterator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="010_null-object.html">1.3.2. Null-Objekt</a></li>
+<li class="toctree-l3"><a class="reference internal" href="020_template-method.html">1.3.3. Template Method («Schablonenmethode»)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="030_strategy.html">1.3.4. Strategie</a></li>
+<li class="toctree-l3"><a class="reference internal" href="040_command.html">1.3.5. Command</a></li>
+<li class="toctree-l3"><a class="reference internal" href="050_proxy.html">1.3.6. Proxy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="060_observer.html">1.3.7. Observer</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">1.3.8. MVC</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#zustandigkeiten">1.3.8.1. Zuständigkeiten</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#vorteile">1.3.8.2. Vorteile</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#nachteile">1.3.8.3. Nachteile</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../threading/index.html">2. Threading</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../advanced-techniques/index.html">3. Advanced Techniques</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../gui/gui.html">4. GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../smells/smells.html">5. Smells</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testing/testing.html">6. Testing</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../index.html">FTOOP Java Examples</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../index.html">1. Patterns</a> &raquo;</li>
+      
+          <li><a href="index.html">1.3. Verhaltensmuster</a> &raquo;</li>
+      
+    <li>1.3.8. MVC</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../../_sources/patterns/behavior-patterns/070_MVC.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="mvc">
+<h1>1.3.8. MVC<a class="headerlink" href="#mvc" title="Permalink to this headline">¶</a></h1>
+<p>(S.1152)</p>
+<p>Semantische Aufteilung von Objekten in die drei Komponenten (M)odel, (V)iew und (C)ontroller.</p>
+<div class="section" id="zustandigkeiten">
+<h2>1.3.8.1. Zuständigkeiten<a class="headerlink" href="#zustandigkeiten" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><strong>Model:</strong> Datenstruktur, Aufbau, meist spiegelt es die Struktur einer Datenbanktabelle.</li>
+<li><strong>View:</strong> Art und Weise der Darstellung des Objekts bzw. der Daten.</li>
+<li><strong>Controller:</strong> Verarbeitung von Interaktionen mit dem Objekt.</li>
+</ul>
+</div>
+<div class="section" id="vorteile">
+<h2>1.3.8.2. Vorteile<a class="headerlink" href="#vorteile" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><strong>Lose Kopplung:</strong> Bei Kommunikation der Komponenten über Interfaces.</li>
+<li><strong>Trennung von Zuständigkeiten:</strong> Jede Komponente repräsentiert einen best. Aspekt des Gesamtsystems.</li>
+<li><strong>Flexibilität:</strong> Mehrere unterschiedliche Darstellungen des gleichen Objekts lassen sich einfach realisieren.</li>
+<li><strong>Konsistente Darstellung:</strong> Durch Observer-Pattern können alle Views auf zentrale Änderungen des Modells reagieren und immer konsistente Daten anzeigen.</li>
+</ul>
+</div>
+<div class="section" id="nachteile">
+<h2>1.3.8.3. Nachteile<a class="headerlink" href="#nachteile" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><strong>Overengineering:</strong> Objekt sollte sich eigentlich um all seine Belange selber kümmern. Aufteilung kann leicht viel Aufwand bedeuten.</li>
+<li><strong>Erhöhte Komplexität:</strong> Erhöhte Anzahl an benötigter Klassen</li>
+<li><strong>Gefahr vieler Änderungsmitteliungen:</strong> Falls viele feingranulare Änderungen an Modell =&gt; Umfassende Kommunikation an alle beteiligten Views.</li>
+<li><strong>Gefahr enger Kopplung:</strong> Falls Komponenten nicht durch Interfaces voneinander getrennt =&gt; Wiederverwendbarkeit sinkt.</li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../../threading/index.html" class="btn btn-neutral float-right" title="2. Threading" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="060_observer.html" class="btn btn-neutral" title="1.3.7. Observer" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, Samuel Blattner.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

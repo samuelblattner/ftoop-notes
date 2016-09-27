@@ -1,0 +1,8 @@
+Strukturmuster
+==============
+
+.. toctree::
+   :maxdepth: 2
+   :glob:
+
+   ./*

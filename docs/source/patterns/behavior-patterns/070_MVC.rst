@@ -1,0 +1,26 @@
+MVC
+===
+
+(S.1152)
+
+Semantische Aufteilung von Objekten in die drei Komponenten (M)odel, (V)iew und (C)ontroller.
+
+Zuständigkeiten
+---------------
+* **Model:** Datenstruktur, Aufbau, meist spiegelt es die Struktur einer Datenbanktabelle.
+* **View:** Art und Weise der Darstellung des Objekts bzw. der Daten.
+* **Controller:** Verarbeitung von Interaktionen mit dem Objekt.
+
+Vorteile
+--------
+* **Lose Kopplung:** Bei Kommunikation der Komponenten über Interfaces.
+* **Trennung von Zuständigkeiten:** Jede Komponente repräsentiert einen best. Aspekt des Gesamtsystems.
+* **Flexibilität:** Mehrere unterschiedliche Darstellungen des gleichen Objekts lassen sich einfach realisieren.
+* **Konsistente Darstellung:** Durch Observer-Pattern können alle Views auf zentrale Änderungen des Modells reagieren und immer konsistente Daten anzeigen.
+
+Nachteile
+---------
+* **Overengineering:** Objekt sollte sich eigentlich um all seine Belange selber kümmern. Aufteilung kann leicht viel Aufwand bedeuten.
+* **Erhöhte Komplexität:** Erhöhte Anzahl an benötigter Klassen
+* **Gefahr vieler Änderungsmitteliungen:** Falls viele feingranulare Änderungen an Modell => Umfassende Kommunikation an alle beteiligten Views.
+* **Gefahr enger Kopplung:** Falls Komponenten nicht durch Interfaces voneinander getrennt => Wiederverwendbarkeit sinkt.

@@ -128,14 +128,385 @@
 <span id="document-patterns/index"></span><div class="section" id="patterns">
 <h2>1. Patterns<a class="headerlink" href="#patterns" title="Permalink to this headline">¶</a></h2>
 <div class="toctree-wrapper compound">
-<span id="document-patterns/behavior-patterns/000_Iterator"></span><div class="section" id="iterator-s-1118">
-<h3>1.1. Iterator (S.1118)<a class="headerlink" href="#iterator-s-1118" title="Permalink to this headline">¶</a></h3>
+<span id="document-patterns/erzeugungsmuster/index"></span><div class="section" id="erzeugungsmuster">
+<h3>1.1. Erzeugungsmuster<a class="headerlink" href="#erzeugungsmuster" title="Permalink to this headline">¶</a></h3>
+<div class="toctree-wrapper compound">
+<span id="document-patterns/erzeugungsmuster/000_erzeugungsmethode"></span><div class="section" id="erzeugungsmethode">
+<h4>1.1.1. Erzeugungsmethode<a class="headerlink" href="#erzeugungsmethode" title="Permalink to this headline">¶</a></h4>
+<p>(S.1088)</p>
+<ul class="simple">
+<li>Analog zu Bestellung in Restaurant</li>
+<li>Statische Produktionsmethode damit komplizierter Konstruktor nicht von aussen aufgerufen werden muss.</li>
+<li>Nur private Konstruktoren!</li>
+</ul>
+<div class="line-block">
+<div class="line"><strong>Vorteile</strong></div>
+<div class="line">+ Lesbarkeit, sprechende Konstruktoren</div>
+<div class="line"><br /></div>
+</div>
+<div class="section" id="beispiel">
+<h5>1.1.1.1. Beispiel<a class="headerlink" href="#beispiel" title="Permalink to this headline">¶</a></h5>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">patterns.erzeugungsmuster.erzeugungsmethode</span><span class="o">;</span>
+
+<span class="cm">/**</span>
+<span class="cm"> * Vehicle Class (Construction Pattern)</span>
+<span class="cm"> */</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Vehicle</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">type</span><span class="o">,</span> <span class="n">color</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kt">int</span> <span class="n">nWheels</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kt">boolean</span> <span class="n">hasMotor</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kt">float</span> <span class="n">maxSpeed</span><span class="o">;</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * This constructor is too complicated for mortals, wrap it in two literal and easy constructors</span>
+<span class="cm">     */</span>
+    <span class="kd">private</span> <span class="nf">Vehicle</span> <span class="o">(</span><span class="n">String</span> <span class="n">type</span><span class="o">,</span> <span class="n">String</span> <span class="n">color</span><span class="o">,</span> <span class="kt">int</span> <span class="n">nWheels</span><span class="o">,</span> <span class="kt">boolean</span> <span class="n">hasMotor</span><span class="o">,</span> <span class="kt">float</span> <span class="n">maxSpeed</span><span class="o">)</span> <span class="o">{</span>
+        <span class="c1">// Do something...</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * Now, this is much easier</span>
+<span class="cm">     */</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="n">Vehicle</span> <span class="nf">createCar</span><span class="o">(</span><span class="n">String</span> <span class="n">color</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="n">Vehicle</span><span class="o">(</span><span class="s">&quot;Car&quot;</span><span class="o">,</span> <span class="n">color</span><span class="o">,</span> <span class="mi">4</span><span class="o">,</span> <span class="kc">true</span><span class="o">,</span> <span class="mf">200.0f</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * And this, too</span>
+<span class="cm">     */</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="n">Vehicle</span> <span class="nf">createBike</span><span class="o">(</span><span class="n">String</span> <span class="n">color</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="n">Vehicle</span><span class="o">(</span><span class="s">&quot;Bike&quot;</span><span class="o">,</span> <span class="n">color</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="kc">false</span><span class="o">,</span> <span class="mf">60.0f</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<span id="document-patterns/erzeugungsmuster/010_fabrikmethode"></span><div class="section" id="fabrikmethode-factory">
+<h4>1.1.2. Fabrikmethode (Factory)<a class="headerlink" href="#fabrikmethode-factory" title="Permalink to this headline">¶</a></h4>
+<p>(S.1091)</p>
+<ul class="simple">
+<li>Ebenfalls eine «Konfigurationsmethode»</li>
+<li>Unterschied zu <code class="docutils literal"><span class="pre">`Erzeugungsmethode`</span></code>: Den Job der Konstruktion übernimmt eine separate Fabrik-Klasse</li>
+<li>Produkte müssen entweder gemeinsames Interface implementieren, gemeinsame abstrakte Klasse erben oder beides!</li>
+</ul>
+<div class="line-block">
+<div class="line"><strong>Vorteile</strong></div>
+<div class="line">+ Lesbarkeit</div>
+<div class="line">+ Abstraktion / Kapselung</div>
+<div class="line">+ Konstruktionssicherheit</div>
+<div class="line">- Mehraufwand</div>
+<div class="line">- Komplexer</div>
+<div class="line"><br /></div>
+</div>
+<div class="section" id="beispiel">
+<h5>1.1.2.1. Beispiel<a class="headerlink" href="#beispiel" title="Permalink to this headline">¶</a></h5>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">package</span> <span class="n">patterns</span><span class="o">.</span><span class="n">erzeugungsmuster</span><span class="o">.</span><span class="n">fabrikmethode</span><span class="p">;</span>
+
+<span class="o">/**</span>
+ <span class="o">*</span> <span class="n">Interface</span> <span class="n">Vehicle</span>
+ <span class="o">*/</span>
+<span class="n">public</span> <span class="n">interface</span> <span class="n">Vehicle</span> <span class="p">{</span>
+
+    <span class="n">public</span> <span class="nb">int</span> <span class="n">getNumWheels</span><span class="p">();</span>
+    <span class="n">public</span> <span class="n">void</span> <span class="n">setSpeed</span><span class="p">(</span><span class="nb">float</span> <span class="n">speed</span><span class="p">);</span>
+
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">package</span> <span class="n">patterns</span><span class="o">.</span><span class="n">erzeugungsmuster</span><span class="o">.</span><span class="n">fabrikmethode</span><span class="p">;</span>
+
+<span class="o">/**</span>
+ <span class="o">*</span> <span class="n">Vehicle</span> <span class="n">Factory</span>
+ <span class="o">*/</span>
+<span class="n">public</span> <span class="k">class</span> <span class="nc">VehicleFactory</span> <span class="p">{</span>
+
+    <span class="n">private</span> <span class="n">enum</span> <span class="n">VEHICLE_TYPE</span> <span class="p">{</span>
+        <span class="n">CAR</span><span class="p">,</span>
+        <span class="n">BIKE</span><span class="p">,</span>
+    <span class="p">}</span>
+
+    <span class="o">/**</span>
+     <span class="o">*</span> <span class="n">This</span> <span class="ow">is</span> <span class="n">the</span> <span class="n">Factory</span> <span class="n">method</span>
+     <span class="o">*/</span>
+    <span class="n">public</span> <span class="n">static</span> <span class="n">Vehicle</span> <span class="n">createVehicle</span><span class="p">(</span><span class="n">final</span> <span class="n">VEHICLE_TYPE</span> <span class="nb">type</span><span class="p">,</span> <span class="n">final</span> <span class="n">String</span> <span class="n">name</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">switch</span> <span class="p">(</span><span class="nb">type</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">case</span> <span class="n">CAR</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">new</span> <span class="n">Car</span><span class="p">(</span><span class="s2">&quot;My cool car&quot;</span><span class="p">);</span>
+            <span class="n">case</span> <span class="n">BIKE</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">new</span> <span class="n">Bike</span><span class="p">(</span><span class="s2">&quot;My cool bike&quot;</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="n">throw</span> <span class="n">new</span> <span class="n">IllegalStateException</span><span class="p">(</span>
+                <span class="n">String</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;Unexpected Vehicle type </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="p">)</span>
+        <span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<span id="document-patterns/erzeugungsmuster/020_erbauer"></span><div class="section" id="erbauer-builder">
+<h4>1.1.3. Erbauer (Builder)<a class="headerlink" href="#erbauer-builder" title="Permalink to this headline">¶</a></h4>
+<p>(S.1094)</p>
+<ul class="simple">
+<li>Ebenfalls eine «Konfigurationsmethode»</li>
+<li>Unterschied zu <code class="docutils literal"><span class="pre">`Fabrikmethode`</span></code>: Es wird eine Instanz des Builders (innere statische Klasse von Produkt) erstellt, die durch gekettete Aufrufe von Konfigurationsmethoden konfiguriert werden kann.</li>
+<li>Dem Produkt wird anschliessend die Instanz des Builders als Konfiguration übergeben.</li>
+</ul>
+<div class="line-block">
+<div class="line"><strong>Vorteile</strong></div>
+<div class="line">+ Lesbarkeit und Vereinfacung</div>
+<div class="line">+ Konstruktionssicherheit</div>
+<div class="line">+ Unterstützung optionaler Attribute</div>
+<div class="line">- Komplexer</div>
+<div class="line"><br /></div>
+</div>
+<div class="section" id="beispiel">
+<h5>1.1.3.1. Beispiel<a class="headerlink" href="#beispiel" title="Permalink to this headline">¶</a></h5>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">package</span> <span class="n">patterns</span><span class="o">.</span><span class="n">erzeugungsmuster</span><span class="o">.</span><span class="n">erbauer</span><span class="p">;</span>
+
+<span class="o">/**</span>
+ <span class="o">*</span> <span class="n">Vehicle</span> <span class="n">Class</span> <span class="p">(</span><span class="n">Construction</span> <span class="n">Pattern</span><span class="p">)</span>
+ <span class="o">*/</span>
+<span class="n">public</span> <span class="k">class</span> <span class="nc">Vehicle</span> <span class="p">{</span>
+
+    <span class="n">private</span> <span class="n">String</span> <span class="nb">type</span><span class="p">,</span> <span class="n">color</span><span class="p">;</span>
+    <span class="n">private</span> <span class="nb">int</span> <span class="n">nWheels</span><span class="p">;</span>
+    <span class="n">private</span> <span class="n">boolean</span> <span class="n">hasMotor</span><span class="p">;</span>
+    <span class="n">private</span> <span class="nb">float</span> <span class="n">maxSpeed</span><span class="p">;</span>
+
+    <span class="o">/**</span>
+     <span class="o">*</span> <span class="n">Called</span> <span class="n">by</span> <span class="n">the</span> <span class="n">Builder</span>
+     <span class="o">*/</span>
+    <span class="n">private</span> <span class="n">Vehicle</span><span class="p">(</span><span class="n">VehicleBuilder</span> <span class="n">options</span><span class="p">)</span> <span class="p">{</span>
+        <span class="o">//</span> <span class="n">Do</span> <span class="n">something</span><span class="o">...</span>
+    <span class="p">}</span>
+
+    <span class="o">/**</span>
+     <span class="o">*</span> <span class="n">Vehicle</span> <span class="n">Builder</span>
+     <span class="o">*/</span>
+    <span class="n">public</span> <span class="n">static</span> <span class="n">final</span> <span class="k">class</span> <span class="nc">VehicleBuilder</span> <span class="p">{</span>
+
+        <span class="n">private</span> <span class="nb">int</span> <span class="n">nWheels</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+        <span class="n">private</span> <span class="nb">int</span> <span class="n">nDoors</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+
+        <span class="n">public</span> <span class="n">VehicleBuilder</span> <span class="n">twoWheeler</span><span class="p">()</span> <span class="p">{</span>
+            <span class="n">this</span><span class="o">.</span><span class="n">nWheels</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+            <span class="k">return</span> <span class="n">this</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="n">public</span> <span class="n">VehicleBuilder</span> <span class="n">fourWheeler</span><span class="p">()</span> <span class="p">{</span>
+            <span class="n">this</span><span class="o">.</span><span class="n">nWheels</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+            <span class="k">return</span> <span class="n">this</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="n">public</span> <span class="n">VehicleBuilder</span> <span class="n">numDoors</span><span class="p">(</span><span class="nb">int</span> <span class="n">nDoors</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">this</span><span class="o">.</span><span class="n">nDoors</span> <span class="o">=</span> <span class="n">nDoors</span><span class="p">;</span>
+            <span class="k">return</span> <span class="n">this</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="n">public</span> <span class="n">Vehicle</span> <span class="n">create</span><span class="p">()</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="n">new</span> <span class="n">Vehicle</span><span class="p">(</span><span class="n">this</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">package</span> <span class="n">patterns</span><span class="o">.</span><span class="n">erzeugungsmuster</span><span class="o">.</span><span class="n">erbauer</span><span class="p">;</span>
+
+
+<span class="o">/**</span>
+ <span class="o">*</span> <span class="n">Created</span> <span class="n">by</span> <span class="n">samuelblattner</span> <span class="n">on</span> <span class="mi">20</span><span class="o">/</span><span class="mi">09</span><span class="o">/</span><span class="mf">16.</span>
+ <span class="o">*/</span>
+<span class="n">public</span> <span class="k">class</span> <span class="nc">Main</span> <span class="p">{</span>
+
+    <span class="n">public</span> <span class="n">static</span> <span class="n">void</span> <span class="n">main</span><span class="p">(</span><span class="n">String</span> <span class="n">args</span><span class="p">[])</span> <span class="p">{</span>
+        <span class="n">Vehicle</span> <span class="n">myCar</span> <span class="o">=</span> <span class="n">new</span> <span class="n">Vehicle</span><span class="o">.</span><span class="n">VehicleBuilder</span><span class="p">()</span><span class="o">.</span><span class="n">fourWheeler</span><span class="p">()</span><span class="o">.</span><span class="n">numDoors</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">create</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<span id="document-patterns/erzeugungsmuster/030_singleton"></span><div class="section" id="singleton">
+<h4>1.1.4. Singleton<a class="headerlink" href="#singleton" title="Permalink to this headline">¶</a></h4>
+<p>(S.1097)</p>
+<ul class="simple">
+<li>Max. 1 Instanz soll existieren</li>
+<li>Z.B. zentrale Registrierung oder Ressourcen-Handler</li>
+<li>Privater Konstruktor</li>
+</ul>
+<div class="line-block">
+<div class="line"><strong>Vorteile</strong></div>
+<div class="line">+ Zentraler Zugriffspunkt</div>
+<div class="line">+ Strukturierung</div>
+<div class="line">- Mehrer Instanzen bei mehreren ClassLoadern möglich (z.B. Webserver)</div>
+<div class="line"><br /></div>
+<div class="line"><strong>Hinweis</strong></div>
+<div class="line">Benutzen von Lazy-Instance (Erzeugung Instanz erst bei Gebrauch) ist nicht zu empfehlen, da die getInstance()-Methode dann synchronized sein müsste und einen potentiellen Flaschenhals darstellt. Deshalb: Lieber bereits zur Ladezeit eine Instanz erzeugen.</div>
+<div class="line"><br /></div>
+</div>
+<div class="section" id="beispiel">
+<h5>1.1.4.1. Beispiel<a class="headerlink" href="#beispiel" title="Permalink to this headline">¶</a></h5>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">package</span> <span class="n">patterns</span><span class="o">.</span><span class="n">erzeugungsmuster</span><span class="o">.</span><span class="n">singleton</span><span class="p">;</span>
+
+<span class="o">/**</span>
+ <span class="o">*</span> <span class="n">Non</span><span class="o">-</span><span class="n">Lazy</span> <span class="n">Singleton</span>
+ <span class="o">*/</span>
+<span class="n">public</span> <span class="n">final</span> <span class="k">class</span> <span class="nc">Singleton</span> <span class="p">{</span>
+
+    <span class="n">private</span> <span class="n">static</span> <span class="n">final</span> <span class="n">Singleton</span> <span class="n">INSTANCE</span> <span class="o">=</span> <span class="n">new</span> <span class="n">Singleton</span><span class="p">();</span>
+
+    <span class="n">public</span> <span class="n">static</span> <span class="n">Singleton</span> <span class="n">getInstance</span><span class="p">()</span> <span class="p">{</span>
+
+        <span class="k">return</span> <span class="n">INSTANCE</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">private</span> <span class="n">Singleton</span><span class="p">()</span> <span class="p">{</span>
+
+    <span class="p">};</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<span id="document-patterns/erzeugungsmuster/040_prototype"></span><div class="section" id="prototyp">
+<h4>1.1.5. Prototyp<a class="headerlink" href="#prototyp" title="Permalink to this headline">¶</a></h4>
+<p>(S.1102)</p>
+<p>Vereinfacht die Vervielfältigung von bestehenden Objekten mit einer makeCopy-Methode. Dazu wird eine Abstrakte Klasse definiert mit der abstrakten Methode makeCopy(). Die Anpassungen, um das kopierte Objekt zu individualisieren werden über Setter-Methoden vorgenommen.</p>
+<div class="section" id="beispiel">
+<h5>1.1.5.1. Beispiel<a class="headerlink" href="#beispiel" title="Permalink to this headline">¶</a></h5>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">patterns.erzeugungsmuster.prototype</span><span class="o">;</span>
+
+<span class="cm">/**</span>
+<span class="cm"> * Abstract Prototype Class</span>
+<span class="cm"> */</span>
+<span class="kd">public</span> <span class="kd">abstract</span> <span class="kd">class</span> <span class="nc">AbstractGraphicsElement</span> <span class="o">{</span>
+
+    <span class="kd">public</span> <span class="kd">abstract</span> <span class="kt">void</span> <span class="nf">makeCopy</span><span class="o">();</span>
+
+<span class="o">}</span>
+</pre></div>
+</div>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">patterns.erzeugungsmuster.prototype</span><span class="o">;</span>
+
+<span class="cm">/**</span>
+<span class="cm"> * Created by samuelblattner on 25/09/16.</span>
+<span class="cm"> */</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">LineFigure</span> <span class="kd">extends</span> <span class="n">AbstractGraphicsElement</span> <span class="o">{</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">makeCopy</span><span class="o">()</span> <span class="o">{</span>
+        <span class="c1">// Do copy stuff ...</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<span id="document-patterns/structure-patterns/index"></span><div class="section" id="strukturmuster">
+<h3>1.2. Strukturmuster<a class="headerlink" href="#strukturmuster" title="Permalink to this headline">¶</a></h3>
+<div class="toctree-wrapper compound">
+<span id="document-patterns/structure-patterns/000_facade"></span><div class="section" id="fassade">
+<h4>1.2.1. Fassade<a class="headerlink" href="#fassade" title="Permalink to this headline">¶</a></h4>
+<p>(S.1106)</p>
+<p>Fassade kapselt und versteckt Komplexität eines Subsystems. «High-Level Interface».</p>
+<div class="section" id="vorteile">
+<h5>1.2.1.1. Vorteile<a class="headerlink" href="#vorteile" title="Permalink to this headline">¶</a></h5>
+<ul class="simple">
+<li>Vereinfachung API</li>
+<li>Trennung zwischen Clients un Subsystem reduziert Komplexität, erhöht lose Kopplung.</li>
+<li>Zentralisierung von Funktionalität und Updates: Transaktionsverwaltung möglich, Bündelung</li>
+</ul>
+</div>
+<div class="section" id="nachteile">
+<h5>1.2.1.2. Nachteile<a class="headerlink" href="#nachteile" title="Permalink to this headline">¶</a></h5>
+<ul class="simple">
+<li>Gefahr eines breiten Interface / API, zu viele Methoden</li>
+<li>Keine Nutzungsgarantie: Clients könnten weiterhin direkt auf Subsystemklassen zugreifen.</li>
+<li>Mehr Indirektionen: Weiterleitungen von Methodenaufrufen («Indirektionen») werden eingeführt.</li>
+</ul>
+</div>
+</div>
+<span id="document-patterns/structure-patterns/010_adapter"></span><div class="section" id="adapter">
+<h4>1.2.2. Adapter<a class="headerlink" href="#adapter" title="Permalink to this headline">¶</a></h4>
+<p>(S.1109)</p>
+<p>Eine «Vermittler»-Klasse, die ansonsten inkompatible Elemente verbindet. So müssen bestehende, inkompatible Interfaces nicht extra umgeschrieben werden.</p>
+<div class="section" id="vorteile">
+<h5>1.2.2.1. Vorteile<a class="headerlink" href="#vorteile" title="Permalink to this headline">¶</a></h5>
+<ul class="simple">
+<li>Sicherstellung von Kompatibilität</li>
+<li>Keine Änderung des bestehenden Systems</li>
+</ul>
+</div>
+<div class="section" id="nachteile">
+<h5>1.2.2.2. Nachteile<a class="headerlink" href="#nachteile" title="Permalink to this headline">¶</a></h5>
+<ul class="simple">
+<li>Aufwand durch Delegation</li>
+</ul>
+</div>
+</div>
+<span id="document-patterns/structure-patterns/020_decorator"></span><div class="section" id="decorator-aka-wrapper">
+<h4>1.2.3. Decorator (aka «Wrapper»)<a class="headerlink" href="#decorator-aka-wrapper" title="Permalink to this headline">¶</a></h4>
+<p>(S.1111)</p>
+<p>Eine bestehende Klasse wird von einer Wrapper-Klasse umhült und erweitert. Grundlage dabei ist ein gemeinsamer Basistyp oder Interface. Eine best. Methode wird dabei erst vom Wrapper aufgerufen und dann vom «gewrappten» Objekt.</p>
+<div class="section" id="vorteile">
+<h5>1.2.3.1. Vorteile<a class="headerlink" href="#vorteile" title="Permalink to this headline">¶</a></h5>
+<ul class="simple">
+<li>Transparent zusätzliche Funktionalität ohne Vererbung</li>
+<li>Hintereinanderschaltung mehrerer Decorators möglich</li>
+<li>Fexibilität: Zu dekorierende Klasse nicht festgelegt, da nur gegen gemeinsames Interface programmiert wird =&gt; Wrapper können für mehrere verschiedene Klassen genutzt werden.</li>
+<li>Vereinfachung von Vererbungshierarchien (im Gegensatz zu Vererbung)</li>
+</ul>
+</div>
+<div class="section" id="nachteile">
+<h5>1.2.3.2. Nachteile<a class="headerlink" href="#nachteile" title="Permalink to this headline">¶</a></h5>
+<ul class="simple">
+<li>Gemeinsamer Basistyp benötigt</li>
+<li>Fehlende Kontrolle über Einsatz von Entwickler (z.B. mehrfache Hintereinanderschaltung, sinnvoll?)</li>
+<li>Zugriff auf Spezialisierungen schwieriger möglich</li>
+<li>Implementierungsaufwand</li>
+</ul>
+</div>
+</div>
+<span id="document-patterns/structure-patterns/030_kompositum"></span><div class="section" id="kompositum">
+<h4>1.2.4. Kompositum<a class="headerlink" href="#kompositum" title="Permalink to this headline">¶</a></h4>
+<p>(S.1114)</p>
+<p>Ermöglicht hierarchische Datenstrukturen, wobei sowohl Knotenpunkte als auch «Blätter» dieselben Funktionalitäten aufweisen. Einezlobjekte sowie Komposita können somit
+beliebig hierarchisch kombiniert werden. Durch ein gemeinsames Interface können alle Bestandteile der Hierarchie gleich verwendet werden.</p>
+<div class="section" id="vorteile">
+<h5>1.2.4.1. Vorteile<a class="headerlink" href="#vorteile" title="Permalink to this headline">¶</a></h5>
+<ul class="simple">
+<li><strong>Vereinfachung:</strong> Zugriff auf Bestandteile einer Hierarchie wird vereinfach, da der Client nicht wissen muss, welches Objekt er gerade anspricht.</li>
+<li><strong>Strukturierung:</strong> Zugriffe werden strukturiert und Implementierungsdetails lassen sich verstecken.</li>
+</ul>
+</div>
+<div class="section" id="nachteile">
+<h5>1.2.4.2. Nachteile<a class="headerlink" href="#nachteile" title="Permalink to this headline">¶</a></h5>
+<ul class="simple">
+<li><strong>Erschwerter Zugriff auf Spezialisierungen:</strong> Durch das gemeinsame Interface ist der Aufruf von spezialisierten Methoden der einzelnen Bestandteile aufwändiger.</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<span id="document-patterns/behavior-patterns/index"></span><div class="section" id="verhaltensmuster">
+<h3>1.3. Verhaltensmuster<a class="headerlink" href="#verhaltensmuster" title="Permalink to this headline">¶</a></h3>
+<div class="toctree-wrapper compound">
+<span id="document-patterns/behavior-patterns/000_Iterator"></span><div class="section" id="iterator">
+<h4>1.3.1. Iterator<a class="headerlink" href="#iterator" title="Permalink to this headline">¶</a></h4>
+<p>(S.1118)</p>
 <p>Eine Art Hilfsklasse, die dafür zuständig ist, durch eine Sammlung von Objekten hindurch zu iterieren. Dies trennt somit auch die Zuständigkeiten,
 sodass sich die Datenstruktur nur um die Daten kümmern muss und der Iterator um das Ablaufen derselben.</p>
 <p>Meist wird ein Interface eines allgemeinen Iterators verwendet («Polymorpher Iterator»), das die Methoden <code class="docutils literal"><span class="pre">Object</span> <span class="pre">nextElement()</span></code> sowie <code class="docutils literal"><span class="pre">boolean</span> <span class="pre">hasNext()</span></code> vorgibt.</p>
 <p>Ein Iterator speichert auch die aktuelle Position der Iteration.</p>
 <div class="section" id="vorteile">
-<h4>1.1.1. Vorteile<a class="headerlink" href="#vorteile" title="Permalink to this headline">¶</a></h4>
+<h5>1.3.1.1. Vorteile<a class="headerlink" href="#vorteile" title="Permalink to this headline">¶</a></h5>
 <ul class="simple">
 <li><strong>Abstraktion und Kapselung:</strong> Die zu durchlaufende Datenstruktur wird gekapselt und kann bei Bedarf im Nachhinein verändert werden, ohne dass dies Änderungen aufseiten von Clients verursacht.</li>
 <li><strong>Vereinfachung:</strong> Die Realisierung eigener Iteratorklassen für komplexere Datenstrukturen kann dabei helfen, eine ansonsten schwierige Implementierung des Iterationsprozesses zu kapseln, aus der Programmlogik herauszulösen und diese zu vereinfachen.</li>
@@ -143,21 +514,22 @@ sodass sich die Datenstruktur nur um die Daten kümmern muss und der Iterator um
 </ul>
 </div>
 <div class="section" id="nachteile">
-<h4>1.1.2. Nachteile<a class="headerlink" href="#nachteile" title="Permalink to this headline">¶</a></h4>
+<h5>1.3.1.2. Nachteile<a class="headerlink" href="#nachteile" title="Permalink to this headline">¶</a></h5>
 <ul class="simple">
 <li><strong>Existenz einer alternativen Schreibweise in der Sprache:</strong> Seit Java 5 existiert mit der <code class="docutils literal"><span class="pre">for-each</span></code>-Schleife eine Möglichkeit, die Lesbarkeit von Iterationen zu verbessern. Es können beliebige Datenstrukturen durchlaufen werden, die das Interface <code class="docutils literal"><span class="pre">Iterable&lt;T&gt;</span></code> implementieren. Dies wird implizit mit einem <code class="docutils literal"><span class="pre">Iterator&lt;E&gt;</span></code> implementiert - versteckt aber dieses Detail.</li>
 </ul>
 </div>
 </div>
-<span id="document-patterns/behavior-patterns/010_null-object"></span><div class="section" id="null-objekt-s-1120">
-<h3>1.2. Null-Objekt (S.1120)<a class="headerlink" href="#null-objekt-s-1120" title="Permalink to this headline">¶</a></h3>
+<span id="document-patterns/behavior-patterns/010_null-object"></span><div class="section" id="null-objekt">
+<h4>1.3.2. Null-Objekt<a class="headerlink" href="#null-objekt" title="Permalink to this headline">¶</a></h4>
+<p>(S.1120)</p>
 <p>Statt bei ungültigen Anfragen oder leeren Mengen <code class="docutils literal"><span class="pre">null</span></code> zurückzugeben, wird von der verwendeten Klasse eine «Null-Objekt»-Variante implementiert. Dies kann einerseits durch
 eine Unterklasse implementiert sein, wobei sämtliche Funktionen angepasst oder entfernt werden müssten. Vorzuziehen ist allerdings - falls die Hauptklasse ein Interface implementiert -
 eine Null-Objekt-Klasse gegen dieses Interface zu realisieren. Dies verhindert, dass versehentlich vergessene Restfunktionalitäten in der Unterklasse trotzdem
 aufgerufen werden könnten.</p>
 <p>Dieses Pattern hat den Vorteil, dass kein Rückgabewert <code class="docutils literal"><span class="pre">null</span></code> vorkommt, der speziell evaluiert werden müsste.</p>
 <div class="section" id="implementierung-der-methoden">
-<h4>1.2.1. Implementierung der Methoden<a class="headerlink" href="#implementierung-der-methoden" title="Permalink to this headline">¶</a></h4>
+<h5>1.3.2.1. Implementierung der Methoden<a class="headerlink" href="#implementierung-der-methoden" title="Permalink to this headline">¶</a></h5>
 <p>Um die «Null»-Eigenschaft auszudrücken, müssen Methoden für die Null-Objekt-Unterklasse nach folgenden Tipps implementiert/angepasst werden:</p>
 <ul class="simple">
 <li>Alle <code class="docutils literal"><span class="pre">void</span></code>-Methoden werden leer implementiert.</li>
@@ -172,39 +544,40 @@ aufgerufen werden könnten.</p>
 </ul>
 </div>
 <div class="section" id="vorteile">
-<h4>1.2.2. Vorteile<a class="headerlink" href="#vorteile" title="Permalink to this headline">¶</a></h4>
+<h5>1.3.2.2. Vorteile<a class="headerlink" href="#vorteile" title="Permalink to this headline">¶</a></h5>
 <ul class="simple">
 <li><strong>Bessere Lesbarkeit und keine Spezialbehandlungen:</strong> Anwendungscode kann auf Spezialbehandlungen verzichten und ist lesbarer.</li>
 </ul>
 </div>
 <div class="section" id="nachteile">
-<h4>1.2.3. Nachteile<a class="headerlink" href="#nachteile" title="Permalink to this headline">¶</a></h4>
+<h5>1.3.2.3. Nachteile<a class="headerlink" href="#nachteile" title="Permalink to this headline">¶</a></h5>
 <ul class="simple">
 <li><strong>Konzeptionelle Probleme:</strong> Manchmal kann es schwierig sein, einen geeigneten Rückgabewert für eine best. Methode zu finden und es muss eine Exception geworfen werden.</li>
 <li><strong>Fehlerverschleierung möglich:</strong> In best. Fällen ist es entscheidend zwischen den Fällen «es gibt <em>ein</em> Objekt» und «es gibt <em>kein</em> Objekt» zu unterscheiden. Diese Pattern kann in solchen Fällen zu Undeutlichkeiten führen.</li>
 </ul>
 </div>
 </div>
-<span id="document-patterns/behavior-patterns/020_template-method"></span><div class="section" id="todo-template-method-s-1123">
-<h3>1.3. TODO: Template Method (S.1123)<a class="headerlink" href="#todo-template-method-s-1123" title="Permalink to this headline">¶</a></h3>
-<p>Eine bestehende Klasse wird von einer Wrapper-Klasse umhült und erweitert. Grundlage dabei ist ein gemeinsamer Basistyp oder Interface. Eine best. Methode wird dabei erst vom Wrapper aufgerufen und dann vom «gewrappten» Objekt.</p>
+<span id="document-patterns/behavior-patterns/020_template-method"></span><div class="section" id="template-method-schablonenmethode">
+<h4>1.3.3. Template Method («Schablonenmethode»)<a class="headerlink" href="#template-method-schablonenmethode" title="Permalink to this headline">¶</a></h4>
+<p>(S.1123)</p>
+<p>Bei dieser Pattern wird eine abstrakte Basisklasse («Schablone») erstellt, die einen bestimmten logischen Ablauf durch Aufruf entsprechender Methoden vorgibt.
+Diese aufgerufenen Methoden werden als <code class="docutils literal"><span class="pre">protected</span></code> deklariert, damit sie in Unterklassen überschrieben werden können.</p>
+<p>Es gibt dabei Methoden, die freiwillig überschrieben werden <em>können</em> und solche, die überschrieben werden <em>müssen</em>. Letztere werden in der Basisklasse
+als <a href="#id1"><span class="problematic" id="id2">``</span></a>abstract``deklariert.</p>
 <div class="section" id="vorteile">
-<h4>1.3.1. Vorteile<a class="headerlink" href="#vorteile" title="Permalink to this headline">¶</a></h4>
+<h5>1.3.3.1. Vorteile<a class="headerlink" href="#vorteile" title="Permalink to this headline">¶</a></h5>
 <ul class="simple">
-<li>Transparent zusätzliche Funktionalität ohne Vererbung</li>
-<li>Hintereinanderschaltung mehrerer Decorators möglich</li>
-<li>Fexibilität: Zu dekorierende Klasse nicht festgelegt, da nur gegen gemeinsames Interface programmiert wird =&gt; Wrapper können für mehrere verschiedene Klassen genutzt werden.</li>
-<li>Vereinfachung von Vererbungshierarchien (im Gegensatz zu Vererbung)</li>
+<li><strong>Definition von Erweiterungsstellen:</strong> Es wird ein Algorithmus vorgegeben, Funktionalitäten können an bestimmten Stellen überschrieben werden.</li>
 </ul>
 </div>
 <div class="section" id="nachteile">
-<h4>1.3.2. Nachteile<a class="headerlink" href="#nachteile" title="Permalink to this headline">¶</a></h4>
+<h5>1.3.3.2. Nachteile<a class="headerlink" href="#nachteile" title="Permalink to this headline">¶</a></h5>
 <ul class="simple">
-<li>Gemeinsamer Basistyp benötigt</li>
-<li>Fehlende Kontrolle über Einsatz von Entwickler (z.B. mehrfache Hintereinanderschaltung, sinnvoll?)</li>
-<li>Zugriff auf Spezialisierungen schwieriger möglich</li>
-<li>Implementierungsaufwand</li>
+<li><strong>Weniger Flexibilität:</strong> Algoritmus vorgegeben und schwierig modifizierbar. In diesem Fall ist dieses Verhalten aber erwünscht.</li>
 </ul>
+</div>
+<div class="section" id="beispiel">
+<h5>1.3.3.3. Beispiel<a class="headerlink" href="#beispiel" title="Permalink to this headline">¶</a></h5>
 <div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">patterns.verhaltensmuster.template</span><span class="o">;</span>
 
 <span class="kd">public</span> <span class="kd">abstract</span> <span class="kd">class</span> <span class="nc">AirplaneChecklist</span> <span class="o">{</span>
@@ -298,466 +671,142 @@ aufgerufen werden könnten.</p>
 </div>
 </div>
 </div>
-<span id="document-patterns/behavior-patterns/MVC"></span><div class="section" id="todo-mvc-s-1152">
-<h3>1.4. TODO: MVC (S.1152)<a class="headerlink" href="#todo-mvc-s-1152" title="Permalink to this headline">¶</a></h3>
-<p>Eine bestehende Klasse wird von einer Wrapper-Klasse umhült und erweitert. Grundlage dabei ist ein gemeinsamer Basistyp oder Interface. Eine best. Methode wird dabei erst vom Wrapper aufgerufen und dann vom «gewrappten» Objekt.</p>
+<span id="document-patterns/behavior-patterns/030_strategy"></span><div class="section" id="strategie">
+<h4>1.3.4. Strategie<a class="headerlink" href="#strategie" title="Permalink to this headline">¶</a></h4>
+<p>(S.1127)</p>
+<p>Ähnlich wie bei der Template-Pattern wird hier ein bestimmter Ablauf vorgegeben, jedoch in einer viel lockereren Weise. Die Hauptfunktionalität wird durch «Strategien» festgelegt.
+Strategien sind Klassen, die ein gemeinsames Interface «Strategy» implementieren. Instanzen dieser Klassen werden dann jeweils an eine Instanze der
+Steuerklasse übergeben, welche sie ausführt.</p>
+<p>Somit können Endresultate der Steuerklasse mit verschiedenen Strategien/Implementierungen erreicht werden, ohne den Aufruf zu verändern.</p>
 <div class="section" id="vorteile">
-<h4>1.4.1. Vorteile<a class="headerlink" href="#vorteile" title="Permalink to this headline">¶</a></h4>
+<h5>1.3.4.1. Vorteile<a class="headerlink" href="#vorteile" title="Permalink to this headline">¶</a></h5>
 <ul class="simple">
-<li>Transparent zusätzliche Funktionalität ohne Vererbung</li>
-<li>Hintereinanderschaltung mehrerer Decorators möglich</li>
-<li>Fexibilität: Zu dekorierende Klasse nicht festgelegt, da nur gegen gemeinsames Interface programmiert wird =&gt; Wrapper können für mehrere verschiedene Klassen genutzt werden.</li>
-<li>Vereinfachung von Vererbungshierarchien (im Gegensatz zu Vererbung)</li>
+<li><strong>Erhöhte Flexibilität:</strong> Die Auswahl der verschiedenen Strategien kann zur Laufzeit erfolgen. Dadurch erhöht sich die Flexibilität und die Wiederverwendbarkeit.</li>
+<li><strong>Bessere Erweiterbarkeit:</strong> Strategien haben keine Abhängigkeiten untereinander =&gt; Leicht erweiterbar.</li>
 </ul>
 </div>
 <div class="section" id="nachteile">
-<h4>1.4.2. Nachteile<a class="headerlink" href="#nachteile" title="Permalink to this headline">¶</a></h4>
+<h5>1.3.4.2. Nachteile<a class="headerlink" href="#nachteile" title="Permalink to this headline">¶</a></h5>
 <ul class="simple">
-<li>Gemeinsamer Basistyp benötigt</li>
-<li>Fehlende Kontrolle über Einsatz von Entwickler (z.B. mehrfache Hintereinanderschaltung, sinnvoll?)</li>
-<li>Zugriff auf Spezialisierungen schwieriger möglich</li>
-<li>Implementierungsaufwand</li>
+<li><strong>Kopplung an konkrete Strategien:</strong> Clients müssen die konkreten Strategiklassen kennen.</li>
+<li><strong>Erhöhter Umfang:</strong> Die Anzahl der Klassen erhöht sich.</li>
 </ul>
 </div>
 </div>
-<span id="document-patterns/behavior-patterns/command"></span><div class="section" id="todo-command-s-1134">
-<h3>1.5. TODO: Command (S.1134)<a class="headerlink" href="#todo-command-s-1134" title="Permalink to this headline">¶</a></h3>
-<p>Eine bestehende Klasse wird von einer Wrapper-Klasse umhült und erweitert. Grundlage dabei ist ein gemeinsamer Basistyp oder Interface. Eine best. Methode wird dabei erst vom Wrapper aufgerufen und dann vom «gewrappten» Objekt.</p>
+<span id="document-patterns/behavior-patterns/040_command"></span><div class="section" id="command">
+<h4>1.3.5. Command<a class="headerlink" href="#command" title="Permalink to this headline">¶</a></h4>
+<p>(S.1134)</p>
+<p>Diese Pattern stellt eine Wiederverwendbarkeit von Abläufen («Commands») zur Verfügung. Dabei werden individuelle Commands (z.B. LoadCommand, SaveCommand, etc.)
+gegen ein Interface <code class="docutils literal"><span class="pre">ICommand</span></code> implementiert, das z.B. eine Methode <code class="docutils literal"><span class="pre">execute()</span></code> vorschreibt.</p>
+<p>Die Commands werden zwar von einer Aufrufenden Komponente erzeugt, sollten aber nicht auch von ihr aufgerufen werden. Stattdessen eignet sich eine separate
+Aufrufer-Klasse («CommandExecutor») dafür. Diese kümmert sich nebst dem Threadsicheren Aufruf der Commands auch darum, den Commands den nötigen «Execution Context» bereitzustellen.
+Dieser Kontext wird in Form eines Value-Objects implementiert und enthält z.B. Referenzen auf Objekte, die für die Ausführung des Commands benötigt werden.</p>
+<p>Dem Command werden somit bei seiner Erzeugung bereits <cite>Spezifikationsdaten</cite> übergeben, die <cite>Ausführungsdaten</cite> werden aber erst bei der Ausführung durch den «CommandExecutor» übergeben.</p>
 <div class="section" id="vorteile">
-<h4>1.5.1. Vorteile<a class="headerlink" href="#vorteile" title="Permalink to this headline">¶</a></h4>
+<h5>1.3.5.1. Vorteile<a class="headerlink" href="#vorteile" title="Permalink to this headline">¶</a></h5>
 <ul class="simple">
-<li>Transparent zusätzliche Funktionalität ohne Vererbung</li>
-<li>Hintereinanderschaltung mehrerer Decorators möglich</li>
-<li>Fexibilität: Zu dekorierende Klasse nicht festgelegt, da nur gegen gemeinsames Interface programmiert wird =&gt; Wrapper können für mehrere verschiedene Klassen genutzt werden.</li>
-<li>Vereinfachung von Vererbungshierarchien (im Gegensatz zu Vererbung)</li>
+<li><strong>Lose Kopplung:</strong> Aufrufer und ausführende Einheit sind klar getrennt, Commands können von überall her aufgerufen werden.</li>
+<li><strong>Bessere Abstraktion:</strong> In einem Befehl werden verschiedene auszuführende Methodenaufrufe an einer Stelle gebündelt.</li>
+<li><strong>Wiederverwendbarkeit</strong></li>
+<li><strong>Fernsteuerung:</strong> Speicherung bzw. Aufzeichnung und <code class="docutils literal"><span class="pre">Undo</span></code>-Funktion der Befehle ist möglich.</li>
 </ul>
 </div>
 <div class="section" id="nachteile">
-<h4>1.5.2. Nachteile<a class="headerlink" href="#nachteile" title="Permalink to this headline">¶</a></h4>
+<h5>1.3.5.2. Nachteile<a class="headerlink" href="#nachteile" title="Permalink to this headline">¶</a></h5>
 <ul class="simple">
-<li>Gemeinsamer Basistyp benötigt</li>
-<li>Fehlende Kontrolle über Einsatz von Entwickler (z.B. mehrfache Hintereinanderschaltung, sinnvoll?)</li>
-<li>Zugriff auf Spezialisierungen schwieriger möglich</li>
-<li>Implementierungsaufwand</li>
+<li><strong>Erhöhter Umfang</strong></li>
 </ul>
 </div>
 </div>
-<span id="document-patterns/behavior-patterns/observer"></span><div class="section" id="todo-observer-s-1144">
-<h3>1.6. TODO: Observer (S.1144)<a class="headerlink" href="#todo-observer-s-1144" title="Permalink to this headline">¶</a></h3>
-<p>Eine bestehende Klasse wird von einer Wrapper-Klasse umhült und erweitert. Grundlage dabei ist ein gemeinsamer Basistyp oder Interface. Eine best. Methode wird dabei erst vom Wrapper aufgerufen und dann vom «gewrappten» Objekt.</p>
-<div class="section" id="vorteile">
-<h4>1.6.1. Vorteile<a class="headerlink" href="#vorteile" title="Permalink to this headline">¶</a></h4>
+<span id="document-patterns/behavior-patterns/050_proxy"></span><div class="section" id="proxy">
+<h4>1.3.6. Proxy<a class="headerlink" href="#proxy" title="Permalink to this headline">¶</a></h4>
+<p>(S.1142)</p>
+<p>Ein <strong>Proxy</strong> ist eine «vorgeschaltete» Klasse, die den Zugriff auf eine andere Klasse regelt. Beide, Proxy wie auch Hauptklasse, implementieren dasselbe Interface.</p>
+<p>Es existieren drei Typen von Proxies:</p>
 <ul class="simple">
-<li>Transparent zusätzliche Funktionalität ohne Vererbung</li>
-<li>Hintereinanderschaltung mehrerer Decorators möglich</li>
-<li>Fexibilität: Zu dekorierende Klasse nicht festgelegt, da nur gegen gemeinsames Interface programmiert wird =&gt; Wrapper können für mehrere verschiedene Klassen genutzt werden.</li>
-<li>Vereinfachung von Vererbungshierarchien (im Gegensatz zu Vererbung)</li>
+<li><strong>Remote Proxy:</strong> Betreut im Hintergrund einen entfernten Service (z.B. Webservice), erweckt aber den Eindruck, dass es sich um ein lokales Objekt handelt.</li>
+<li><strong>Lazy Init Proxy:</strong> Erzeugt die Hauptklasse erst zum Zeitpunkt des Gebrauchs. =&gt; Erhöht Performance, da ressourcenschonend.</li>
+<li><strong>Access Control Proxy:</strong> Regelt Zugriff und Berechtigungen auf die Hauptklasse.</li>
+</ul>
+<div class="section" id="vorteile">
+<h5>1.3.6.1. Vorteile<a class="headerlink" href="#vorteile" title="Permalink to this headline">¶</a></h5>
+<ul class="simple">
+<li><strong>Steuerung von Funktionalität:</strong> Ähnlich zur Decorator-Pattern kann die Basisfunktionalität erweitert werden. Steuerung steht aber im Vordergrund.</li>
 </ul>
 </div>
 <div class="section" id="nachteile">
-<h4>1.6.2. Nachteile<a class="headerlink" href="#nachteile" title="Permalink to this headline">¶</a></h4>
+<h5>1.3.6.2. Nachteile<a class="headerlink" href="#nachteile" title="Permalink to this headline">¶</a></h5>
 <ul class="simple">
-<li>Gemeinsamer Basistyp benötigt</li>
-<li>Fehlende Kontrolle über Einsatz von Entwickler (z.B. mehrfache Hintereinanderschaltung, sinnvoll?)</li>
-<li>Zugriff auf Spezialisierungen schwieriger möglich</li>
-<li>Implementierungsaufwand</li>
+<li><strong>Aufwand durch Delegation</strong> Besonders wenn die Hauptklasse viele Methoden besitzt.</li>
 </ul>
 </div>
 </div>
-<span id="document-patterns/behavior-patterns/proxy"></span><div class="section" id="todo-proxy-s-1142">
-<h3>1.7. TODO: Proxy (S.1142)<a class="headerlink" href="#todo-proxy-s-1142" title="Permalink to this headline">¶</a></h3>
-<p>Eine bestehende Klasse wird von einer Wrapper-Klasse umhült und erweitert. Grundlage dabei ist ein gemeinsamer Basistyp oder Interface. Eine best. Methode wird dabei erst vom Wrapper aufgerufen und dann vom «gewrappten» Objekt.</p>
+<span id="document-patterns/behavior-patterns/060_observer"></span><div class="section" id="observer">
+<h4>1.3.7. Observer<a class="headerlink" href="#observer" title="Permalink to this headline">¶</a></h4>
+<p>(S.1144)</p>
+<p>Diese Pattern ermöglich es Klassen, sich bei einer anderen Klasse als «Interessenten» anzumelden. Sie werden bei jeder Statusänderung des Hauptobjektes über den neuen Zustand informiert.</p>
+<p>Es gibt dabei zwei Varianten:
+* <strong>Pull:</strong> Die Interessenten werden nur darüber informiert, <em>dass</em> eine Änderung stattgefunden hat. <em>Was</em> sich genau geändert hat und alle weiteren Details müssen sie sich selber über eine <code class="docutils literal"><span class="pre">get()</span></code>-Methode holen. Dies bedingt aber auch, dass die Interessenten stets eine Referenz auf das beobachtete Objekt behalten.
+* <strong>Push:</strong> Sämtliche Informationen zur Statusänderung werden an die Interessenten «gepusht». Sie benötigen somit keine Referenz auf das beobachtete Objekt. Allerdings müssen hier auch immer <em>alle</em> Informationen übermittelt werden, da das beobachtete Objekt nichts von den Bedürfnissen der Interessenten weiss.</p>
+<div class="section" id="beobachtung-mehrerer-objekte">
+<h5>1.3.7.1. Beobachtung mehrerer Objekte<a class="headerlink" href="#beobachtung-mehrerer-objekte" title="Permalink to this headline">¶</a></h5>
+<p>Beobachtet ein Interessent mehrere Objekte, so ist es wichtig, dass bei der <code class="docutils literal"><span class="pre">update()</span></code>-Methode stets die Referenz zum beobachteten Objekt mitgesendet wird. Ansonsten weiss der Interessent nicht, welches seiner beobachteten Objekte gerade sendet.</p>
+</div>
+<div class="section" id="einschrankung-des-subjekt-zugriffs">
+<h5>1.3.7.2. Einschränkung des Subjekt-Zugriffs<a class="headerlink" href="#einschrankung-des-subjekt-zugriffs" title="Permalink to this headline">¶</a></h5>
+<p>Da Interessenten u.U. eine Referenz auf das beobachtete Objekt halten und weil allgemeine <code class="docutils literal"><span class="pre">update()</span></code>-Methoden eher schlechter lesbar sind, sollte die Beobachtung
+über ein spezifisches Interface geschehen, z.B. <code class="docutils literal"><span class="pre">nameChanged</span></code>. Dies hat zum Vorteil, dass sprechende, leicht lesbare Methodennamen verwendet werden. Zudem sollte der get-Zugriff, um
+den Zustand abzurufen ebenfalls über ein Interface mit der Methode <code class="docutils literal"><span class="pre">getState()</span></code> erfolgen, um den Aufruf anderer Methoden zu verhindern.</p>
+</div>
 <div class="section" id="vorteile">
-<h4>1.7.1. Vorteile<a class="headerlink" href="#vorteile" title="Permalink to this headline">¶</a></h4>
+<h5>1.3.7.3. Vorteile<a class="headerlink" href="#vorteile" title="Permalink to this headline">¶</a></h5>
 <ul class="simple">
-<li>Transparent zusätzliche Funktionalität ohne Vererbung</li>
-<li>Hintereinanderschaltung mehrerer Decorators möglich</li>
-<li>Fexibilität: Zu dekorierende Klasse nicht festgelegt, da nur gegen gemeinsames Interface programmiert wird =&gt; Wrapper können für mehrere verschiedene Klassen genutzt werden.</li>
-<li>Vereinfachung von Vererbungshierarchien (im Gegensatz zu Vererbung)</li>
+<li><strong>Lose Kopplung:</strong> Insbesondere wenn sich Subjekt und Beobachter nicht kennen (über Interfaces) =&gt; Einfache Erweiterbarkeit.</li>
+<li><strong>Flexibilität:</strong> Anzahl Interessenten kann zur Laufzeit erhöht und vermindert werden. Beobachter beeinflussen sich nicht gegenseitig.</li>
 </ul>
 </div>
 <div class="section" id="nachteile">
-<h4>1.7.2. Nachteile<a class="headerlink" href="#nachteile" title="Permalink to this headline">¶</a></h4>
+<h5>1.3.7.4. Nachteile<a class="headerlink" href="#nachteile" title="Permalink to this headline">¶</a></h5>
 <ul class="simple">
-<li>Gemeinsamer Basistyp benötigt</li>
-<li>Fehlende Kontrolle über Einsatz von Entwickler (z.B. mehrfache Hintereinanderschaltung, sinnvoll?)</li>
-<li>Zugriff auf Spezialisierungen schwieriger möglich</li>
-<li>Implementierungsaufwand</li>
+<li><strong>Fehlende Reaktion:</strong> Das Subjekt weiss nicht, ob ein Beobachter auf ein Ereignis reagieren wird. Er könnte es einfach ignorieren.</li>
+<li><strong>Probleme der Statusänderung:</strong> Subjekt weiss nicht, wie Beobachter reagiert. Im schlimmsten fall könnte die Reaktion sehr lange dauern oder zur Blockade führen. =&gt; Asynchrone Abarbeitung in Betracht ziehen.</li>
+<li><strong>Komplexität:</strong> Schwierig, den ganzen Prozess threadsicher zu gestalten. Neue Interessenten sollten als Kompromiss nur nachfolgende Benachrichtigungen erhalten.</li>
+<li><strong>Nachvollziehbarkeit:</strong> Häufig gibt es sehr viele Benachrichtigungen =&gt; Ablauf schwer nachzuvollziehen (Debugging)</li>
+<li><strong>Gefahr von Zyklen(!):</strong> Werden Beobachter ebenfalls beobachtet, ist die Gefahr von unerklärbaren Effekten und Endlosschlaufen gross!</li>
 </ul>
 </div>
 </div>
-<span id="document-patterns/behavior-patterns/strategy"></span><div class="section" id="todo-strategie-s-1127">
-<h3>1.8. TODO: Strategie (S.1127)<a class="headerlink" href="#todo-strategie-s-1127" title="Permalink to this headline">¶</a></h3>
-<p>Eine bestehende Klasse wird von einer Wrapper-Klasse umhült und erweitert. Grundlage dabei ist ein gemeinsamer Basistyp oder Interface. Eine best. Methode wird dabei erst vom Wrapper aufgerufen und dann vom «gewrappten» Objekt.</p>
-<div class="section" id="vorteile">
-<h4>1.8.1. Vorteile<a class="headerlink" href="#vorteile" title="Permalink to this headline">¶</a></h4>
+<span id="document-patterns/behavior-patterns/070_MVC"></span><div class="section" id="mvc">
+<h4>1.3.8. MVC<a class="headerlink" href="#mvc" title="Permalink to this headline">¶</a></h4>
+<p>(S.1152)</p>
+<p>Semantische Aufteilung von Objekten in die drei Komponenten (M)odel, (V)iew und (C)ontroller.</p>
+<div class="section" id="zustandigkeiten">
+<h5>1.3.8.1. Zuständigkeiten<a class="headerlink" href="#zustandigkeiten" title="Permalink to this headline">¶</a></h5>
 <ul class="simple">
-<li>Transparent zusätzliche Funktionalität ohne Vererbung</li>
-<li>Hintereinanderschaltung mehrerer Decorators möglich</li>
-<li>Fexibilität: Zu dekorierende Klasse nicht festgelegt, da nur gegen gemeinsames Interface programmiert wird =&gt; Wrapper können für mehrere verschiedene Klassen genutzt werden.</li>
-<li>Vereinfachung von Vererbungshierarchien (im Gegensatz zu Vererbung)</li>
+<li><strong>Model:</strong> Datenstruktur, Aufbau, meist spiegelt es die Struktur einer Datenbanktabelle.</li>
+<li><strong>View:</strong> Art und Weise der Darstellung des Objekts bzw. der Daten.</li>
+<li><strong>Controller:</strong> Verarbeitung von Interaktionen mit dem Objekt.</li>
+</ul>
+</div>
+<div class="section" id="vorteile">
+<h5>1.3.8.2. Vorteile<a class="headerlink" href="#vorteile" title="Permalink to this headline">¶</a></h5>
+<ul class="simple">
+<li><strong>Lose Kopplung:</strong> Bei Kommunikation der Komponenten über Interfaces.</li>
+<li><strong>Trennung von Zuständigkeiten:</strong> Jede Komponente repräsentiert einen best. Aspekt des Gesamtsystems.</li>
+<li><strong>Flexibilität:</strong> Mehrere unterschiedliche Darstellungen des gleichen Objekts lassen sich einfach realisieren.</li>
+<li><strong>Konsistente Darstellung:</strong> Durch Observer-Pattern können alle Views auf zentrale Änderungen des Modells reagieren und immer konsistente Daten anzeigen.</li>
 </ul>
 </div>
 <div class="section" id="nachteile">
-<h4>1.8.2. Nachteile<a class="headerlink" href="#nachteile" title="Permalink to this headline">¶</a></h4>
+<h5>1.3.8.3. Nachteile<a class="headerlink" href="#nachteile" title="Permalink to this headline">¶</a></h5>
 <ul class="simple">
-<li>Gemeinsamer Basistyp benötigt</li>
-<li>Fehlende Kontrolle über Einsatz von Entwickler (z.B. mehrfache Hintereinanderschaltung, sinnvoll?)</li>
-<li>Zugriff auf Spezialisierungen schwieriger möglich</li>
-<li>Implementierungsaufwand</li>
+<li><strong>Overengineering:</strong> Objekt sollte sich eigentlich um all seine Belange selber kümmern. Aufteilung kann leicht viel Aufwand bedeuten.</li>
+<li><strong>Erhöhte Komplexität:</strong> Erhöhte Anzahl an benötigter Klassen</li>
+<li><strong>Gefahr vieler Änderungsmitteliungen:</strong> Falls viele feingranulare Änderungen an Modell =&gt; Umfassende Kommunikation an alle beteiligten Views.</li>
+<li><strong>Gefahr enger Kopplung:</strong> Falls Komponenten nicht durch Interfaces voneinander getrennt =&gt; Wiederverwendbarkeit sinkt.</li>
 </ul>
 </div>
 </div>
-<span id="document-patterns/erzeugungsmuster/erbauer"></span><div class="section" id="erbauer-builder">
-<h3>1.9. Erbauer (Builder)<a class="headerlink" href="#erbauer-builder" title="Permalink to this headline">¶</a></h3>
-<ul class="simple">
-<li>Ebenfalls eine «Konfigurationsmethode»</li>
-<li>Unterschied zu <code class="docutils literal"><span class="pre">`Fabrikmethode`</span></code>: Es wird eine Instanz des Builders (innere statische Klasse von Produkt) erstellt, die durch gekettete Aufrufe von Konfigurationsmethoden konfiguriert werden kann.</li>
-<li>Dem Produkt wird anschliessend die Instanz des Builders als Konfiguration übergeben.</li>
-</ul>
-<div class="line-block">
-<div class="line"><strong>Vorteile</strong></div>
-<div class="line">+ Lesbarkeit und Vereinfacung</div>
-<div class="line">+ Konstruktionssicherheit</div>
-<div class="line">+ Unterstützung optionaler Attribute</div>
-<div class="line">- Komplexer</div>
-<div class="line"><br /></div>
-</div>
-<div class="section" id="beispiel">
-<h4>1.9.1. Beispiel<a class="headerlink" href="#beispiel" title="Permalink to this headline">¶</a></h4>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">package</span> <span class="n">patterns</span><span class="o">.</span><span class="n">erzeugungsmuster</span><span class="o">.</span><span class="n">erbauer</span><span class="p">;</span>
-
-<span class="o">/**</span>
- <span class="o">*</span> <span class="n">Vehicle</span> <span class="n">Class</span> <span class="p">(</span><span class="n">Construction</span> <span class="n">Pattern</span><span class="p">)</span>
- <span class="o">*/</span>
-<span class="n">public</span> <span class="k">class</span> <span class="nc">Vehicle</span> <span class="p">{</span>
-
-    <span class="n">private</span> <span class="n">String</span> <span class="nb">type</span><span class="p">,</span> <span class="n">color</span><span class="p">;</span>
-    <span class="n">private</span> <span class="nb">int</span> <span class="n">nWheels</span><span class="p">;</span>
-    <span class="n">private</span> <span class="n">boolean</span> <span class="n">hasMotor</span><span class="p">;</span>
-    <span class="n">private</span> <span class="nb">float</span> <span class="n">maxSpeed</span><span class="p">;</span>
-
-    <span class="o">/**</span>
-     <span class="o">*</span> <span class="n">Called</span> <span class="n">by</span> <span class="n">the</span> <span class="n">Builder</span>
-     <span class="o">*/</span>
-    <span class="n">private</span> <span class="n">Vehicle</span><span class="p">(</span><span class="n">VehicleBuilder</span> <span class="n">options</span><span class="p">)</span> <span class="p">{</span>
-        <span class="o">//</span> <span class="n">Do</span> <span class="n">something</span><span class="o">...</span>
-    <span class="p">}</span>
-
-    <span class="o">/**</span>
-     <span class="o">*</span> <span class="n">Vehicle</span> <span class="n">Builder</span>
-     <span class="o">*/</span>
-    <span class="n">public</span> <span class="n">static</span> <span class="n">final</span> <span class="k">class</span> <span class="nc">VehicleBuilder</span> <span class="p">{</span>
-
-        <span class="n">private</span> <span class="nb">int</span> <span class="n">nWheels</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
-        <span class="n">private</span> <span class="nb">int</span> <span class="n">nDoors</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
-
-        <span class="n">public</span> <span class="n">VehicleBuilder</span> <span class="n">twoWheeler</span><span class="p">()</span> <span class="p">{</span>
-            <span class="n">this</span><span class="o">.</span><span class="n">nWheels</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
-            <span class="k">return</span> <span class="n">this</span><span class="p">;</span>
-        <span class="p">}</span>
-
-        <span class="n">public</span> <span class="n">VehicleBuilder</span> <span class="n">fourWheeler</span><span class="p">()</span> <span class="p">{</span>
-            <span class="n">this</span><span class="o">.</span><span class="n">nWheels</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
-            <span class="k">return</span> <span class="n">this</span><span class="p">;</span>
-        <span class="p">}</span>
-
-        <span class="n">public</span> <span class="n">VehicleBuilder</span> <span class="n">numDoors</span><span class="p">(</span><span class="nb">int</span> <span class="n">nDoors</span><span class="p">)</span> <span class="p">{</span>
-            <span class="n">this</span><span class="o">.</span><span class="n">nDoors</span> <span class="o">=</span> <span class="n">nDoors</span><span class="p">;</span>
-            <span class="k">return</span> <span class="n">this</span><span class="p">;</span>
-        <span class="p">}</span>
-
-        <span class="n">public</span> <span class="n">Vehicle</span> <span class="n">create</span><span class="p">()</span> <span class="p">{</span>
-            <span class="k">return</span> <span class="n">new</span> <span class="n">Vehicle</span><span class="p">(</span><span class="n">this</span><span class="p">);</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-
-<span class="p">}</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">package</span> <span class="n">patterns</span><span class="o">.</span><span class="n">erzeugungsmuster</span><span class="o">.</span><span class="n">erbauer</span><span class="p">;</span>
-
-
-<span class="o">/**</span>
- <span class="o">*</span> <span class="n">Created</span> <span class="n">by</span> <span class="n">samuelblattner</span> <span class="n">on</span> <span class="mi">20</span><span class="o">/</span><span class="mi">09</span><span class="o">/</span><span class="mf">16.</span>
- <span class="o">*/</span>
-<span class="n">public</span> <span class="k">class</span> <span class="nc">Main</span> <span class="p">{</span>
-
-    <span class="n">public</span> <span class="n">static</span> <span class="n">void</span> <span class="n">main</span><span class="p">(</span><span class="n">String</span> <span class="n">args</span><span class="p">[])</span> <span class="p">{</span>
-        <span class="n">Vehicle</span> <span class="n">myCar</span> <span class="o">=</span> <span class="n">new</span> <span class="n">Vehicle</span><span class="o">.</span><span class="n">VehicleBuilder</span><span class="p">()</span><span class="o">.</span><span class="n">fourWheeler</span><span class="p">()</span><span class="o">.</span><span class="n">numDoors</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">create</span><span class="p">();</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-</div>
-</div>
-<span id="document-patterns/erzeugungsmuster/erzeugungsmethode"></span><div class="section" id="erzeugungsmethode">
-<h3>1.10. Erzeugungsmethode<a class="headerlink" href="#erzeugungsmethode" title="Permalink to this headline">¶</a></h3>
-<ul class="simple">
-<li>Analog zu Bestellung in Restaurant</li>
-<li>Statische Produktionsmethode damit komplizierter Konstruktor nicht von aussen aufgerufen werden muss.</li>
-<li>Nur private Konstruktoren!</li>
-</ul>
-<div class="line-block">
-<div class="line"><strong>Vorteile</strong></div>
-<div class="line">+ Lesbarkeit, sprechende Konstruktoren</div>
-<div class="line"><br /></div>
-</div>
-<div class="section" id="beispiel">
-<h4>1.10.1. Beispiel<a class="headerlink" href="#beispiel" title="Permalink to this headline">¶</a></h4>
-<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">patterns.erzeugungsmuster.erzeugungsmethode</span><span class="o">;</span>
-
-<span class="cm">/**</span>
-<span class="cm"> * Vehicle Class (Construction Pattern)</span>
-<span class="cm"> */</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Vehicle</span> <span class="o">{</span>
-
-    <span class="kd">private</span> <span class="n">String</span> <span class="n">type</span><span class="o">,</span> <span class="n">color</span><span class="o">;</span>
-    <span class="kd">private</span> <span class="kt">int</span> <span class="n">nWheels</span><span class="o">;</span>
-    <span class="kd">private</span> <span class="kt">boolean</span> <span class="n">hasMotor</span><span class="o">;</span>
-    <span class="kd">private</span> <span class="kt">float</span> <span class="n">maxSpeed</span><span class="o">;</span>
-
-    <span class="cm">/**</span>
-<span class="cm">     * This constructor is too complicated for mortals, wrap it in two literal and easy constructors</span>
-<span class="cm">     */</span>
-    <span class="kd">private</span> <span class="nf">Vehicle</span> <span class="o">(</span><span class="n">String</span> <span class="n">type</span><span class="o">,</span> <span class="n">String</span> <span class="n">color</span><span class="o">,</span> <span class="kt">int</span> <span class="n">nWheels</span><span class="o">,</span> <span class="kt">boolean</span> <span class="n">hasMotor</span><span class="o">,</span> <span class="kt">float</span> <span class="n">maxSpeed</span><span class="o">)</span> <span class="o">{</span>
-        <span class="c1">// Do something...</span>
-    <span class="o">}</span>
-
-    <span class="cm">/**</span>
-<span class="cm">     * Now, this is much easier</span>
-<span class="cm">     */</span>
-    <span class="kd">public</span> <span class="kd">static</span> <span class="n">Vehicle</span> <span class="nf">createCar</span><span class="o">(</span><span class="n">String</span> <span class="n">color</span><span class="o">)</span> <span class="o">{</span>
-        <span class="k">return</span> <span class="k">new</span> <span class="n">Vehicle</span><span class="o">(</span><span class="s">&quot;Car&quot;</span><span class="o">,</span> <span class="n">color</span><span class="o">,</span> <span class="mi">4</span><span class="o">,</span> <span class="kc">true</span><span class="o">,</span> <span class="mf">200.0f</span><span class="o">);</span>
-    <span class="o">}</span>
-
-    <span class="cm">/**</span>
-<span class="cm">     * And this, too</span>
-<span class="cm">     */</span>
-    <span class="kd">public</span> <span class="kd">static</span> <span class="n">Vehicle</span> <span class="nf">createBike</span><span class="o">(</span><span class="n">String</span> <span class="n">color</span><span class="o">)</span> <span class="o">{</span>
-        <span class="k">return</span> <span class="k">new</span> <span class="n">Vehicle</span><span class="o">(</span><span class="s">&quot;Bike&quot;</span><span class="o">,</span> <span class="n">color</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="kc">false</span><span class="o">,</span> <span class="mf">60.0f</span><span class="o">);</span>
-    <span class="o">}</span>
-<span class="o">}</span>
-</pre></div>
-</div>
-</div>
-</div>
-<span id="document-patterns/erzeugungsmuster/fabrikmethode"></span><div class="section" id="fabrikmethode-factory">
-<h3>1.11. Fabrikmethode (Factory)<a class="headerlink" href="#fabrikmethode-factory" title="Permalink to this headline">¶</a></h3>
-<ul class="simple">
-<li>Ebenfalls eine «Konfigurationsmethode»</li>
-<li>Unterschied zu <code class="docutils literal"><span class="pre">`Erzeugungsmethode`</span></code>: Den Job der Konstruktion übernimmt eine separate Fabrik-Klasse</li>
-<li>Produkte müssen entweder gemeinsames Interface implementieren, gemeinsame abstrakte Klasse erben oder beides!</li>
-</ul>
-<div class="line-block">
-<div class="line"><strong>Vorteile</strong></div>
-<div class="line">+ Lesbarkeit</div>
-<div class="line">+ Abstraktion / Kapselung</div>
-<div class="line">+ Konstruktionssicherheit</div>
-<div class="line">- Mehraufwand</div>
-<div class="line">- Komplexer</div>
-<div class="line"><br /></div>
-</div>
-<div class="section" id="beispiel">
-<h4>1.11.1. Beispiel<a class="headerlink" href="#beispiel" title="Permalink to this headline">¶</a></h4>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">package</span> <span class="n">patterns</span><span class="o">.</span><span class="n">erzeugungsmuster</span><span class="o">.</span><span class="n">fabrikmethode</span><span class="p">;</span>
-
-<span class="o">/**</span>
- <span class="o">*</span> <span class="n">Interface</span> <span class="n">Vehicle</span>
- <span class="o">*/</span>
-<span class="n">public</span> <span class="n">interface</span> <span class="n">Vehicle</span> <span class="p">{</span>
-
-    <span class="n">public</span> <span class="nb">int</span> <span class="n">getNumWheels</span><span class="p">();</span>
-    <span class="n">public</span> <span class="n">void</span> <span class="n">setSpeed</span><span class="p">(</span><span class="nb">float</span> <span class="n">speed</span><span class="p">);</span>
-
-<span class="p">}</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">package</span> <span class="n">patterns</span><span class="o">.</span><span class="n">erzeugungsmuster</span><span class="o">.</span><span class="n">fabrikmethode</span><span class="p">;</span>
-
-<span class="o">/**</span>
- <span class="o">*</span> <span class="n">Vehicle</span> <span class="n">Factory</span>
- <span class="o">*/</span>
-<span class="n">public</span> <span class="k">class</span> <span class="nc">VehicleFactory</span> <span class="p">{</span>
-
-    <span class="n">private</span> <span class="n">enum</span> <span class="n">VEHICLE_TYPE</span> <span class="p">{</span>
-        <span class="n">CAR</span><span class="p">,</span>
-        <span class="n">BIKE</span><span class="p">,</span>
-    <span class="p">}</span>
-
-    <span class="o">/**</span>
-     <span class="o">*</span> <span class="n">This</span> <span class="ow">is</span> <span class="n">the</span> <span class="n">Factory</span> <span class="n">method</span>
-     <span class="o">*/</span>
-    <span class="n">public</span> <span class="n">static</span> <span class="n">Vehicle</span> <span class="n">createVehicle</span><span class="p">(</span><span class="n">final</span> <span class="n">VEHICLE_TYPE</span> <span class="nb">type</span><span class="p">,</span> <span class="n">final</span> <span class="n">String</span> <span class="n">name</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">switch</span> <span class="p">(</span><span class="nb">type</span><span class="p">)</span> <span class="p">{</span>
-            <span class="n">case</span> <span class="n">CAR</span><span class="p">:</span>
-                <span class="k">return</span> <span class="n">new</span> <span class="n">Car</span><span class="p">(</span><span class="s2">&quot;My cool car&quot;</span><span class="p">);</span>
-            <span class="n">case</span> <span class="n">BIKE</span><span class="p">:</span>
-                <span class="k">return</span> <span class="n">new</span> <span class="n">Bike</span><span class="p">(</span><span class="s2">&quot;My cool bike&quot;</span><span class="p">);</span>
-        <span class="p">}</span>
-
-        <span class="n">throw</span> <span class="n">new</span> <span class="n">IllegalStateException</span><span class="p">(</span>
-                <span class="n">String</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;Unexpected Vehicle type </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="p">)</span>
-        <span class="p">);</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-</div>
-</div>
-<span id="document-patterns/erzeugungsmuster/prototype"></span><div class="section" id="prototyp-s-1102">
-<h3>1.12. Prototyp (S.1102)<a class="headerlink" href="#prototyp-s-1102" title="Permalink to this headline">¶</a></h3>
-<p>Vereinfacht die Vervielfältigung von bestehenden Objekten mit einer makeCopy-Methode. Dazu wird eine Abstrakte Klasse definiert mit der abstrakten Methode makeCopy(). Die Anpassungen, um das kopierte Objekt zu individualisieren werden über Setter-Methoden vorgenommen.</p>
-<div class="section" id="beispiel">
-<h4>1.12.1. Beispiel<a class="headerlink" href="#beispiel" title="Permalink to this headline">¶</a></h4>
-<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">patterns.erzeugungsmuster.prototype</span><span class="o">;</span>
-
-<span class="cm">/**</span>
-<span class="cm"> * Abstract Prototype Class</span>
-<span class="cm"> */</span>
-<span class="kd">public</span> <span class="kd">abstract</span> <span class="kd">class</span> <span class="nc">AbstractGraphicsElement</span> <span class="o">{</span>
-
-    <span class="kd">public</span> <span class="kd">abstract</span> <span class="kt">void</span> <span class="nf">makeCopy</span><span class="o">();</span>
-
-<span class="o">}</span>
-</pre></div>
-</div>
-<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">patterns.erzeugungsmuster.prototype</span><span class="o">;</span>
-
-<span class="cm">/**</span>
-<span class="cm"> * Created by samuelblattner on 25/09/16.</span>
-<span class="cm"> */</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">LineFigure</span> <span class="kd">extends</span> <span class="n">AbstractGraphicsElement</span> <span class="o">{</span>
-
-    <span class="nd">@Override</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">makeCopy</span><span class="o">()</span> <span class="o">{</span>
-        <span class="c1">// Do copy stuff ...</span>
-    <span class="o">}</span>
-<span class="o">}</span>
-</pre></div>
-</div>
-</div>
-</div>
-<span id="document-patterns/erzeugungsmuster/singleton"></span><div class="section" id="singleton">
-<h3>1.13. Singleton<a class="headerlink" href="#singleton" title="Permalink to this headline">¶</a></h3>
-<ul class="simple">
-<li>Max. 1 Instanz soll existieren</li>
-<li>Z.B. zentrale Registrierung oder Ressourcen-Handler</li>
-<li>Privater Konstruktor</li>
-</ul>
-<div class="line-block">
-<div class="line"><strong>Vorteile</strong></div>
-<div class="line">+ Zentraler Zugriffspunkt</div>
-<div class="line">+ Strukturierung</div>
-<div class="line">- Mehrer Instanzen bei mehreren ClassLoadern möglich (z.B. Webserver)</div>
-<div class="line"><br /></div>
-<div class="line"><strong>Hinweis</strong></div>
-<div class="line">Benutzen von Lazy-Instance (Erzeugung Instanz erst bei Gebrauch) ist nicht zu empfehlen, da die getInstance()-Methode dann synchronized sein müsste und einen potentiellen Flaschenhals darstellt. Deshalb: Lieber bereits zur Ladezeit eine Instanz erzeugen.</div>
-<div class="line"><br /></div>
-</div>
-<div class="section" id="beispiel">
-<h4>1.13.1. Beispiel<a class="headerlink" href="#beispiel" title="Permalink to this headline">¶</a></h4>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">package</span> <span class="n">patterns</span><span class="o">.</span><span class="n">erzeugungsmuster</span><span class="o">.</span><span class="n">singleton</span><span class="p">;</span>
-
-<span class="o">/**</span>
- <span class="o">*</span> <span class="n">Non</span><span class="o">-</span><span class="n">Lazy</span> <span class="n">Singleton</span>
- <span class="o">*/</span>
-<span class="n">public</span> <span class="n">final</span> <span class="k">class</span> <span class="nc">Singleton</span> <span class="p">{</span>
-
-    <span class="n">private</span> <span class="n">static</span> <span class="n">final</span> <span class="n">Singleton</span> <span class="n">INSTANCE</span> <span class="o">=</span> <span class="n">new</span> <span class="n">Singleton</span><span class="p">();</span>
-
-    <span class="n">public</span> <span class="n">static</span> <span class="n">Singleton</span> <span class="n">getInstance</span><span class="p">()</span> <span class="p">{</span>
-
-        <span class="k">return</span> <span class="n">INSTANCE</span><span class="p">;</span>
-    <span class="p">}</span>
-
-    <span class="n">private</span> <span class="n">Singleton</span><span class="p">()</span> <span class="p">{</span>
-
-    <span class="p">};</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-</div>
-</div>
-<span id="document-patterns/structure-patterns/adapter"></span><div class="section" id="adapter">
-<h3>1.14. Adapter<a class="headerlink" href="#adapter" title="Permalink to this headline">¶</a></h3>
-<p>Eine «Vermittler»-Klasse, die ansonsten inkompatible Elemente verbindet. So müssen bestehende, inkompatible Interfaces nicht extra umgeschrieben werden.</p>
-<div class="section" id="vorteile">
-<h4>1.14.1. Vorteile<a class="headerlink" href="#vorteile" title="Permalink to this headline">¶</a></h4>
-<ul class="simple">
-<li>Sicherstellung von Kompatibilität</li>
-<li>Keine Änderung des bestehenden Systems</li>
-</ul>
-</div>
-<div class="section" id="nachteile">
-<h4>1.14.2. Nachteile<a class="headerlink" href="#nachteile" title="Permalink to this headline">¶</a></h4>
-<ul class="simple">
-<li>Aufwand durch Delegation</li>
-</ul>
-</div>
-</div>
-<span id="document-patterns/structure-patterns/decorator"></span><div class="section" id="decorator-aka-wrapper-s-1111">
-<h3>1.15. Decorator (aka «Wrapper») (S.1111)<a class="headerlink" href="#decorator-aka-wrapper-s-1111" title="Permalink to this headline">¶</a></h3>
-<p>Eine bestehende Klasse wird von einer Wrapper-Klasse umhült und erweitert. Grundlage dabei ist ein gemeinsamer Basistyp oder Interface. Eine best. Methode wird dabei erst vom Wrapper aufgerufen und dann vom «gewrappten» Objekt.</p>
-<div class="section" id="vorteile">
-<h4>1.15.1. Vorteile<a class="headerlink" href="#vorteile" title="Permalink to this headline">¶</a></h4>
-<ul class="simple">
-<li>Transparent zusätzliche Funktionalität ohne Vererbung</li>
-<li>Hintereinanderschaltung mehrerer Decorators möglich</li>
-<li>Fexibilität: Zu dekorierende Klasse nicht festgelegt, da nur gegen gemeinsames Interface programmiert wird =&gt; Wrapper können für mehrere verschiedene Klassen genutzt werden.</li>
-<li>Vereinfachung von Vererbungshierarchien (im Gegensatz zu Vererbung)</li>
-</ul>
-</div>
-<div class="section" id="nachteile">
-<h4>1.15.2. Nachteile<a class="headerlink" href="#nachteile" title="Permalink to this headline">¶</a></h4>
-<ul class="simple">
-<li>Gemeinsamer Basistyp benötigt</li>
-<li>Fehlende Kontrolle über Einsatz von Entwickler (z.B. mehrfache Hintereinanderschaltung, sinnvoll?)</li>
-<li>Zugriff auf Spezialisierungen schwieriger möglich</li>
-<li>Implementierungsaufwand</li>
-</ul>
-</div>
-</div>
-<span id="document-patterns/structure-patterns/facade"></span><div class="section" id="fassade">
-<h3>1.16. Fassade<a class="headerlink" href="#fassade" title="Permalink to this headline">¶</a></h3>
-<p>Fassade kapselt und versteckt Komplexität eines Subsystems. «High-Level Interface».</p>
-<div class="section" id="vorteile">
-<h4>1.16.1. Vorteile<a class="headerlink" href="#vorteile" title="Permalink to this headline">¶</a></h4>
-<ul class="simple">
-<li>Vereinfachung API</li>
-<li>Trennung zwischen Clients un Subsystem reduziert Komplexität, erhöht lose Kopplung.</li>
-<li>Zentralisierung von Funktionalität und Updates: Transaktionsverwaltung möglich, Bündelung</li>
-</ul>
-</div>
-<div class="section" id="nachteile">
-<h4>1.16.2. Nachteile<a class="headerlink" href="#nachteile" title="Permalink to this headline">¶</a></h4>
-<ul class="simple">
-<li>Gefahr eines breiten Interface / API, zu viele Methoden</li>
-<li>Keine Nutzungsgarantie: Clients könnten weiterhin direkt auf Subsystemklassen zugreifen.</li>
-<li>Mehr Indirektionen: Weiterleitungen von Methodenaufrufen («Indirektionen») werden eingeführt.</li>
-</ul>
-</div>
-</div>
-<span id="document-patterns/structure-patterns/kompositum"></span><div class="section" id="todo-kompositum-s-1114">
-<h3>1.17. TODO: Kompositum (S.1114)<a class="headerlink" href="#todo-kompositum-s-1114" title="Permalink to this headline">¶</a></h3>
-<p>Eine bestehende Klasse wird von einer Wrapper-Klasse umhült und erweitert. Grundlage dabei ist ein gemeinsamer Basistyp oder Interface. Eine best. Methode wird dabei erst vom Wrapper aufgerufen und dann vom «gewrappten» Objekt.</p>
-<div class="section" id="vorteile">
-<h4>1.17.1. Vorteile<a class="headerlink" href="#vorteile" title="Permalink to this headline">¶</a></h4>
-<ul class="simple">
-<li>Transparent zusätzliche Funktionalität ohne Vererbung</li>
-<li>Hintereinanderschaltung mehrerer Decorators möglich</li>
-<li>Fexibilität: Zu dekorierende Klasse nicht festgelegt, da nur gegen gemeinsames Interface programmiert wird =&gt; Wrapper können für mehrere verschiedene Klassen genutzt werden.</li>
-<li>Vereinfachung von Vererbungshierarchien (im Gegensatz zu Vererbung)</li>
-</ul>
-</div>
-<div class="section" id="nachteile">
-<h4>1.17.2. Nachteile<a class="headerlink" href="#nachteile" title="Permalink to this headline">¶</a></h4>
-<ul class="simple">
-<li>Gemeinsamer Basistyp benötigt</li>
-<li>Fehlende Kontrolle über Einsatz von Entwickler (z.B. mehrfache Hintereinanderschaltung, sinnvoll?)</li>
-<li>Zugriff auf Spezialisierungen schwieriger möglich</li>
-<li>Implementierungsaufwand</li>
-</ul>
 </div>
 </div>
 </div>

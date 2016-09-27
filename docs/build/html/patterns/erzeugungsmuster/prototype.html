@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>1.12. Prototyp (S.1102) &mdash; FTOOP Java Examples 1.0 documentation</title>
+  <title>1.2.4. Prototyp (S.1102) &mdash; FTOOP Java Examples 1.0 documentation</title>
   
 
   
@@ -31,9 +31,9 @@
 
   
     <link rel="top" title="FTOOP Java Examples 1.0 documentation" href="../../index.html"/>
-        <link rel="up" title="1. Patterns" href="../index.html"/>
-        <link rel="next" title="1.13. Singleton" href="singleton.html"/>
-        <link rel="prev" title="1.11. Fabrikmethode (Factory)" href="fabrikmethode.html"/> 
+        <link rel="up" title="1.2. Erzeugungsmuster" href="index.html"/>
+        <link rel="next" title="1.2.5. Singleton" href="singleton.html"/>
+        <link rel="prev" title="1.2.3. Fabrikmethode (Factory)" href="fabrikmethode.html"/> 
 
   
   <script src="../../_static/js/modernizr.min.js"></script>
@@ -84,32 +84,26 @@
             
                 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">1. Patterns</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="../behavior-patterns/Iterator.html">1.1. TODO: Iterator (S.1118)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../behavior-patterns/MVC.html">1.2. TODO: MVC (S.1152)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../behavior-patterns/command.html">1.3. TODO: Command (S.1134)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../behavior-patterns/null-object.html">1.4. TODO: Null-Objekt (S.1120)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../behavior-patterns/observer.html">1.5. TODO: Observer (S.1144)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../behavior-patterns/proxy.html">1.6. TODO: Proxy (S.1142)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../behavior-patterns/strategy.html">1.7. TODO: Strategie (S.1127)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../behavior-patterns/template-method.html">1.8. TODO: Template Method (S.1123)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="erbauer.html">1.9. Erbauer (Builder)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="erzeugungsmethode.html">1.10. Erzeugungsmethode</a></li>
-<li class="toctree-l2"><a class="reference internal" href="fabrikmethode.html">1.11. Fabrikmethode (Factory)</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">1.12. Prototyp (S.1102)</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#beispiel">1.12.1. Beispiel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../behavior-patterns/index.html">1.1. Verhaltensmuster</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">1.2. Erzeugungsmuster</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="erbauer.html">1.2.1. Erbauer (Builder)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="erzeugungsmethode.html">1.2.2. Erzeugungsmethode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="fabrikmethode.html">1.2.3. Fabrikmethode (Factory)</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">1.2.4. Prototyp (S.1102)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#beispiel">1.2.4.1. Beispiel</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="singleton.html">1.13. Singleton</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../structure-patterns/adapter.html">1.14. Adapter</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../structure-patterns/decorator.html">1.15. Decorator (aka «Wrapper») (S.1111)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../structure-patterns/facade.html">1.16. Fassade</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../structure-patterns/kompositum.html">1.17. TODO: Kompositum (S.1114)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="singleton.html">1.2.5. Singleton</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../structure-patterns/index.html">1.3. Strukturmuster</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../threading/index.html">2. Threading</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../advanced-techniques/index.html">3. Advanced Techniques</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../gui/gui.html">4. GUI</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../smells/smells.html">5. Smells</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testing/testing.html">6. Testing</a></li>
 </ul>
 
             
@@ -142,7 +136,9 @@
       
           <li><a href="../index.html">1. Patterns</a> &raquo;</li>
       
-    <li>1.12. Prototyp (S.1102)</li>
+          <li><a href="index.html">1.2. Erzeugungsmuster</a> &raquo;</li>
+      
+    <li>1.2.4. Prototyp (S.1102)</li>
       <li class="wy-breadcrumbs-aside">
         
           
@@ -157,10 +153,10 @@
            <div itemprop="articleBody">
             
   <div class="section" id="prototyp-s-1102">
-<h1>1.12. Prototyp (S.1102)<a class="headerlink" href="#prototyp-s-1102" title="Permalink to this headline">¶</a></h1>
+<h1>1.2.4. Prototyp (S.1102)<a class="headerlink" href="#prototyp-s-1102" title="Permalink to this headline">¶</a></h1>
 <p>Vereinfacht die Vervielfältigung von bestehenden Objekten mit einer makeCopy-Methode. Dazu wird eine Abstrakte Klasse definiert mit der abstrakten Methode makeCopy(). Die Anpassungen, um das kopierte Objekt zu individualisieren werden über Setter-Methoden vorgenommen.</p>
 <div class="section" id="beispiel">
-<h2>1.12.1. Beispiel<a class="headerlink" href="#beispiel" title="Permalink to this headline">¶</a></h2>
+<h2>1.2.4.1. Beispiel<a class="headerlink" href="#beispiel" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">patterns.erzeugungsmuster.prototype</span><span class="o">;</span>
 
 <span class="cm">/**</span>
@@ -197,10 +193,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="singleton.html" class="btn btn-neutral float-right" title="1.13. Singleton" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="singleton.html" class="btn btn-neutral float-right" title="1.2.5. Singleton" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="fabrikmethode.html" class="btn btn-neutral" title="1.11. Fabrikmethode (Factory)" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="fabrikmethode.html" class="btn btn-neutral" title="1.2.3. Fabrikmethode (Factory)" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

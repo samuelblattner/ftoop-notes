@@ -1,5 +1,7 @@
-TODO: Null-Objekt (S.1120)
-==========================
+Null-Objekt
+===========
+
+(S.1120)
 
 Statt bei ungültigen Anfragen oder leeren Mengen ``null`` zurückzugeben, wird von der verwendeten Klasse eine «Null-Objekt»-Variante implementiert. Dies kann einerseits durch
 eine Unterklasse implementiert sein, wobei sämtliche Funktionen angepasst oder entfernt werden müssten. Vorzuziehen ist allerdings - falls die Hauptklasse ein Interface implementiert -

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>1.2. TODO: Null-Objekt (S.1120) &mdash; FTOOP Java Examples 1.0 documentation</title>
+  <title>1.3.2. Null-Objekt &mdash; FTOOP Java Examples 1.0 documentation</title>
   
 
   
@@ -31,9 +31,9 @@
 
   
     <link rel="top" title="FTOOP Java Examples 1.0 documentation" href="../../index.html"/>
-        <link rel="up" title="1. Patterns" href="../index.html"/>
-        <link rel="next" title="1.3. TODO: Template Method (S.1123)" href="020_template-method.html"/>
-        <link rel="prev" title="1.1. Iterator (S.1118)" href="000_Iterator.html"/> 
+        <link rel="up" title="1.3. Verhaltensmuster" href="index.html"/>
+        <link rel="next" title="1.3.3. Template Method («Schablonenmethode»)" href="020_template-method.html"/>
+        <link rel="prev" title="1.3.1. Iterator" href="000_Iterator.html"/> 
 
   
   <script src="../../_static/js/modernizr.min.js"></script>
@@ -84,28 +84,24 @@
             
                 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">1. Patterns</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="000_Iterator.html">1.1. Iterator (S.1118)</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">1.2. TODO: Null-Objekt (S.1120)</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#implementierung-der-methoden">1.2.1. Implementierung der Methoden</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#vorteile">1.2.2. Vorteile</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#nachteile">1.2.3. Nachteile</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../erzeugungsmuster/index.html">1.1. Erzeugungsmuster</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../structure-patterns/index.html">1.2. Strukturmuster</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">1.3. Verhaltensmuster</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="000_Iterator.html">1.3.1. Iterator</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">1.3.2. Null-Objekt</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#implementierung-der-methoden">1.3.2.1. Implementierung der Methoden</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#vorteile">1.3.2.2. Vorteile</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#nachteile">1.3.2.3. Nachteile</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="020_template-method.html">1.3. TODO: Template Method (S.1123)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="MVC.html">1.4. TODO: MVC (S.1152)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="command.html">1.5. TODO: Command (S.1134)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="observer.html">1.6. TODO: Observer (S.1144)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="proxy.html">1.7. TODO: Proxy (S.1142)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="strategy.html">1.8. TODO: Strategie (S.1127)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../erzeugungsmuster/erbauer.html">1.9. Erbauer (Builder)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../erzeugungsmuster/erzeugungsmethode.html">1.10. Erzeugungsmethode</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../erzeugungsmuster/fabrikmethode.html">1.11. Fabrikmethode (Factory)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../erzeugungsmuster/prototype.html">1.12. Prototyp (S.1102)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../erzeugungsmuster/singleton.html">1.13. Singleton</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../structure-patterns/adapter.html">1.14. Adapter</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../structure-patterns/decorator.html">1.15. Decorator (aka «Wrapper») (S.1111)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../structure-patterns/facade.html">1.16. Fassade</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../structure-patterns/kompositum.html">1.17. TODO: Kompositum (S.1114)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="020_template-method.html">1.3.3. Template Method («Schablonenmethode»)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="030_strategy.html">1.3.4. Strategie</a></li>
+<li class="toctree-l3"><a class="reference internal" href="040_command.html">1.3.5. Command</a></li>
+<li class="toctree-l3"><a class="reference internal" href="050_proxy.html">1.3.6. Proxy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="060_observer.html">1.3.7. Observer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="070_MVC.html">1.3.8. MVC</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../threading/index.html">2. Threading</a></li>
@@ -145,7 +141,9 @@
       
           <li><a href="../index.html">1. Patterns</a> &raquo;</li>
       
-    <li>1.2. TODO: Null-Objekt (S.1120)</li>
+          <li><a href="index.html">1.3. Verhaltensmuster</a> &raquo;</li>
+      
+    <li>1.3.2. Null-Objekt</li>
       <li class="wy-breadcrumbs-aside">
         
           
@@ -159,15 +157,16 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="todo-null-objekt-s-1120">
-<h1>1.2. TODO: Null-Objekt (S.1120)<a class="headerlink" href="#todo-null-objekt-s-1120" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="null-objekt">
+<h1>1.3.2. Null-Objekt<a class="headerlink" href="#null-objekt" title="Permalink to this headline">¶</a></h1>
+<p>(S.1120)</p>
 <p>Statt bei ungültigen Anfragen oder leeren Mengen <code class="docutils literal"><span class="pre">null</span></code> zurückzugeben, wird von der verwendeten Klasse eine «Null-Objekt»-Variante implementiert. Dies kann einerseits durch
 eine Unterklasse implementiert sein, wobei sämtliche Funktionen angepasst oder entfernt werden müssten. Vorzuziehen ist allerdings - falls die Hauptklasse ein Interface implementiert -
 eine Null-Objekt-Klasse gegen dieses Interface zu realisieren. Dies verhindert, dass versehentlich vergessene Restfunktionalitäten in der Unterklasse trotzdem
 aufgerufen werden könnten.</p>
 <p>Dieses Pattern hat den Vorteil, dass kein Rückgabewert <code class="docutils literal"><span class="pre">null</span></code> vorkommt, der speziell evaluiert werden müsste.</p>
 <div class="section" id="implementierung-der-methoden">
-<h2>1.2.1. Implementierung der Methoden<a class="headerlink" href="#implementierung-der-methoden" title="Permalink to this headline">¶</a></h2>
+<h2>1.3.2.1. Implementierung der Methoden<a class="headerlink" href="#implementierung-der-methoden" title="Permalink to this headline">¶</a></h2>
 <p>Um die «Null»-Eigenschaft auszudrücken, müssen Methoden für die Null-Objekt-Unterklasse nach folgenden Tipps implementiert/angepasst werden:</p>
 <ul class="simple">
 <li>Alle <code class="docutils literal"><span class="pre">void</span></code>-Methoden werden leer implementiert.</li>
@@ -182,13 +181,13 @@ aufgerufen werden könnten.</p>
 </ul>
 </div>
 <div class="section" id="vorteile">
-<h2>1.2.2. Vorteile<a class="headerlink" href="#vorteile" title="Permalink to this headline">¶</a></h2>
+<h2>1.3.2.2. Vorteile<a class="headerlink" href="#vorteile" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><strong>Bessere Lesbarkeit und keine Spezialbehandlungen:</strong> Anwendungscode kann auf Spezialbehandlungen verzichten und ist lesbarer.</li>
 </ul>
 </div>
 <div class="section" id="nachteile">
-<h2>1.2.3. Nachteile<a class="headerlink" href="#nachteile" title="Permalink to this headline">¶</a></h2>
+<h2>1.3.2.3. Nachteile<a class="headerlink" href="#nachteile" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><strong>Konzeptionelle Probleme:</strong> Manchmal kann es schwierig sein, einen geeigneten Rückgabewert für eine best. Methode zu finden und es muss eine Exception geworfen werden.</li>
 <li><strong>Fehlerverschleierung möglich:</strong> In best. Fällen ist es entscheidend zwischen den Fällen «es gibt <em>ein</em> Objekt» und «es gibt <em>kein</em> Objekt» zu unterscheiden. Diese Pattern kann in solchen Fällen zu Undeutlichkeiten führen.</li>
@@ -203,10 +202,10 @@ aufgerufen werden könnten.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="020_template-method.html" class="btn btn-neutral float-right" title="1.3. TODO: Template Method (S.1123)" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="020_template-method.html" class="btn btn-neutral float-right" title="1.3.3. Template Method («Schablonenmethode»)" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="000_Iterator.html" class="btn btn-neutral" title="1.1. Iterator (S.1118)" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="000_Iterator.html" class="btn btn-neutral" title="1.3.1. Iterator" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

@@ -1,0 +1,247 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>1.2.3. Decorator (aka «Wrapper») &mdash; FTOOP Java Examples 1.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="FTOOP Java Examples 1.0 documentation" href="../../index.html"/>
+        <link rel="up" title="1.2. Strukturmuster" href="index.html"/>
+        <link rel="next" title="1.2.4. Kompositum" href="030_kompositum.html"/>
+        <link rel="prev" title="1.2.2. Adapter" href="010_adapter.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> FTOOP Java Examples
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">1. Patterns</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../erzeugungsmuster/index.html">1.1. Erzeugungsmuster</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">1.2. Strukturmuster</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="000_facade.html">1.2.1. Fassade</a></li>
+<li class="toctree-l3"><a class="reference internal" href="010_adapter.html">1.2.2. Adapter</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">1.2.3. Decorator (aka «Wrapper»)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#vorteile">1.2.3.1. Vorteile</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#nachteile">1.2.3.2. Nachteile</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="030_kompositum.html">1.2.4. Kompositum</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../behavior-patterns/index.html">1.3. Verhaltensmuster</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../threading/index.html">2. Threading</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../advanced-techniques/index.html">3. Advanced Techniques</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../gui/gui.html">4. GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../smells/smells.html">5. Smells</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testing/testing.html">6. Testing</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../index.html">FTOOP Java Examples</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../index.html">1. Patterns</a> &raquo;</li>
+      
+          <li><a href="index.html">1.2. Strukturmuster</a> &raquo;</li>
+      
+    <li>1.2.3. Decorator (aka «Wrapper»)</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../../_sources/patterns/structure-patterns/020_decorator.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="decorator-aka-wrapper">
+<h1>1.2.3. Decorator (aka «Wrapper»)<a class="headerlink" href="#decorator-aka-wrapper" title="Permalink to this headline">¶</a></h1>
+<p>(S.1111)</p>
+<p>Eine bestehende Klasse wird von einer Wrapper-Klasse umhült und erweitert. Grundlage dabei ist ein gemeinsamer Basistyp oder Interface. Eine best. Methode wird dabei erst vom Wrapper aufgerufen und dann vom «gewrappten» Objekt.</p>
+<div class="section" id="vorteile">
+<h2>1.2.3.1. Vorteile<a class="headerlink" href="#vorteile" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Transparent zusätzliche Funktionalität ohne Vererbung</li>
+<li>Hintereinanderschaltung mehrerer Decorators möglich</li>
+<li>Fexibilität: Zu dekorierende Klasse nicht festgelegt, da nur gegen gemeinsames Interface programmiert wird =&gt; Wrapper können für mehrere verschiedene Klassen genutzt werden.</li>
+<li>Vereinfachung von Vererbungshierarchien (im Gegensatz zu Vererbung)</li>
+</ul>
+</div>
+<div class="section" id="nachteile">
+<h2>1.2.3.2. Nachteile<a class="headerlink" href="#nachteile" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Gemeinsamer Basistyp benötigt</li>
+<li>Fehlende Kontrolle über Einsatz von Entwickler (z.B. mehrfache Hintereinanderschaltung, sinnvoll?)</li>
+<li>Zugriff auf Spezialisierungen schwieriger möglich</li>
+<li>Implementierungsaufwand</li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="030_kompositum.html" class="btn btn-neutral float-right" title="1.2.4. Kompositum" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="010_adapter.html" class="btn btn-neutral" title="1.2.2. Adapter" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, Samuel Blattner.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'1.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

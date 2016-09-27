@@ -1,5 +1,7 @@
-Iterator (S.1118)
-=================
+Iterator
+========
+
+(S.1118)
 
 Eine Art Hilfsklasse, die dafür zuständig ist, durch eine Sammlung von Objekten hindurch zu iterieren. Dies trennt somit auch die Zuständigkeiten,
 sodass sich die Datenstruktur nur um die Daten kümmern muss und der Iterator um das Ablaufen derselben.
