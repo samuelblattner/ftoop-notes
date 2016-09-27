@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>2.3. Thread Pool &mdash; FTOOP Java Examples 1.0 documentation</title>
+  <title>2.3. Executor Framework (Thread Pools) (S.557) &mdash; FTOOP Java Examples 1.0 documentation</title>
   
 
   
@@ -87,12 +87,18 @@
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">2. Threading</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../alternator/alternator.html">2.1. Alternator</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../consumer-producer/consumer-producer.html">2.2. Queued Consumer Producer</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">2.3. Thread Pool</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">2.3. Executor Framework (Thread Pools) (S.557)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#callable">2.3.1. Callable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#future-v">2.3.2. Future&lt;V&gt;</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#beispiel">2.3.3. Beispiel</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../advanced-techniques/index.html">3. Advanced Techniques</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../gui/gui.html">4. GUI</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../smells/smells.html">5. Smells</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testing/testing.html">6. Testing</a></li>
 </ul>
 
             
@@ -125,7 +131,7 @@
       
           <li><a href="../index.html">2. Threading</a> &raquo;</li>
       
-    <li>2.3. Thread Pool</li>
+    <li>2.3. Executor Framework (Thread Pools) (S.557)</li>
       <li class="wy-breadcrumbs-aside">
         
           
@@ -139,8 +145,239 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="thread-pool">
-<h1>2.3. Thread Pool<a class="headerlink" href="#thread-pool" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="executor-framework-thread-pools-s-557">
+<h1>2.3. Executor Framework (Thread Pools) (S.557)<a class="headerlink" href="#executor-framework-thread-pools-s-557" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="callable">
+<h2>2.3.1. Callable<a class="headerlink" href="#callable" title="Permalink to this headline">¶</a></h2>
+<p>Wie Runnable, aber für einen Rückgabetyp vorgesehen. Interface Callable ist wiefolgt definiert:</p>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Callable</span><span class="o">&lt;</span><span class="n">V</span><span class="o">&gt;</span>
+<span class="o">{</span>
+     <span class="n">V</span> <span class="nf">call</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span><span class="o">;</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="future-v">
+<h2>2.3.2. Future&lt;V&gt;<a class="headerlink" href="#future-v" title="Permalink to this headline">¶</a></h2>
+<p>Der ExecutorService liefert beim Hinzufügen eines Runnable oder Callable ein Interface Future&lt;V&gt; zurück, das einerseits
+den Status des asynchronen Tasks, als auch später das Resultat enthält (via synchronem .get())</p>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Future</span><span class="o">&lt;</span><span class="n">V</span><span class="o">&gt;</span>
+<span class="o">{</span>
+     <span class="n">V</span> <span class="nf">get</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">InterruptedException</span><span class="o">,</span> <span class="n">ExecutionException</span><span class="o">;</span>
+     <span class="n">V</span> <span class="nf">get</span><span class="o">(</span><span class="kt">long</span> <span class="n">timeout</span><span class="o">,</span> <span class="n">TimeUnit</span> <span class="n">unit</span><span class="o">)</span> <span class="kd">throws</span>
+            <span class="n">InterruptedExecution</span><span class="o">,</span> <span class="n">ExecutionException</span><span class="o">,</span> <span class="n">TimeoutException</span><span class="o">;</span>
+     <span class="kt">boolean</span> <span class="nf">cancel</span> <span class="o">(</span><span class="kt">boolean</span> <span class="n">mayInterruptIfRunning</span><span class="o">);</span>
+     <span class="kt">boolean</span> <span class="nf">isCancelled</span><span class="o">();</span>
+     <span class="kt">boolean</span> <span class="nf">isDone</span><span class="o">();</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="beispiel">
+<h2>2.3.3. Beispiel<a class="headerlink" href="#beispiel" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">threading.threadpool</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.ArrayList</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.concurrent.Callable</span><span class="o">;</span>
+
+<span class="cm">/**</span>
+<span class="cm"> * PrimeSpotter Callable finding prime numbers in a given interval.</span>
+<span class="cm"> * @author samuel</span>
+<span class="cm"> *</span>
+<span class="cm"> */</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">PrimeSpotter</span> <span class="kd">implements</span> <span class="n">Callable</span><span class="o">&lt;</span><span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;&gt;</span> <span class="o">{</span>
+	<span class="cm">/** Interval [from, to]. */</span>
+	<span class="kd">private</span> <span class="kt">int</span> <span class="n">from</span><span class="o">,</span> <span class="n">to</span><span class="o">;</span>
+	
+	<span class="cm">/**</span>
+<span class="cm">	 * Constructor of PrimeSpotter, initializing interval bounds.</span>
+<span class="cm">	 * @param fromNumber Start of interval (inclusive)</span>
+<span class="cm">	 * @param toNumber End of interval (inclusive)</span>
+<span class="cm">	 */</span>
+	<span class="kd">public</span> <span class="nf">PrimeSpotter</span><span class="o">(</span><span class="kd">final</span> <span class="kt">int</span> <span class="n">fromNumber</span><span class="o">,</span> <span class="kd">final</span> <span class="kt">int</span> <span class="n">toNumber</span><span class="o">)</span> <span class="o">{</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">from</span> <span class="o">=</span> <span class="n">fromNumber</span><span class="o">;</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">to</span> <span class="o">=</span> <span class="n">toNumber</span><span class="o">;</span>
+	<span class="o">}</span>
+	
+	<span class="cm">/**</span>
+<span class="cm">	 * Calculates if a given number n is a prime number.</span>
+<span class="cm">	 * @param n Number to be examined</span>
+<span class="cm">	 * @return boolean</span>
+<span class="cm">	 */</span>
+	<span class="kd">private</span> <span class="kt">boolean</span> <span class="nf">isPrime</span><span class="o">(</span><span class="kd">final</span> <span class="kt">int</span> <span class="n">n</span><span class="o">)</span> <span class="o">{</span>
+		<span class="kt">int</span> <span class="n">divisor</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
+		<span class="kt">int</span> <span class="n">divisions</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+		<span class="k">while</span> <span class="o">(</span><span class="n">divisor</span> <span class="o">&lt;=</span> <span class="n">n</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">&amp;&amp;</span> <span class="n">divisions</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="o">)</span> <span class="o">{</span>
+			<span class="k">if</span> <span class="o">(</span><span class="n">n</span> <span class="o">%</span> <span class="n">divisor</span> <span class="o">==</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+				<span class="n">divisions</span><span class="o">++;</span>
+			<span class="o">}</span>
+			<span class="n">divisor</span><span class="o">++;</span>
+		<span class="o">}</span>
+		<span class="k">return</span> <span class="n">divisions</span> <span class="o">&lt;=</span> <span class="mi">1</span> <span class="o">&amp;&amp;</span> <span class="n">n</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="o">;</span>
+	<span class="o">}</span>
+	
+	<span class="cm">/**</span>
+<span class="cm">	 * Runnable method run.</span>
+<span class="cm">	 * @return List of results</span>
+<span class="cm">	 */</span>
+	<span class="kd">public</span> <span class="kd">final</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="nf">call</span><span class="o">()</span> <span class="o">{</span>
+		<span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">foundPrimeNumbers</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;();</span>
+
+		<span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">n</span> <span class="o">=</span> <span class="n">from</span><span class="o">;</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="n">to</span><span class="o">;</span> <span class="n">n</span><span class="o">++)</span> <span class="o">{</span>
+			<span class="k">if</span> <span class="o">(</span><span class="n">isPrime</span><span class="o">(</span><span class="n">n</span><span class="o">))</span> <span class="o">{</span>
+				<span class="n">foundPrimeNumbers</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">n</span><span class="o">);</span>
+			<span class="o">}</span>
+		<span class="o">}</span>
+		<span class="k">return</span> <span class="n">foundPrimeNumbers</span><span class="o">;</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">threading.threadpool</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">java.util.List</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.ArrayList</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.concurrent.ExecutionException</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.concurrent.ExecutorService</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.concurrent.Executors</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.concurrent.Future</span><span class="o">;</span>
+
+<span class="cm">/**</span>
+<span class="cm"> * Main class to calculate prime numbers in a given interval. Provides</span>
+<span class="cm"> * a thread pool using the Executor Framework in ordert to allow for</span>
+<span class="cm"> * parallel calculation. The inverval is split into sub-intervals where</span>
+<span class="cm"> * each is assigned to a free thread.</span>
+<span class="cm"> *</span>
+<span class="cm"> * @author samuel blattner</span>
+<span class="cm"> *</span>
+<span class="cm"> */</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">OptimusPrime</span> <span class="o">{</span>
+	
+	<span class="cm">/** Ask check style how this should make any sense. */</span>
+	<span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="kt">int</span> <span class="n">NUM_EXPECTED_ARGUMENTS</span> <span class="o">=</span> <span class="mi">3</span><span class="o">;</span>
+	<span class="cm">/** Thread pool providing threads for prime number calculation. */</span>
+	<span class="kd">private</span> <span class="n">ExecutorService</span> <span class="n">threadPool</span><span class="o">;</span>
+	<span class="cm">/** Number of threads used for calculation. */</span>
+	<span class="kd">private</span> <span class="kt">int</span> <span class="n">numberOfThreads</span><span class="o">;</span>
+	
+	<span class="cm">/**</span>
+<span class="cm">	 * Constructor of OptimsPrime. Initializes the thread pool.</span>
+<span class="cm">	 * @param newNumberOfThreads Number of threads that should be provided </span>
+<span class="cm">	 * to calculate the prime numbers.</span>
+<span class="cm">	 */</span>
+	<span class="kd">public</span> <span class="nf">OptimusPrime</span><span class="o">(</span><span class="kd">final</span> <span class="kt">int</span> <span class="n">newNumberOfThreads</span><span class="o">)</span> <span class="o">{</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">numberOfThreads</span> <span class="o">=</span> <span class="n">newNumberOfThreads</span><span class="o">;</span>
+		<span class="n">threadPool</span> <span class="o">=</span> <span class="n">Executors</span><span class="o">.</span><span class="na">newFixedThreadPool</span><span class="o">(</span><span class="n">newNumberOfThreads</span><span class="o">);</span>
+	<span class="o">}</span>
+	
+	<span class="cm">/**</span>
+<span class="cm">	 * Main task submission routine. Breaks down a given interval [from, to] </span>
+<span class="cm">	 * into smaller sub-intervals and assigns them each to a </span>
+<span class="cm">	 * PrimeSpotter-Object. All sub-intervals are then calculated using the </span>
+<span class="cm">	 * threads provided by the pool.</span>
+<span class="cm">	 * </span>
+<span class="cm">	 *  @param from Interval start</span>
+<span class="cm">	 *  @param to Interval end</span>
+<span class="cm">	 *  @return A list of Future-Objects, each holding an ArrayList, </span>
+<span class="cm">	 *  containing the prime numbers</span>
+<span class="cm">	 */</span>
+	<span class="kd">private</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Future</span><span class="o">&lt;</span><span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;&gt;&gt;</span> <span class="nf">calculatePrimeNumbers</span><span class="o">(</span>
+			<span class="kd">final</span> <span class="kt">int</span> <span class="n">from</span><span class="o">,</span> <span class="kd">final</span> <span class="kt">int</span> <span class="n">to</span><span class="o">)</span> <span class="o">{</span>
+		<span class="c1">// Size of the sub-intervals</span>
+		<span class="kt">int</span> <span class="n">intervalSize</span> <span class="o">=</span> <span class="o">(</span><span class="n">to</span> <span class="o">-</span> <span class="n">from</span><span class="o">)</span> <span class="o">/</span> <span class="n">numberOfThreads</span><span class="o">;</span>
+		<span class="c1">// Start number in the current sub-interval</span>
+		<span class="kt">int</span> <span class="n">curFrom</span> <span class="o">=</span> <span class="n">from</span><span class="o">;</span>
+		<span class="c1">// End number in the current sub-interval</span>
+		<span class="kt">int</span> <span class="n">curTo</span> <span class="o">=</span> <span class="n">curFrom</span> <span class="o">+</span> <span class="n">intervalSize</span><span class="o">;</span>
+		<span class="c1">// Array of PrimeSpotter-Objects (Callables)</span>
+		<span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">PrimeSpotter</span><span class="o">&gt;</span> <span class="n">subTasks</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">PrimeSpotter</span><span class="o">&gt;();</span>
+		
+		<span class="cm">/** Loop over sub-intervals and create sub-tasks until end reached */</span>
+		<span class="k">while</span> <span class="o">(</span><span class="n">curFrom</span> <span class="o">&lt;</span> <span class="n">to</span><span class="o">)</span> <span class="o">{</span>
+			<span class="n">subTasks</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="n">PrimeSpotter</span><span class="o">(</span><span class="n">curFrom</span><span class="o">,</span> <span class="n">curTo</span><span class="o">));</span>
+			<span class="n">curFrom</span> <span class="o">+=</span> <span class="n">intervalSize</span><span class="o">;</span> <span class="n">curTo</span> <span class="o">+=</span> <span class="n">intervalSize</span><span class="o">;</span>
+			<span class="k">if</span> <span class="o">(</span><span class="n">curTo</span> <span class="o">&gt;</span> <span class="n">to</span><span class="o">)</span> <span class="o">{</span> 
+				<span class="n">curTo</span> <span class="o">=</span> <span class="n">to</span><span class="o">;</span> 
+				<span class="o">}</span>
+		<span class="o">}</span>
+		<span class="k">try</span> <span class="o">{</span>
+			<span class="n">List</span><span class="o">&lt;</span><span class="n">Future</span><span class="o">&lt;</span><span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;&gt;&gt;</span> <span class="n">results</span> <span class="o">=</span> 
+					<span class="n">threadPool</span><span class="o">.</span><span class="na">invokeAll</span><span class="o">(</span><span class="n">subTasks</span><span class="o">);</span>
+			<span class="n">threadPool</span><span class="o">.</span><span class="na">shutdown</span><span class="o">();</span>
+			<span class="k">return</span> <span class="n">results</span><span class="o">;</span>
+		<span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">InterruptedException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+			<span class="n">Thread</span><span class="o">.</span><span class="na">currentThread</span><span class="o">().</span><span class="na">interrupt</span><span class="o">();</span>
+		<span class="o">}</span>
+		<span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+	<span class="o">}</span>
+	
+	<span class="cm">/**</span>
+<span class="cm">	 * Invokes the calculatePrimeNumbers method and unifies its results in one </span>
+<span class="cm">	 * single list.</span>
+<span class="cm">	 * @param from Start of interva</span>
+<span class="cm">	 * @param to End of interval</span>
+<span class="cm">	 * @return Unified ArrayList of prime numbers</span>
+<span class="cm">	 * @throws InterruptedException</span>
+<span class="cm">	 * @throws ExecutionException</span>
+<span class="cm">	 */</span>
+	<span class="kd">public</span> <span class="kd">final</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="nf">getPrimeNumbers</span><span class="o">(</span>
+			<span class="kd">final</span> <span class="kt">int</span> <span class="n">from</span><span class="o">,</span> <span class="kd">final</span> <span class="kt">int</span> <span class="n">to</span><span class="o">)</span> <span class="o">{</span>
+		<span class="c1">// A list of future objects for the results</span>
+		<span class="n">List</span><span class="o">&lt;</span><span class="n">Future</span><span class="o">&lt;</span><span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;&gt;&gt;</span> <span class="n">primeNumbers</span> <span class="o">=</span> 
+				<span class="n">calculatePrimeNumbers</span><span class="o">(</span><span class="n">from</span><span class="o">,</span> <span class="n">to</span><span class="o">);</span>
+		<span class="c1">// The unified list, all results of all lists are to be collected in.</span>
+		<span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">result</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;();</span>
+		
+		<span class="k">for</span> <span class="o">(</span><span class="n">Future</span><span class="o">&lt;</span><span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;&gt;</span> <span class="n">primeSet</span><span class="o">:</span> <span class="n">primeNumbers</span><span class="o">)</span> <span class="o">{</span>
+			<span class="k">try</span> <span class="o">{</span>
+				<span class="n">result</span><span class="o">.</span><span class="na">addAll</span><span class="o">(</span><span class="n">primeSet</span><span class="o">.</span><span class="na">get</span><span class="o">());</span>
+			<span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="kd">final</span> <span class="n">InterruptedException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+				<span class="c1">// Not going to occur since .get() is blocking until finished.</span>
+			<span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="kd">final</span> <span class="n">ExecutionException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+				<span class="c1">// Not going to occur</span>
+			<span class="o">}</span>
+		<span class="o">}</span>
+		<span class="k">return</span> <span class="n">result</span><span class="o">;</span>
+	<span class="o">}</span>
+	
+	<span class="cm">/**</span>
+<span class="cm">	 * main entry point.</span>
+<span class="cm">	 * @param args The args</span>
+<span class="cm">	 */</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="kd">final</span> <span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+		<span class="kt">int</span> <span class="n">from</span> <span class="o">=</span> <span class="mi">0</span><span class="o">,</span> <span class="n">to</span> <span class="o">=</span> <span class="mi">0</span><span class="o">,</span> <span class="n">numThreads</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
+		
+		<span class="k">if</span> <span class="o">(</span><span class="n">args</span><span class="o">.</span><span class="na">length</span> <span class="o">!=</span> <span class="n">NUM_EXPECTED_ARGUMENTS</span><span class="o">)</span> <span class="o">{</span>
+			<span class="n">System</span><span class="o">.</span><span class="na">err</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Usage main (int from, int to, int n_threads)&quot;</span><span class="o">);</span>
+			<span class="n">System</span><span class="o">.</span><span class="na">exit</span><span class="o">(</span><span class="mi">1</span><span class="o">);</span>
+		<span class="o">}</span>
+		<span class="k">try</span> <span class="o">{</span>
+			<span class="n">from</span> <span class="o">=</span> <span class="n">Integer</span><span class="o">.</span><span class="na">parseInt</span><span class="o">(</span><span class="n">args</span><span class="o">[</span><span class="mi">0</span><span class="o">]);</span>
+			<span class="n">to</span> <span class="o">=</span> <span class="n">Integer</span><span class="o">.</span><span class="na">parseInt</span><span class="o">(</span><span class="n">args</span><span class="o">[</span><span class="mi">1</span><span class="o">]);</span>
+			<span class="n">numThreads</span> <span class="o">=</span> <span class="n">Integer</span><span class="o">.</span><span class="na">parseInt</span><span class="o">(</span><span class="n">args</span><span class="o">[</span><span class="mi">2</span><span class="o">]);</span>
+		<span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+			<span class="n">System</span><span class="o">.</span><span class="na">err</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Usage main (int from, int to, int n_threads)&quot;</span><span class="o">);</span>
+			<span class="n">System</span><span class="o">.</span><span class="na">exit</span><span class="o">(</span><span class="mi">1</span><span class="o">);</span>
+		<span class="o">}</span>
+		
+		<span class="c1">// OptimusPrime instance</span>
+		<span class="n">OptimusPrime</span> <span class="n">optimusPrime</span> <span class="o">=</span> <span class="k">new</span> <span class="n">OptimusPrime</span><span class="o">(</span><span class="n">numThreads</span><span class="o">);</span>
+		<span class="c1">// Measure start time</span>
+		<span class="kt">long</span> <span class="n">startTime</span> <span class="o">=</span> <span class="n">System</span><span class="o">.</span><span class="na">currentTimeMillis</span><span class="o">();</span>
+		<span class="c1">// Calculate prime numbers</span>
+		<span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">primeNums</span> <span class="o">=</span> <span class="n">optimusPrime</span><span class="o">.</span><span class="na">getPrimeNumbers</span><span class="o">(</span><span class="n">from</span><span class="o">,</span> <span class="n">to</span><span class="o">);</span>
+		<span class="c1">// Measure end time</span>
+		<span class="kt">long</span> <span class="n">endTime</span> <span class="o">=</span> <span class="n">System</span><span class="o">.</span><span class="na">currentTimeMillis</span><span class="o">();</span>
+		
+		<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">format</span><span class="o">(</span>
+				<span class="s">&quot;Calculation of %d prime nums with %d threads took %d ms.\n\n&quot;</span><span class="o">,</span> 
+						<span class="n">primeNums</span><span class="o">.</span><span class="na">size</span><span class="o">(),</span> <span class="n">numThreads</span><span class="o">,</span> <span class="o">(</span><span class="n">endTime</span> <span class="o">-</span> <span class="n">startTime</span><span class="o">));</span>
+		<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Result:&quot;</span><span class="o">);</span>
+		<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">primeNums</span><span class="o">);</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
 </div>
 
 

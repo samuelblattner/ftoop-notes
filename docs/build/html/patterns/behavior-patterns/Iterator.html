@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>1.1. TODO: Iterator (S.1118) &mdash; FTOOP Java Examples 1.0 documentation</title>
+  <title>1.1. Iterator (S.1118) &mdash; FTOOP Java Examples 1.0 documentation</title>
   
 
   
@@ -84,7 +84,7 @@
             
                 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">1. Patterns</a><ul class="current">
-<li class="toctree-l2 current"><a class="current reference internal" href="#">1.1. TODO: Iterator (S.1118)</a><ul>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">1.1. Iterator (S.1118)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#vorteile">1.1.1. Vorteile</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#nachteile">1.1.2. Nachteile</a></li>
 </ul>
@@ -111,6 +111,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../advanced-techniques/index.html">3. Advanced Techniques</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../gui/gui.html">4. GUI</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../smells/smells.html">5. Smells</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../testing/testing.html">6. Testing</a></li>
 </ul>
 
             
@@ -143,7 +144,7 @@
       
           <li><a href="../index.html">1. Patterns</a> &raquo;</li>
       
-    <li>1.1. TODO: Iterator (S.1118)</li>
+    <li>1.1. Iterator (S.1118)</li>
       <li class="wy-breadcrumbs-aside">
         
           
@@ -157,25 +158,24 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="todo-iterator-s-1118">
-<h1>1.1. TODO: Iterator (S.1118)<a class="headerlink" href="#todo-iterator-s-1118" title="Permalink to this headline">¶</a></h1>
-<p>Eine bestehende Klasse wird von einer Wrapper-Klasse umhült und erweitert. Grundlage dabei ist ein gemeinsamer Basistyp oder Interface. Eine best. Methode wird dabei erst vom Wrapper aufgerufen und dann vom «gewrappten» Objekt.</p>
+  <div class="section" id="iterator-s-1118">
+<h1>1.1. Iterator (S.1118)<a class="headerlink" href="#iterator-s-1118" title="Permalink to this headline">¶</a></h1>
+<p>Eine Art Hilfsklasse, die dafür zuständig ist, durch eine Sammlung von Objekten hindurch zu iterieren. Dies trennt somit auch die Zuständigkeiten,
+sodass sich die Datenstruktur nur um die Daten kümmern muss und der Iterator um das Ablaufen derselben.</p>
+<p>Meist wird ein Interface eines allgemeinen Iterators verwendet («Polymorpher Iterator»), das die Methoden <code class="docutils literal"><span class="pre">Object</span> <span class="pre">nextElement()</span></code> sowie <code class="docutils literal"><span class="pre">boolean</span> <span class="pre">hasNext()</span></code> vorgibt.</p>
+<p>Ein Iterator speichert auch die aktuelle Position der Iteration.</p>
 <div class="section" id="vorteile">
 <h2>1.1.1. Vorteile<a class="headerlink" href="#vorteile" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li>Transparent zusätzliche Funktionalität ohne Vererbung</li>
-<li>Hintereinanderschaltung mehrerer Decorators möglich</li>
-<li>Fexibilität: Zu dekorierende Klasse nicht festgelegt, da nur gegen gemeinsames Interface programmiert wird =&gt; Wrapper können für mehrere verschiedene Klassen genutzt werden.</li>
-<li>Vereinfachung von Vererbungshierarchien (im Gegensatz zu Vererbung)</li>
+<li><strong>Abstraktion und Kapselung:</strong> Die zu durchlaufende Datenstruktur wird gekapselt und kann bei Bedarf im Nachhinein verändert werden, ohne dass dies Änderungen aufseiten von Clients verursacht.</li>
+<li><strong>Vereinfachung:</strong> Die Realisierung eigener Iteratorklassen für komplexere Datenstrukturen kann dabei helfen, eine ansonsten schwierige Implementierung des Iterationsprozesses zu kapseln, aus der Programmlogik herauszulösen und diese zu vereinfachen.</li>
+<li><strong>Bessere Lesbarkeit:</strong> Lesbarkeit besser als bei einer <code class="docutils literal"><span class="pre">for</span></code>-Schleife</li>
 </ul>
 </div>
 <div class="section" id="nachteile">
 <h2>1.1.2. Nachteile<a class="headerlink" href="#nachteile" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li>Gemeinsamer Basistyp benötigt</li>
-<li>Fehlende Kontrolle über Einsatz von Entwickler (z.B. mehrfache Hintereinanderschaltung, sinnvoll?)</li>
-<li>Zugriff auf Spezialisierungen schwieriger möglich</li>
-<li>Implementierungsaufwand</li>
+<li><strong>Existenz einer alternativen Schreibweise in der Sprache:</strong> Seit Java 5 existiert mit der <code class="docutils literal"><span class="pre">for-each</span></code>-Schleife eine Möglichkeit, die Lesbarkeit von Iterationen zu verbessern. Es können beliebige Datenstrukturen durchlaufen werden, die das Interface <code class="docutils literal"><span class="pre">Iterable&lt;T&gt;</span></code> implementieren. Dies wird implizit mit einem <code class="docutils literal"><span class="pre">Iterator&lt;E&gt;</span></code> implementiert - versteckt aber dieses Detail.</li>
 </ul>
 </div>
 </div>

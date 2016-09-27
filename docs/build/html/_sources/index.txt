@@ -9,7 +9,7 @@ Welcome to FTOOP Java Examples
 Contents:
 
 .. toctree::
-   :maxdepth: 3
+   :maxdepth: 2
    :glob:
    :numbered:
 
@@ -19,11 +19,3 @@ Contents:
    gui/*
    smells/*
    testing/*
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
-

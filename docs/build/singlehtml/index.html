@@ -128,52 +128,65 @@
 <span id="document-patterns/index"></span><div class="section" id="patterns">
 <h2>1. Patterns<a class="headerlink" href="#patterns" title="Permalink to this headline">¶</a></h2>
 <div class="toctree-wrapper compound">
-<span id="document-patterns/behavior-patterns/Iterator"></span><div class="section" id="todo-iterator-s-1118">
-<h3>1.1. TODO: Iterator (S.1118)<a class="headerlink" href="#todo-iterator-s-1118" title="Permalink to this headline">¶</a></h3>
-<p>Eine bestehende Klasse wird von einer Wrapper-Klasse umhült und erweitert. Grundlage dabei ist ein gemeinsamer Basistyp oder Interface. Eine best. Methode wird dabei erst vom Wrapper aufgerufen und dann vom «gewrappten» Objekt.</p>
+<span id="document-patterns/behavior-patterns/000_Iterator"></span><div class="section" id="iterator-s-1118">
+<h3>1.1. Iterator (S.1118)<a class="headerlink" href="#iterator-s-1118" title="Permalink to this headline">¶</a></h3>
+<p>Eine Art Hilfsklasse, die dafür zuständig ist, durch eine Sammlung von Objekten hindurch zu iterieren. Dies trennt somit auch die Zuständigkeiten,
+sodass sich die Datenstruktur nur um die Daten kümmern muss und der Iterator um das Ablaufen derselben.</p>
+<p>Meist wird ein Interface eines allgemeinen Iterators verwendet («Polymorpher Iterator»), das die Methoden <code class="docutils literal"><span class="pre">Object</span> <span class="pre">nextElement()</span></code> sowie <code class="docutils literal"><span class="pre">boolean</span> <span class="pre">hasNext()</span></code> vorgibt.</p>
+<p>Ein Iterator speichert auch die aktuelle Position der Iteration.</p>
 <div class="section" id="vorteile">
 <h4>1.1.1. Vorteile<a class="headerlink" href="#vorteile" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
-<li>Transparent zusätzliche Funktionalität ohne Vererbung</li>
-<li>Hintereinanderschaltung mehrerer Decorators möglich</li>
-<li>Fexibilität: Zu dekorierende Klasse nicht festgelegt, da nur gegen gemeinsames Interface programmiert wird =&gt; Wrapper können für mehrere verschiedene Klassen genutzt werden.</li>
-<li>Vereinfachung von Vererbungshierarchien (im Gegensatz zu Vererbung)</li>
+<li><strong>Abstraktion und Kapselung:</strong> Die zu durchlaufende Datenstruktur wird gekapselt und kann bei Bedarf im Nachhinein verändert werden, ohne dass dies Änderungen aufseiten von Clients verursacht.</li>
+<li><strong>Vereinfachung:</strong> Die Realisierung eigener Iteratorklassen für komplexere Datenstrukturen kann dabei helfen, eine ansonsten schwierige Implementierung des Iterationsprozesses zu kapseln, aus der Programmlogik herauszulösen und diese zu vereinfachen.</li>
+<li><strong>Bessere Lesbarkeit:</strong> Lesbarkeit besser als bei einer <code class="docutils literal"><span class="pre">for</span></code>-Schleife</li>
 </ul>
 </div>
 <div class="section" id="nachteile">
 <h4>1.1.2. Nachteile<a class="headerlink" href="#nachteile" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
-<li>Gemeinsamer Basistyp benötigt</li>
-<li>Fehlende Kontrolle über Einsatz von Entwickler (z.B. mehrfache Hintereinanderschaltung, sinnvoll?)</li>
-<li>Zugriff auf Spezialisierungen schwieriger möglich</li>
-<li>Implementierungsaufwand</li>
+<li><strong>Existenz einer alternativen Schreibweise in der Sprache:</strong> Seit Java 5 existiert mit der <code class="docutils literal"><span class="pre">for-each</span></code>-Schleife eine Möglichkeit, die Lesbarkeit von Iterationen zu verbessern. Es können beliebige Datenstrukturen durchlaufen werden, die das Interface <code class="docutils literal"><span class="pre">Iterable&lt;T&gt;</span></code> implementieren. Dies wird implizit mit einem <code class="docutils literal"><span class="pre">Iterator&lt;E&gt;</span></code> implementiert - versteckt aber dieses Detail.</li>
 </ul>
 </div>
 </div>
-<span id="document-patterns/behavior-patterns/MVC"></span><div class="section" id="todo-mvc-s-1152">
-<h3>1.2. TODO: MVC (S.1152)<a class="headerlink" href="#todo-mvc-s-1152" title="Permalink to this headline">¶</a></h3>
-<p>Eine bestehende Klasse wird von einer Wrapper-Klasse umhült und erweitert. Grundlage dabei ist ein gemeinsamer Basistyp oder Interface. Eine best. Methode wird dabei erst vom Wrapper aufgerufen und dann vom «gewrappten» Objekt.</p>
-<div class="section" id="vorteile">
-<h4>1.2.1. Vorteile<a class="headerlink" href="#vorteile" title="Permalink to this headline">¶</a></h4>
+<span id="document-patterns/behavior-patterns/010_null-object"></span><div class="section" id="null-objekt-s-1120">
+<h3>1.2. Null-Objekt (S.1120)<a class="headerlink" href="#null-objekt-s-1120" title="Permalink to this headline">¶</a></h3>
+<p>Statt bei ungültigen Anfragen oder leeren Mengen <code class="docutils literal"><span class="pre">null</span></code> zurückzugeben, wird von der verwendeten Klasse eine «Null-Objekt»-Variante implementiert. Dies kann einerseits durch
+eine Unterklasse implementiert sein, wobei sämtliche Funktionen angepasst oder entfernt werden müssten. Vorzuziehen ist allerdings - falls die Hauptklasse ein Interface implementiert -
+eine Null-Objekt-Klasse gegen dieses Interface zu realisieren. Dies verhindert, dass versehentlich vergessene Restfunktionalitäten in der Unterklasse trotzdem
+aufgerufen werden könnten.</p>
+<p>Dieses Pattern hat den Vorteil, dass kein Rückgabewert <code class="docutils literal"><span class="pre">null</span></code> vorkommt, der speziell evaluiert werden müsste.</p>
+<div class="section" id="implementierung-der-methoden">
+<h4>1.2.1. Implementierung der Methoden<a class="headerlink" href="#implementierung-der-methoden" title="Permalink to this headline">¶</a></h4>
+<p>Um die «Null»-Eigenschaft auszudrücken, müssen Methoden für die Null-Objekt-Unterklasse nach folgenden Tipps implementiert/angepasst werden:</p>
 <ul class="simple">
-<li>Transparent zusätzliche Funktionalität ohne Vererbung</li>
-<li>Hintereinanderschaltung mehrerer Decorators möglich</li>
-<li>Fexibilität: Zu dekorierende Klasse nicht festgelegt, da nur gegen gemeinsames Interface programmiert wird =&gt; Wrapper können für mehrere verschiedene Klassen genutzt werden.</li>
-<li>Vereinfachung von Vererbungshierarchien (im Gegensatz zu Vererbung)</li>
+<li>Alle <code class="docutils literal"><span class="pre">void</span></code>-Methoden werden leer implementiert.</li>
+<li><code class="docutils literal"><span class="pre">boolean</span></code>-Methoden geben häufig false zurück (z.B. für <code class="docutils literal"><span class="pre">hasNext()</span></code>)</li>
+<li>Für <code class="docutils literal"><span class="pre">int``bieten</span> <span class="pre">sich</span> <span class="pre">of</span> <span class="pre">0</span> <span class="pre">oder</span> <span class="pre">-1</span> <span class="pre">als</span> <span class="pre">Rückgabewerte</span> <span class="pre">an</span> <span class="pre">(z.B.</span> <span class="pre">für</span> <span class="pre">``getSize()</span></code>)</li>
+<li>Gleiches gilt für weitere Zahlentypen (float, double, etc.)</li>
+<li>Für Strings bietet sich ein Leerstring als Rückgabe an.</li>
+<li>Für Objektreferenzen kann entweder rekursiv das NULL-OBJEKT-Muster angewendet oder aber der Wert <code class="docutils literal"><span class="pre">null</span></code> zurückgegeben werden. Manchmal bietet sich auch das Auslösen einer NoSuchElementException an.</li>
+<li>Für untypisierte Container sind im Collections-Framework die NULL-OBJEKT-Konstanten <code class="docutils literal"><span class="pre">EMPTY_SET,</span> <span class="pre">EMPTY_LIST</span></code> oder <cite>ÈMPTY_MAP`</cite> definiert. Für generische Typen existieren die Methoden <code class="docutils literal"><span class="pre">emptySet(),</span> <span class="pre">emptyList()</span></code> und <code class="docutils literal"><span class="pre">emptyMap()</span></code>, die typsichere, leere und unmodifizierbare Container zurückliefern.</li>
+<li>Arrays sollten mit <code class="docutils literal"><span class="pre">new</span> <span class="pre">ArrayType[0]</span></code> als leeres Array zurückgegeben werden.</li>
+<li>Für Methoden, deren Rückgabewert für ein Null-Objekt nicht sinnvoll gewählt werden kann, sollte eine <code class="docutils literal"><span class="pre">UnsupportedOperationException</span></code> geworfen werden.</li>
+</ul>
+</div>
+<div class="section" id="vorteile">
+<h4>1.2.2. Vorteile<a class="headerlink" href="#vorteile" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><strong>Bessere Lesbarkeit und keine Spezialbehandlungen:</strong> Anwendungscode kann auf Spezialbehandlungen verzichten und ist lesbarer.</li>
 </ul>
 </div>
 <div class="section" id="nachteile">
-<h4>1.2.2. Nachteile<a class="headerlink" href="#nachteile" title="Permalink to this headline">¶</a></h4>
+<h4>1.2.3. Nachteile<a class="headerlink" href="#nachteile" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
-<li>Gemeinsamer Basistyp benötigt</li>
-<li>Fehlende Kontrolle über Einsatz von Entwickler (z.B. mehrfache Hintereinanderschaltung, sinnvoll?)</li>
-<li>Zugriff auf Spezialisierungen schwieriger möglich</li>
-<li>Implementierungsaufwand</li>
+<li><strong>Konzeptionelle Probleme:</strong> Manchmal kann es schwierig sein, einen geeigneten Rückgabewert für eine best. Methode zu finden und es muss eine Exception geworfen werden.</li>
+<li><strong>Fehlerverschleierung möglich:</strong> In best. Fällen ist es entscheidend zwischen den Fällen «es gibt <em>ein</em> Objekt» und «es gibt <em>kein</em> Objekt» zu unterscheiden. Diese Pattern kann in solchen Fällen zu Undeutlichkeiten führen.</li>
 </ul>
 </div>
 </div>
-<span id="document-patterns/behavior-patterns/command"></span><div class="section" id="todo-command-s-1134">
-<h3>1.3. TODO: Command (S.1134)<a class="headerlink" href="#todo-command-s-1134" title="Permalink to this headline">¶</a></h3>
+<span id="document-patterns/behavior-patterns/020_template-method"></span><div class="section" id="todo-template-method-s-1123">
+<h3>1.3. TODO: Template Method (S.1123)<a class="headerlink" href="#todo-template-method-s-1123" title="Permalink to this headline">¶</a></h3>
 <p>Eine bestehende Klasse wird von einer Wrapper-Klasse umhült und erweitert. Grundlage dabei ist ein gemeinsamer Basistyp oder Interface. Eine best. Methode wird dabei erst vom Wrapper aufgerufen und dann vom «gewrappten» Objekt.</p>
 <div class="section" id="vorteile">
 <h4>1.3.1. Vorteile<a class="headerlink" href="#vorteile" title="Permalink to this headline">¶</a></h4>
@@ -186,116 +199,6 @@
 </div>
 <div class="section" id="nachteile">
 <h4>1.3.2. Nachteile<a class="headerlink" href="#nachteile" title="Permalink to this headline">¶</a></h4>
-<ul class="simple">
-<li>Gemeinsamer Basistyp benötigt</li>
-<li>Fehlende Kontrolle über Einsatz von Entwickler (z.B. mehrfache Hintereinanderschaltung, sinnvoll?)</li>
-<li>Zugriff auf Spezialisierungen schwieriger möglich</li>
-<li>Implementierungsaufwand</li>
-</ul>
-</div>
-</div>
-<span id="document-patterns/behavior-patterns/null-object"></span><div class="section" id="todo-null-objekt-s-1120">
-<h3>1.4. TODO: Null-Objekt (S.1120)<a class="headerlink" href="#todo-null-objekt-s-1120" title="Permalink to this headline">¶</a></h3>
-<p>Eine bestehende Klasse wird von einer Wrapper-Klasse umhült und erweitert. Grundlage dabei ist ein gemeinsamer Basistyp oder Interface. Eine best. Methode wird dabei erst vom Wrapper aufgerufen und dann vom «gewrappten» Objekt.</p>
-<div class="section" id="vorteile">
-<h4>1.4.1. Vorteile<a class="headerlink" href="#vorteile" title="Permalink to this headline">¶</a></h4>
-<ul class="simple">
-<li>Transparent zusätzliche Funktionalität ohne Vererbung</li>
-<li>Hintereinanderschaltung mehrerer Decorators möglich</li>
-<li>Fexibilität: Zu dekorierende Klasse nicht festgelegt, da nur gegen gemeinsames Interface programmiert wird =&gt; Wrapper können für mehrere verschiedene Klassen genutzt werden.</li>
-<li>Vereinfachung von Vererbungshierarchien (im Gegensatz zu Vererbung)</li>
-</ul>
-</div>
-<div class="section" id="nachteile">
-<h4>1.4.2. Nachteile<a class="headerlink" href="#nachteile" title="Permalink to this headline">¶</a></h4>
-<ul class="simple">
-<li>Gemeinsamer Basistyp benötigt</li>
-<li>Fehlende Kontrolle über Einsatz von Entwickler (z.B. mehrfache Hintereinanderschaltung, sinnvoll?)</li>
-<li>Zugriff auf Spezialisierungen schwieriger möglich</li>
-<li>Implementierungsaufwand</li>
-</ul>
-</div>
-</div>
-<span id="document-patterns/behavior-patterns/observer"></span><div class="section" id="todo-observer-s-1144">
-<h3>1.5. TODO: Observer (S.1144)<a class="headerlink" href="#todo-observer-s-1144" title="Permalink to this headline">¶</a></h3>
-<p>Eine bestehende Klasse wird von einer Wrapper-Klasse umhült und erweitert. Grundlage dabei ist ein gemeinsamer Basistyp oder Interface. Eine best. Methode wird dabei erst vom Wrapper aufgerufen und dann vom «gewrappten» Objekt.</p>
-<div class="section" id="vorteile">
-<h4>1.5.1. Vorteile<a class="headerlink" href="#vorteile" title="Permalink to this headline">¶</a></h4>
-<ul class="simple">
-<li>Transparent zusätzliche Funktionalität ohne Vererbung</li>
-<li>Hintereinanderschaltung mehrerer Decorators möglich</li>
-<li>Fexibilität: Zu dekorierende Klasse nicht festgelegt, da nur gegen gemeinsames Interface programmiert wird =&gt; Wrapper können für mehrere verschiedene Klassen genutzt werden.</li>
-<li>Vereinfachung von Vererbungshierarchien (im Gegensatz zu Vererbung)</li>
-</ul>
-</div>
-<div class="section" id="nachteile">
-<h4>1.5.2. Nachteile<a class="headerlink" href="#nachteile" title="Permalink to this headline">¶</a></h4>
-<ul class="simple">
-<li>Gemeinsamer Basistyp benötigt</li>
-<li>Fehlende Kontrolle über Einsatz von Entwickler (z.B. mehrfache Hintereinanderschaltung, sinnvoll?)</li>
-<li>Zugriff auf Spezialisierungen schwieriger möglich</li>
-<li>Implementierungsaufwand</li>
-</ul>
-</div>
-</div>
-<span id="document-patterns/behavior-patterns/proxy"></span><div class="section" id="todo-proxy-s-1142">
-<h3>1.6. TODO: Proxy (S.1142)<a class="headerlink" href="#todo-proxy-s-1142" title="Permalink to this headline">¶</a></h3>
-<p>Eine bestehende Klasse wird von einer Wrapper-Klasse umhült und erweitert. Grundlage dabei ist ein gemeinsamer Basistyp oder Interface. Eine best. Methode wird dabei erst vom Wrapper aufgerufen und dann vom «gewrappten» Objekt.</p>
-<div class="section" id="vorteile">
-<h4>1.6.1. Vorteile<a class="headerlink" href="#vorteile" title="Permalink to this headline">¶</a></h4>
-<ul class="simple">
-<li>Transparent zusätzliche Funktionalität ohne Vererbung</li>
-<li>Hintereinanderschaltung mehrerer Decorators möglich</li>
-<li>Fexibilität: Zu dekorierende Klasse nicht festgelegt, da nur gegen gemeinsames Interface programmiert wird =&gt; Wrapper können für mehrere verschiedene Klassen genutzt werden.</li>
-<li>Vereinfachung von Vererbungshierarchien (im Gegensatz zu Vererbung)</li>
-</ul>
-</div>
-<div class="section" id="nachteile">
-<h4>1.6.2. Nachteile<a class="headerlink" href="#nachteile" title="Permalink to this headline">¶</a></h4>
-<ul class="simple">
-<li>Gemeinsamer Basistyp benötigt</li>
-<li>Fehlende Kontrolle über Einsatz von Entwickler (z.B. mehrfache Hintereinanderschaltung, sinnvoll?)</li>
-<li>Zugriff auf Spezialisierungen schwieriger möglich</li>
-<li>Implementierungsaufwand</li>
-</ul>
-</div>
-</div>
-<span id="document-patterns/behavior-patterns/strategy"></span><div class="section" id="todo-strategie-s-1127">
-<h3>1.7. TODO: Strategie (S.1127)<a class="headerlink" href="#todo-strategie-s-1127" title="Permalink to this headline">¶</a></h3>
-<p>Eine bestehende Klasse wird von einer Wrapper-Klasse umhült und erweitert. Grundlage dabei ist ein gemeinsamer Basistyp oder Interface. Eine best. Methode wird dabei erst vom Wrapper aufgerufen und dann vom «gewrappten» Objekt.</p>
-<div class="section" id="vorteile">
-<h4>1.7.1. Vorteile<a class="headerlink" href="#vorteile" title="Permalink to this headline">¶</a></h4>
-<ul class="simple">
-<li>Transparent zusätzliche Funktionalität ohne Vererbung</li>
-<li>Hintereinanderschaltung mehrerer Decorators möglich</li>
-<li>Fexibilität: Zu dekorierende Klasse nicht festgelegt, da nur gegen gemeinsames Interface programmiert wird =&gt; Wrapper können für mehrere verschiedene Klassen genutzt werden.</li>
-<li>Vereinfachung von Vererbungshierarchien (im Gegensatz zu Vererbung)</li>
-</ul>
-</div>
-<div class="section" id="nachteile">
-<h4>1.7.2. Nachteile<a class="headerlink" href="#nachteile" title="Permalink to this headline">¶</a></h4>
-<ul class="simple">
-<li>Gemeinsamer Basistyp benötigt</li>
-<li>Fehlende Kontrolle über Einsatz von Entwickler (z.B. mehrfache Hintereinanderschaltung, sinnvoll?)</li>
-<li>Zugriff auf Spezialisierungen schwieriger möglich</li>
-<li>Implementierungsaufwand</li>
-</ul>
-</div>
-</div>
-<span id="document-patterns/behavior-patterns/template-method"></span><div class="section" id="todo-template-method-s-1123">
-<h3>1.8. TODO: Template Method (S.1123)<a class="headerlink" href="#todo-template-method-s-1123" title="Permalink to this headline">¶</a></h3>
-<p>Eine bestehende Klasse wird von einer Wrapper-Klasse umhült und erweitert. Grundlage dabei ist ein gemeinsamer Basistyp oder Interface. Eine best. Methode wird dabei erst vom Wrapper aufgerufen und dann vom «gewrappten» Objekt.</p>
-<div class="section" id="vorteile">
-<h4>1.8.1. Vorteile<a class="headerlink" href="#vorteile" title="Permalink to this headline">¶</a></h4>
-<ul class="simple">
-<li>Transparent zusätzliche Funktionalität ohne Vererbung</li>
-<li>Hintereinanderschaltung mehrerer Decorators möglich</li>
-<li>Fexibilität: Zu dekorierende Klasse nicht festgelegt, da nur gegen gemeinsames Interface programmiert wird =&gt; Wrapper können für mehrere verschiedene Klassen genutzt werden.</li>
-<li>Vereinfachung von Vererbungshierarchien (im Gegensatz zu Vererbung)</li>
-</ul>
-</div>
-<div class="section" id="nachteile">
-<h4>1.8.2. Nachteile<a class="headerlink" href="#nachteile" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
 <li>Gemeinsamer Basistyp benötigt</li>
 <li>Fehlende Kontrolle über Einsatz von Entwickler (z.B. mehrfache Hintereinanderschaltung, sinnvoll?)</li>
@@ -393,6 +296,116 @@
 <span class="o">}</span>
 </pre></div>
 </div>
+</div>
+</div>
+<span id="document-patterns/behavior-patterns/MVC"></span><div class="section" id="todo-mvc-s-1152">
+<h3>1.4. TODO: MVC (S.1152)<a class="headerlink" href="#todo-mvc-s-1152" title="Permalink to this headline">¶</a></h3>
+<p>Eine bestehende Klasse wird von einer Wrapper-Klasse umhült und erweitert. Grundlage dabei ist ein gemeinsamer Basistyp oder Interface. Eine best. Methode wird dabei erst vom Wrapper aufgerufen und dann vom «gewrappten» Objekt.</p>
+<div class="section" id="vorteile">
+<h4>1.4.1. Vorteile<a class="headerlink" href="#vorteile" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>Transparent zusätzliche Funktionalität ohne Vererbung</li>
+<li>Hintereinanderschaltung mehrerer Decorators möglich</li>
+<li>Fexibilität: Zu dekorierende Klasse nicht festgelegt, da nur gegen gemeinsames Interface programmiert wird =&gt; Wrapper können für mehrere verschiedene Klassen genutzt werden.</li>
+<li>Vereinfachung von Vererbungshierarchien (im Gegensatz zu Vererbung)</li>
+</ul>
+</div>
+<div class="section" id="nachteile">
+<h4>1.4.2. Nachteile<a class="headerlink" href="#nachteile" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>Gemeinsamer Basistyp benötigt</li>
+<li>Fehlende Kontrolle über Einsatz von Entwickler (z.B. mehrfache Hintereinanderschaltung, sinnvoll?)</li>
+<li>Zugriff auf Spezialisierungen schwieriger möglich</li>
+<li>Implementierungsaufwand</li>
+</ul>
+</div>
+</div>
+<span id="document-patterns/behavior-patterns/command"></span><div class="section" id="todo-command-s-1134">
+<h3>1.5. TODO: Command (S.1134)<a class="headerlink" href="#todo-command-s-1134" title="Permalink to this headline">¶</a></h3>
+<p>Eine bestehende Klasse wird von einer Wrapper-Klasse umhült und erweitert. Grundlage dabei ist ein gemeinsamer Basistyp oder Interface. Eine best. Methode wird dabei erst vom Wrapper aufgerufen und dann vom «gewrappten» Objekt.</p>
+<div class="section" id="vorteile">
+<h4>1.5.1. Vorteile<a class="headerlink" href="#vorteile" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>Transparent zusätzliche Funktionalität ohne Vererbung</li>
+<li>Hintereinanderschaltung mehrerer Decorators möglich</li>
+<li>Fexibilität: Zu dekorierende Klasse nicht festgelegt, da nur gegen gemeinsames Interface programmiert wird =&gt; Wrapper können für mehrere verschiedene Klassen genutzt werden.</li>
+<li>Vereinfachung von Vererbungshierarchien (im Gegensatz zu Vererbung)</li>
+</ul>
+</div>
+<div class="section" id="nachteile">
+<h4>1.5.2. Nachteile<a class="headerlink" href="#nachteile" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>Gemeinsamer Basistyp benötigt</li>
+<li>Fehlende Kontrolle über Einsatz von Entwickler (z.B. mehrfache Hintereinanderschaltung, sinnvoll?)</li>
+<li>Zugriff auf Spezialisierungen schwieriger möglich</li>
+<li>Implementierungsaufwand</li>
+</ul>
+</div>
+</div>
+<span id="document-patterns/behavior-patterns/observer"></span><div class="section" id="todo-observer-s-1144">
+<h3>1.6. TODO: Observer (S.1144)<a class="headerlink" href="#todo-observer-s-1144" title="Permalink to this headline">¶</a></h3>
+<p>Eine bestehende Klasse wird von einer Wrapper-Klasse umhült und erweitert. Grundlage dabei ist ein gemeinsamer Basistyp oder Interface. Eine best. Methode wird dabei erst vom Wrapper aufgerufen und dann vom «gewrappten» Objekt.</p>
+<div class="section" id="vorteile">
+<h4>1.6.1. Vorteile<a class="headerlink" href="#vorteile" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>Transparent zusätzliche Funktionalität ohne Vererbung</li>
+<li>Hintereinanderschaltung mehrerer Decorators möglich</li>
+<li>Fexibilität: Zu dekorierende Klasse nicht festgelegt, da nur gegen gemeinsames Interface programmiert wird =&gt; Wrapper können für mehrere verschiedene Klassen genutzt werden.</li>
+<li>Vereinfachung von Vererbungshierarchien (im Gegensatz zu Vererbung)</li>
+</ul>
+</div>
+<div class="section" id="nachteile">
+<h4>1.6.2. Nachteile<a class="headerlink" href="#nachteile" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>Gemeinsamer Basistyp benötigt</li>
+<li>Fehlende Kontrolle über Einsatz von Entwickler (z.B. mehrfache Hintereinanderschaltung, sinnvoll?)</li>
+<li>Zugriff auf Spezialisierungen schwieriger möglich</li>
+<li>Implementierungsaufwand</li>
+</ul>
+</div>
+</div>
+<span id="document-patterns/behavior-patterns/proxy"></span><div class="section" id="todo-proxy-s-1142">
+<h3>1.7. TODO: Proxy (S.1142)<a class="headerlink" href="#todo-proxy-s-1142" title="Permalink to this headline">¶</a></h3>
+<p>Eine bestehende Klasse wird von einer Wrapper-Klasse umhült und erweitert. Grundlage dabei ist ein gemeinsamer Basistyp oder Interface. Eine best. Methode wird dabei erst vom Wrapper aufgerufen und dann vom «gewrappten» Objekt.</p>
+<div class="section" id="vorteile">
+<h4>1.7.1. Vorteile<a class="headerlink" href="#vorteile" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>Transparent zusätzliche Funktionalität ohne Vererbung</li>
+<li>Hintereinanderschaltung mehrerer Decorators möglich</li>
+<li>Fexibilität: Zu dekorierende Klasse nicht festgelegt, da nur gegen gemeinsames Interface programmiert wird =&gt; Wrapper können für mehrere verschiedene Klassen genutzt werden.</li>
+<li>Vereinfachung von Vererbungshierarchien (im Gegensatz zu Vererbung)</li>
+</ul>
+</div>
+<div class="section" id="nachteile">
+<h4>1.7.2. Nachteile<a class="headerlink" href="#nachteile" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>Gemeinsamer Basistyp benötigt</li>
+<li>Fehlende Kontrolle über Einsatz von Entwickler (z.B. mehrfache Hintereinanderschaltung, sinnvoll?)</li>
+<li>Zugriff auf Spezialisierungen schwieriger möglich</li>
+<li>Implementierungsaufwand</li>
+</ul>
+</div>
+</div>
+<span id="document-patterns/behavior-patterns/strategy"></span><div class="section" id="todo-strategie-s-1127">
+<h3>1.8. TODO: Strategie (S.1127)<a class="headerlink" href="#todo-strategie-s-1127" title="Permalink to this headline">¶</a></h3>
+<p>Eine bestehende Klasse wird von einer Wrapper-Klasse umhült und erweitert. Grundlage dabei ist ein gemeinsamer Basistyp oder Interface. Eine best. Methode wird dabei erst vom Wrapper aufgerufen und dann vom «gewrappten» Objekt.</p>
+<div class="section" id="vorteile">
+<h4>1.8.1. Vorteile<a class="headerlink" href="#vorteile" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>Transparent zusätzliche Funktionalität ohne Vererbung</li>
+<li>Hintereinanderschaltung mehrerer Decorators möglich</li>
+<li>Fexibilität: Zu dekorierende Klasse nicht festgelegt, da nur gegen gemeinsames Interface programmiert wird =&gt; Wrapper können für mehrere verschiedene Klassen genutzt werden.</li>
+<li>Vereinfachung von Vererbungshierarchien (im Gegensatz zu Vererbung)</li>
+</ul>
+</div>
+<div class="section" id="nachteile">
+<h4>1.8.2. Nachteile<a class="headerlink" href="#nachteile" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>Gemeinsamer Basistyp benötigt</li>
+<li>Fehlende Kontrolle über Einsatz von Entwickler (z.B. mehrfache Hintereinanderschaltung, sinnvoll?)</li>
+<li>Zugriff auf Spezialisierungen schwieriger möglich</li>
+<li>Implementierungsaufwand</li>
+</ul>
 </div>
 </div>
 <span id="document-patterns/erzeugungsmuster/erbauer"></span><div class="section" id="erbauer-builder">
@@ -987,8 +1000,239 @@
 </div>
 </div>
 </div>
-<span id="document-threading/thread-pool/thread-pool"></span><div class="section" id="thread-pool">
-<h3>2.3. Thread Pool<a class="headerlink" href="#thread-pool" title="Permalink to this headline">¶</a></h3>
+<span id="document-threading/thread-pool/thread-pool"></span><div class="section" id="executor-framework-thread-pools-s-557">
+<h3>2.3. Executor Framework (Thread Pools) (S.557)<a class="headerlink" href="#executor-framework-thread-pools-s-557" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="callable">
+<h4>2.3.1. Callable<a class="headerlink" href="#callable" title="Permalink to this headline">¶</a></h4>
+<p>Wie Runnable, aber für einen Rückgabetyp vorgesehen. Interface Callable ist wiefolgt definiert:</p>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Callable</span><span class="o">&lt;</span><span class="n">V</span><span class="o">&gt;</span>
+<span class="o">{</span>
+     <span class="n">V</span> <span class="nf">call</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span><span class="o">;</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="future-v">
+<h4>2.3.2. Future&lt;V&gt;<a class="headerlink" href="#future-v" title="Permalink to this headline">¶</a></h4>
+<p>Der ExecutorService liefert beim Hinzufügen eines Runnable oder Callable ein Interface Future&lt;V&gt; zurück, das einerseits
+den Status des asynchronen Tasks, als auch später das Resultat enthält (via synchronem .get())</p>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Future</span><span class="o">&lt;</span><span class="n">V</span><span class="o">&gt;</span>
+<span class="o">{</span>
+     <span class="n">V</span> <span class="nf">get</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">InterruptedException</span><span class="o">,</span> <span class="n">ExecutionException</span><span class="o">;</span>
+     <span class="n">V</span> <span class="nf">get</span><span class="o">(</span><span class="kt">long</span> <span class="n">timeout</span><span class="o">,</span> <span class="n">TimeUnit</span> <span class="n">unit</span><span class="o">)</span> <span class="kd">throws</span>
+            <span class="n">InterruptedExecution</span><span class="o">,</span> <span class="n">ExecutionException</span><span class="o">,</span> <span class="n">TimeoutException</span><span class="o">;</span>
+     <span class="kt">boolean</span> <span class="nf">cancel</span> <span class="o">(</span><span class="kt">boolean</span> <span class="n">mayInterruptIfRunning</span><span class="o">);</span>
+     <span class="kt">boolean</span> <span class="nf">isCancelled</span><span class="o">();</span>
+     <span class="kt">boolean</span> <span class="nf">isDone</span><span class="o">();</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="beispiel">
+<h4>2.3.3. Beispiel<a class="headerlink" href="#beispiel" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">threading.threadpool</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.ArrayList</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.concurrent.Callable</span><span class="o">;</span>
+
+<span class="cm">/**</span>
+<span class="cm"> * PrimeSpotter Callable finding prime numbers in a given interval.</span>
+<span class="cm"> * @author samuel</span>
+<span class="cm"> *</span>
+<span class="cm"> */</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">PrimeSpotter</span> <span class="kd">implements</span> <span class="n">Callable</span><span class="o">&lt;</span><span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;&gt;</span> <span class="o">{</span>
+	<span class="cm">/** Interval [from, to]. */</span>
+	<span class="kd">private</span> <span class="kt">int</span> <span class="n">from</span><span class="o">,</span> <span class="n">to</span><span class="o">;</span>
+	
+	<span class="cm">/**</span>
+<span class="cm">	 * Constructor of PrimeSpotter, initializing interval bounds.</span>
+<span class="cm">	 * @param fromNumber Start of interval (inclusive)</span>
+<span class="cm">	 * @param toNumber End of interval (inclusive)</span>
+<span class="cm">	 */</span>
+	<span class="kd">public</span> <span class="nf">PrimeSpotter</span><span class="o">(</span><span class="kd">final</span> <span class="kt">int</span> <span class="n">fromNumber</span><span class="o">,</span> <span class="kd">final</span> <span class="kt">int</span> <span class="n">toNumber</span><span class="o">)</span> <span class="o">{</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">from</span> <span class="o">=</span> <span class="n">fromNumber</span><span class="o">;</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">to</span> <span class="o">=</span> <span class="n">toNumber</span><span class="o">;</span>
+	<span class="o">}</span>
+	
+	<span class="cm">/**</span>
+<span class="cm">	 * Calculates if a given number n is a prime number.</span>
+<span class="cm">	 * @param n Number to be examined</span>
+<span class="cm">	 * @return boolean</span>
+<span class="cm">	 */</span>
+	<span class="kd">private</span> <span class="kt">boolean</span> <span class="nf">isPrime</span><span class="o">(</span><span class="kd">final</span> <span class="kt">int</span> <span class="n">n</span><span class="o">)</span> <span class="o">{</span>
+		<span class="kt">int</span> <span class="n">divisor</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
+		<span class="kt">int</span> <span class="n">divisions</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+		<span class="k">while</span> <span class="o">(</span><span class="n">divisor</span> <span class="o">&lt;=</span> <span class="n">n</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">&amp;&amp;</span> <span class="n">divisions</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="o">)</span> <span class="o">{</span>
+			<span class="k">if</span> <span class="o">(</span><span class="n">n</span> <span class="o">%</span> <span class="n">divisor</span> <span class="o">==</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+				<span class="n">divisions</span><span class="o">++;</span>
+			<span class="o">}</span>
+			<span class="n">divisor</span><span class="o">++;</span>
+		<span class="o">}</span>
+		<span class="k">return</span> <span class="n">divisions</span> <span class="o">&lt;=</span> <span class="mi">1</span> <span class="o">&amp;&amp;</span> <span class="n">n</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="o">;</span>
+	<span class="o">}</span>
+	
+	<span class="cm">/**</span>
+<span class="cm">	 * Runnable method run.</span>
+<span class="cm">	 * @return List of results</span>
+<span class="cm">	 */</span>
+	<span class="kd">public</span> <span class="kd">final</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="nf">call</span><span class="o">()</span> <span class="o">{</span>
+		<span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">foundPrimeNumbers</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;();</span>
+
+		<span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">n</span> <span class="o">=</span> <span class="n">from</span><span class="o">;</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="n">to</span><span class="o">;</span> <span class="n">n</span><span class="o">++)</span> <span class="o">{</span>
+			<span class="k">if</span> <span class="o">(</span><span class="n">isPrime</span><span class="o">(</span><span class="n">n</span><span class="o">))</span> <span class="o">{</span>
+				<span class="n">foundPrimeNumbers</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">n</span><span class="o">);</span>
+			<span class="o">}</span>
+		<span class="o">}</span>
+		<span class="k">return</span> <span class="n">foundPrimeNumbers</span><span class="o">;</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">threading.threadpool</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">java.util.List</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.ArrayList</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.concurrent.ExecutionException</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.concurrent.ExecutorService</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.concurrent.Executors</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.concurrent.Future</span><span class="o">;</span>
+
+<span class="cm">/**</span>
+<span class="cm"> * Main class to calculate prime numbers in a given interval. Provides</span>
+<span class="cm"> * a thread pool using the Executor Framework in ordert to allow for</span>
+<span class="cm"> * parallel calculation. The inverval is split into sub-intervals where</span>
+<span class="cm"> * each is assigned to a free thread.</span>
+<span class="cm"> *</span>
+<span class="cm"> * @author samuel blattner</span>
+<span class="cm"> *</span>
+<span class="cm"> */</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">OptimusPrime</span> <span class="o">{</span>
+	
+	<span class="cm">/** Ask check style how this should make any sense. */</span>
+	<span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="kt">int</span> <span class="n">NUM_EXPECTED_ARGUMENTS</span> <span class="o">=</span> <span class="mi">3</span><span class="o">;</span>
+	<span class="cm">/** Thread pool providing threads for prime number calculation. */</span>
+	<span class="kd">private</span> <span class="n">ExecutorService</span> <span class="n">threadPool</span><span class="o">;</span>
+	<span class="cm">/** Number of threads used for calculation. */</span>
+	<span class="kd">private</span> <span class="kt">int</span> <span class="n">numberOfThreads</span><span class="o">;</span>
+	
+	<span class="cm">/**</span>
+<span class="cm">	 * Constructor of OptimsPrime. Initializes the thread pool.</span>
+<span class="cm">	 * @param newNumberOfThreads Number of threads that should be provided </span>
+<span class="cm">	 * to calculate the prime numbers.</span>
+<span class="cm">	 */</span>
+	<span class="kd">public</span> <span class="nf">OptimusPrime</span><span class="o">(</span><span class="kd">final</span> <span class="kt">int</span> <span class="n">newNumberOfThreads</span><span class="o">)</span> <span class="o">{</span>
+		<span class="k">this</span><span class="o">.</span><span class="na">numberOfThreads</span> <span class="o">=</span> <span class="n">newNumberOfThreads</span><span class="o">;</span>
+		<span class="n">threadPool</span> <span class="o">=</span> <span class="n">Executors</span><span class="o">.</span><span class="na">newFixedThreadPool</span><span class="o">(</span><span class="n">newNumberOfThreads</span><span class="o">);</span>
+	<span class="o">}</span>
+	
+	<span class="cm">/**</span>
+<span class="cm">	 * Main task submission routine. Breaks down a given interval [from, to] </span>
+<span class="cm">	 * into smaller sub-intervals and assigns them each to a </span>
+<span class="cm">	 * PrimeSpotter-Object. All sub-intervals are then calculated using the </span>
+<span class="cm">	 * threads provided by the pool.</span>
+<span class="cm">	 * </span>
+<span class="cm">	 *  @param from Interval start</span>
+<span class="cm">	 *  @param to Interval end</span>
+<span class="cm">	 *  @return A list of Future-Objects, each holding an ArrayList, </span>
+<span class="cm">	 *  containing the prime numbers</span>
+<span class="cm">	 */</span>
+	<span class="kd">private</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Future</span><span class="o">&lt;</span><span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;&gt;&gt;</span> <span class="nf">calculatePrimeNumbers</span><span class="o">(</span>
+			<span class="kd">final</span> <span class="kt">int</span> <span class="n">from</span><span class="o">,</span> <span class="kd">final</span> <span class="kt">int</span> <span class="n">to</span><span class="o">)</span> <span class="o">{</span>
+		<span class="c1">// Size of the sub-intervals</span>
+		<span class="kt">int</span> <span class="n">intervalSize</span> <span class="o">=</span> <span class="o">(</span><span class="n">to</span> <span class="o">-</span> <span class="n">from</span><span class="o">)</span> <span class="o">/</span> <span class="n">numberOfThreads</span><span class="o">;</span>
+		<span class="c1">// Start number in the current sub-interval</span>
+		<span class="kt">int</span> <span class="n">curFrom</span> <span class="o">=</span> <span class="n">from</span><span class="o">;</span>
+		<span class="c1">// End number in the current sub-interval</span>
+		<span class="kt">int</span> <span class="n">curTo</span> <span class="o">=</span> <span class="n">curFrom</span> <span class="o">+</span> <span class="n">intervalSize</span><span class="o">;</span>
+		<span class="c1">// Array of PrimeSpotter-Objects (Callables)</span>
+		<span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">PrimeSpotter</span><span class="o">&gt;</span> <span class="n">subTasks</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">PrimeSpotter</span><span class="o">&gt;();</span>
+		
+		<span class="cm">/** Loop over sub-intervals and create sub-tasks until end reached */</span>
+		<span class="k">while</span> <span class="o">(</span><span class="n">curFrom</span> <span class="o">&lt;</span> <span class="n">to</span><span class="o">)</span> <span class="o">{</span>
+			<span class="n">subTasks</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="n">PrimeSpotter</span><span class="o">(</span><span class="n">curFrom</span><span class="o">,</span> <span class="n">curTo</span><span class="o">));</span>
+			<span class="n">curFrom</span> <span class="o">+=</span> <span class="n">intervalSize</span><span class="o">;</span> <span class="n">curTo</span> <span class="o">+=</span> <span class="n">intervalSize</span><span class="o">;</span>
+			<span class="k">if</span> <span class="o">(</span><span class="n">curTo</span> <span class="o">&gt;</span> <span class="n">to</span><span class="o">)</span> <span class="o">{</span> 
+				<span class="n">curTo</span> <span class="o">=</span> <span class="n">to</span><span class="o">;</span> 
+				<span class="o">}</span>
+		<span class="o">}</span>
+		<span class="k">try</span> <span class="o">{</span>
+			<span class="n">List</span><span class="o">&lt;</span><span class="n">Future</span><span class="o">&lt;</span><span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;&gt;&gt;</span> <span class="n">results</span> <span class="o">=</span> 
+					<span class="n">threadPool</span><span class="o">.</span><span class="na">invokeAll</span><span class="o">(</span><span class="n">subTasks</span><span class="o">);</span>
+			<span class="n">threadPool</span><span class="o">.</span><span class="na">shutdown</span><span class="o">();</span>
+			<span class="k">return</span> <span class="n">results</span><span class="o">;</span>
+		<span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">InterruptedException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+			<span class="n">Thread</span><span class="o">.</span><span class="na">currentThread</span><span class="o">().</span><span class="na">interrupt</span><span class="o">();</span>
+		<span class="o">}</span>
+		<span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+	<span class="o">}</span>
+	
+	<span class="cm">/**</span>
+<span class="cm">	 * Invokes the calculatePrimeNumbers method and unifies its results in one </span>
+<span class="cm">	 * single list.</span>
+<span class="cm">	 * @param from Start of interva</span>
+<span class="cm">	 * @param to End of interval</span>
+<span class="cm">	 * @return Unified ArrayList of prime numbers</span>
+<span class="cm">	 * @throws InterruptedException</span>
+<span class="cm">	 * @throws ExecutionException</span>
+<span class="cm">	 */</span>
+	<span class="kd">public</span> <span class="kd">final</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="nf">getPrimeNumbers</span><span class="o">(</span>
+			<span class="kd">final</span> <span class="kt">int</span> <span class="n">from</span><span class="o">,</span> <span class="kd">final</span> <span class="kt">int</span> <span class="n">to</span><span class="o">)</span> <span class="o">{</span>
+		<span class="c1">// A list of future objects for the results</span>
+		<span class="n">List</span><span class="o">&lt;</span><span class="n">Future</span><span class="o">&lt;</span><span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;&gt;&gt;</span> <span class="n">primeNumbers</span> <span class="o">=</span> 
+				<span class="n">calculatePrimeNumbers</span><span class="o">(</span><span class="n">from</span><span class="o">,</span> <span class="n">to</span><span class="o">);</span>
+		<span class="c1">// The unified list, all results of all lists are to be collected in.</span>
+		<span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">result</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;();</span>
+		
+		<span class="k">for</span> <span class="o">(</span><span class="n">Future</span><span class="o">&lt;</span><span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;&gt;</span> <span class="n">primeSet</span><span class="o">:</span> <span class="n">primeNumbers</span><span class="o">)</span> <span class="o">{</span>
+			<span class="k">try</span> <span class="o">{</span>
+				<span class="n">result</span><span class="o">.</span><span class="na">addAll</span><span class="o">(</span><span class="n">primeSet</span><span class="o">.</span><span class="na">get</span><span class="o">());</span>
+			<span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="kd">final</span> <span class="n">InterruptedException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+				<span class="c1">// Not going to occur since .get() is blocking until finished.</span>
+			<span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="kd">final</span> <span class="n">ExecutionException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+				<span class="c1">// Not going to occur</span>
+			<span class="o">}</span>
+		<span class="o">}</span>
+		<span class="k">return</span> <span class="n">result</span><span class="o">;</span>
+	<span class="o">}</span>
+	
+	<span class="cm">/**</span>
+<span class="cm">	 * main entry point.</span>
+<span class="cm">	 * @param args The args</span>
+<span class="cm">	 */</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="kd">final</span> <span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+		<span class="kt">int</span> <span class="n">from</span> <span class="o">=</span> <span class="mi">0</span><span class="o">,</span> <span class="n">to</span> <span class="o">=</span> <span class="mi">0</span><span class="o">,</span> <span class="n">numThreads</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
+		
+		<span class="k">if</span> <span class="o">(</span><span class="n">args</span><span class="o">.</span><span class="na">length</span> <span class="o">!=</span> <span class="n">NUM_EXPECTED_ARGUMENTS</span><span class="o">)</span> <span class="o">{</span>
+			<span class="n">System</span><span class="o">.</span><span class="na">err</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Usage main (int from, int to, int n_threads)&quot;</span><span class="o">);</span>
+			<span class="n">System</span><span class="o">.</span><span class="na">exit</span><span class="o">(</span><span class="mi">1</span><span class="o">);</span>
+		<span class="o">}</span>
+		<span class="k">try</span> <span class="o">{</span>
+			<span class="n">from</span> <span class="o">=</span> <span class="n">Integer</span><span class="o">.</span><span class="na">parseInt</span><span class="o">(</span><span class="n">args</span><span class="o">[</span><span class="mi">0</span><span class="o">]);</span>
+			<span class="n">to</span> <span class="o">=</span> <span class="n">Integer</span><span class="o">.</span><span class="na">parseInt</span><span class="o">(</span><span class="n">args</span><span class="o">[</span><span class="mi">1</span><span class="o">]);</span>
+			<span class="n">numThreads</span> <span class="o">=</span> <span class="n">Integer</span><span class="o">.</span><span class="na">parseInt</span><span class="o">(</span><span class="n">args</span><span class="o">[</span><span class="mi">2</span><span class="o">]);</span>
+		<span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+			<span class="n">System</span><span class="o">.</span><span class="na">err</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Usage main (int from, int to, int n_threads)&quot;</span><span class="o">);</span>
+			<span class="n">System</span><span class="o">.</span><span class="na">exit</span><span class="o">(</span><span class="mi">1</span><span class="o">);</span>
+		<span class="o">}</span>
+		
+		<span class="c1">// OptimusPrime instance</span>
+		<span class="n">OptimusPrime</span> <span class="n">optimusPrime</span> <span class="o">=</span> <span class="k">new</span> <span class="n">OptimusPrime</span><span class="o">(</span><span class="n">numThreads</span><span class="o">);</span>
+		<span class="c1">// Measure start time</span>
+		<span class="kt">long</span> <span class="n">startTime</span> <span class="o">=</span> <span class="n">System</span><span class="o">.</span><span class="na">currentTimeMillis</span><span class="o">();</span>
+		<span class="c1">// Calculate prime numbers</span>
+		<span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">primeNums</span> <span class="o">=</span> <span class="n">optimusPrime</span><span class="o">.</span><span class="na">getPrimeNumbers</span><span class="o">(</span><span class="n">from</span><span class="o">,</span> <span class="n">to</span><span class="o">);</span>
+		<span class="c1">// Measure end time</span>
+		<span class="kt">long</span> <span class="n">endTime</span> <span class="o">=</span> <span class="n">System</span><span class="o">.</span><span class="na">currentTimeMillis</span><span class="o">();</span>
+		
+		<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">format</span><span class="o">(</span>
+				<span class="s">&quot;Calculation of %d prime nums with %d threads took %d ms.\n\n&quot;</span><span class="o">,</span> 
+						<span class="n">primeNums</span><span class="o">.</span><span class="na">size</span><span class="o">(),</span> <span class="n">numThreads</span><span class="o">,</span> <span class="o">(</span><span class="n">endTime</span> <span class="o">-</span> <span class="n">startTime</span><span class="o">));</span>
+		<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Result:&quot;</span><span class="o">);</span>
+		<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">primeNums</span><span class="o">);</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -1750,7 +1994,7 @@ Meist wird das Öffnen und Schliessen einer Datei innerhalb eines try/catch Bloc
 <div class="highlight-java"><div class="highlight"><pre><span></span><span class="kn">package</span> <span class="nn">smells.exception_handling</span><span class="o">;</span>
 
 <span class="kn">import</span> <span class="nn">sun.misc.IOUtils</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">sun.nio.ch.IOUtil</span><span class="o">;</span>
+<span class="c1">//import sun.nio.ch.IOUtil;</span>
 
 <span class="kn">import</span> <span class="nn">java.io.FileInputStream</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">java.io.IOException</span><span class="o">;</span>
@@ -2163,14 +2407,6 @@ public class EnumConstants_Good {
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="indices-and-tables">
-<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
-<ul class="simple">
-<li><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></li>
-<li><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></li>
-<li><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></li>
-</ul>
 </div>
 
 
